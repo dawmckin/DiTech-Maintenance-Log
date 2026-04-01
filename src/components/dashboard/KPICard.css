@@ -1,0 +1,42 @@
+.kpi-card {
+  background: #1f2937; /* dark card */
+  color: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+  hr {
+    background-color: #fff;
+  }
+}
+
+.kpi-title {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* chart styles */
+.recharts-pie-label-text {
+  fill: #fff;
+  font-weight: bold;
+}
+
+.recharts-legend-item-text {
+  color: #fff !important;
+}
+
+.recharts-pie-label-line {
+  /* stroke: #1f2937; */
+  display: none;
+}
