@@ -543,8 +543,8 @@
     "workstation": "4090",
     "equipment": "Roller",
     "issue_type": "Setup",
-    "start_time": "2026-04-01T18:15:00",
-    "end_time": "2026-04-01T19:49:33",
+    "start_time": "2026-04-01T10:15:00",
+    "end_time": "2026-04-01T12:49:33",
     "status": "closed",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": "Resolved and verified."

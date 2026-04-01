@@ -21,6 +21,5 @@ export default function groupLogsByField(logs, field, status) {
         map[key].Downtime += diff;
     });
 
-    console.log(Object.values(map).sort((a, b) => b.Downtime - a.Downtime));
     return Object.values(map).sort((a, b) => b.Downtime - a.Downtime);
 }
