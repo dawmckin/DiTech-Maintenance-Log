@@ -13,7 +13,7 @@ export default function calculateKPIs(logs) {
 
     logs.forEach((log) => {
         const start = new Date(log.start_time);
-        const end = log.end_time ? new Date(log.end_time) : now;
+        const end = log.end_time === "" ? now : new Date(log.end_time);
 
         //total downtime
         if(start) {
@@ -28,8 +28,7 @@ export default function calculateKPIs(logs) {
         //tickets today
         const isToday = start.getDate() === now.getDate() && 
                         start.getMonth() === now.getMonth() && 
-                        start.getFullYear() === now.getFullYear() &&
-                        log.status === "open";
+                        start.getFullYear() === now.getFullYear();
 
         if(isToday) {
             issuesToday++;
@@ -47,7 +46,9 @@ export default function calculateKPIs(logs) {
 
         issueCountByType[key].value += 1;
     });
-    console.log(Object.values(issueCountByType));
+
+    console.log(totalDowntime);
+
     return {
         totalDowntime,
         activeIssues,

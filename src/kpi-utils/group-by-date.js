@@ -1,6 +1,7 @@
 export default function groupLogsByDate(logs, range = 'day') {
     if (!Array.isArray(logs)) return [];
     
+    const now = new Date();
     const map = {};
     let highestIssues = 0; 
 
@@ -22,25 +23,25 @@ export default function groupLogsByDate(logs, range = 'day') {
 
         if(!map[key]) {
             map[key] = {
-                date: key,
-                issues: 0,
-                downtime: 0
+                Date: key,
+                Issues: 0,
+                Downtime: 0
             };
         }
 
-        map[key].issues += 1;
+        map[key].Issues += 1;
         
-        if(map[key].issues > highestIssues) {
-            highestIssues = map[key].issues
+        if(map[key].Issues > highestIssues) {
+            highestIssues = map[key].Issues
         }
 
-        if(log.end_time) {
-            const start = new Date(log.start_time);
-            const end = new Date(log.end_time);
-            const diff = (end - start) / 1000;
-            map[key].downtime += diff;
-        }
+
+        const start = new Date(log.start_time);
+        const end = log.end_time === "" ? now : new Date(log.end_time);
+        const diff = (end - start);
+        map[key].Downtime += diff;
+
     });
 
-    return {groups: Object.values(map).sort((a, b) => new Date(a.date) - new Date(b.date)), highestIssues};
+    return {groups: Object.values(map).sort((a, b) => new Date(a.Date) - new Date(b.Date)), highestIssues};
 }

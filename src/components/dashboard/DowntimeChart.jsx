@@ -23,12 +23,12 @@ export default function DowntimeChart({logs, range}) {
 
             <ResponsiveContainer width='100%' height={300}>
                 <LineChart data={data.groups}>
-                    <XAxis dataKey="date" stroke="#e5e7eb"/>
+                    <XAxis dataKey="Date" stroke="#e5e7eb"/>
                     <YAxis tickFormatter={(v) => Math.round(v / (1000 * 60 * 60)) + "h"} stroke="#e5e7eb"/>
                     <Tooltip formatter={(value)=> formatDuration(value)}/>
                     <Line 
                         type="monotone"
-                        dataKey="downtime"
+                        dataKey="Downtime"
                         stroke="#dc3545"
                         strokeWidth={2}
                     />

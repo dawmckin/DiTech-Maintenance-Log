@@ -7,13 +7,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useMemo } from "react";
-import groupDowntimeByField from "../../kpi-utils/group-by-field";
+import groupLogsByField from "../../kpi-utils/group-by-field";
 import formatDuration from "../../kpi-utils/format-duration";
 import "./KPICard.css";
 
 export default function DowntimeByIssueTypeChart({logs}) {
     const data = useMemo(() => {
-        return groupDowntimeByField(logs, "issue_type");
+        return groupLogsByField(logs, "issue_type");
     }, [logs]);
 
     return (
@@ -22,11 +22,11 @@ export default function DowntimeByIssueTypeChart({logs}) {
             <hr />
 
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={data}>
-                    <XAxis datakey="name" stroke="#e5e7eb"/>
-                    <YAxis stroke="#e5e7eb"/>
-                    <Tooltip formatter={(value) => formatDuration(value)} radius={[6, 6, 0, 0]}/>
-                    <Bar dataKey="downtime"  fill="#dc3545"/>
+                <BarChart data={data} barCategoryGap="20%">
+                    <XAxis dataKey="Name" stroke="#e5e7eb"/>
+                    <YAxis  tickFormatter={(v) => Math.round(v / (1000 * 60 * 60)) + "h"} stroke="#e5e7eb"/>
+                    <Tooltip formatter={(v) => formatDuration(v)} radius={[6, 6, 0, 0]} color="#000"/>
+                    <Bar dataKey="Downtime" fill="#dc3545" radius={[6, 6, 0, 0]}/>
                 </BarChart>
             </ResponsiveContainer>
         </div>
