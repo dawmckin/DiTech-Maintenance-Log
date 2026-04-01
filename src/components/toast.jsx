@@ -9,8 +9,6 @@ function Toast({message, type = 'success', onClose}) {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log(message, type);
-            console.log("Closing toast");
             onClose();
         }, 3000);
 

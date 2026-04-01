@@ -47,8 +47,6 @@ export default function calculateKPIs(logs) {
         issueCountByType[key].value += 1;
     });
 
-    console.log(totalDowntime);
-
     return {
         totalDowntime,
         activeIssues,

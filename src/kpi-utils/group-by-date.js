@@ -1,4 +1,4 @@
-export default function groupLogsByDate(logs, range = 'day') {
+export default function groupLogsByDate(logs, range) {
     if (!Array.isArray(logs)) return [];
     
     const now = new Date();
@@ -9,16 +9,17 @@ export default function groupLogsByDate(logs, range = 'day') {
         const date = new Date(log.start_time);
 
         let key;
-        if(range === "day") {
+        if(range === "today" || range === "yesterday") {
             key = date.toLocaleDateString();
         } else if(range === "week") {
-            const firstDay = new Date(date);
-            firstDay.setDate(date.getDate() - date.getDay());
-            key = firstDay.toLocaleDateString();
+            // const firstDay = new Date(date);
+            // firstDay.setDate(date.getDate() - date.getDay());
+            // key = firstDay.toLocaleDateString();
+            key = date.toLocaleDateString();
         } else if(range === "month") {
-            key = `${date.getFullYear()}-${date.getMonth() + 1}`;
-        } else if(range === "year") {
-            key = `${date.getFullYear()}`;
+            key = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        } else if(range === "quarter-year" || range === "half-year" || range === "year") {
+            key = `${date.toLocaleString('default', { month: 'short' })}-${date.getFullYear()}`;
         }
 
         if(!map[key]) {

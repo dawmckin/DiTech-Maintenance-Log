@@ -38,7 +38,6 @@ export default function WorklogForm() {
         ) {
             showToast("Missing required fields.", "warning");
         } else {
-            console.log(worklogFormData);
             showToast("Maintenance Log Initialized.", "success");
             setPrelimFormState(2);
 
@@ -53,7 +52,6 @@ export default function WorklogForm() {
         if(!worklogFormData.notes) {
             showToast("Missing required fields.", "warning");
         } else {
-            console.log(worklogFormData);
             showToast("Maintenance Log Submitted.", "success");
             setPrelimFormState(3);
 
