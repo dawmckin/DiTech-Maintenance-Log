@@ -9,7 +9,7 @@
     "status": "closed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 2,
@@ -21,7 +21,7 @@
     "status": "open",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": ""
+    "notes": 0
   },
   {
     "ticket_id": 3,
@@ -33,7 +33,7 @@
     "status": "closed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 4,
@@ -45,7 +45,7 @@
     "status": "closed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 5,
@@ -57,7 +57,7 @@
     "status": "closed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 6,
@@ -69,7 +69,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 7,
@@ -81,7 +81,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 8,
@@ -93,7 +93,7 @@
     "status": "open",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": ""
+    "notes": 0
   },
   {
     "ticket_id": 9,
@@ -105,7 +105,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 10,
@@ -117,7 +117,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 11,
@@ -129,7 +129,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 12,
@@ -141,7 +141,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 13,
@@ -153,7 +153,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 14,
@@ -165,7 +165,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 15,
@@ -177,7 +177,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 16,
@@ -189,7 +189,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 17,
@@ -201,7 +201,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 18,
@@ -213,7 +213,7 @@
     "status": "open",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": ""
+    "notes": 0
   },
   {
     "ticket_id": 19,
@@ -225,7 +225,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 20,
@@ -237,7 +237,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 21,
@@ -249,7 +249,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 22,
@@ -261,7 +261,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 23,
@@ -273,7 +273,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 24,
@@ -285,7 +285,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 25,
@@ -297,7 +297,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 26,
@@ -309,7 +309,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 27,
@@ -321,7 +321,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 28,
@@ -333,7 +333,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 29,
@@ -345,7 +345,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 30,
@@ -357,7 +357,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 31,
@@ -369,7 +369,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 32,
@@ -381,7 +381,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 33,
@@ -393,7 +393,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 34,
@@ -405,7 +405,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 35,
@@ -417,7 +417,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 36,
@@ -429,7 +429,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 37,
@@ -441,7 +441,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 38,
@@ -453,7 +453,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 39,
@@ -465,7 +465,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 40,
@@ -477,7 +477,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 41,
@@ -489,7 +489,7 @@
     "status": "open",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": ""
+    "notes": 0
   },
   {
     "ticket_id": 42,
@@ -501,7 +501,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 43,
@@ -513,7 +513,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 44,
@@ -525,7 +525,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 45,
@@ -537,7 +537,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 46,
@@ -549,7 +549,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 47,
@@ -561,7 +561,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 48,
@@ -573,7 +573,7 @@
     "status": "open",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": ""
+    "notes": 0
   },
   {
     "ticket_id": 49,
@@ -585,7 +585,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 50,
@@ -597,7 +597,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 2
   },
   {
     "ticket_id": 51,
@@ -609,7 +609,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 52,
@@ -621,7 +621,7 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   },
   {
     "ticket_id": 53,
@@ -633,6 +633,6 @@
     "status": "closed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": "Resolved and verified."
+    "notes": 0
   }
 ]

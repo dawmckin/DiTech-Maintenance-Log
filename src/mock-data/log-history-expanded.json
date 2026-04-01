@@ -1,0 +1,17 @@
+[
+    {
+        "createdBy": "Dalton McKinney",
+        "notes": [
+            {
+                "ticket_id": 50,
+                "user": "dm12345",
+                "text": "This is an example of what a note might look like"
+            },
+            {
+                "ticket_id": 50,
+                "user": "dm12345",
+                "text": "This is an example of what a note might look like"
+            }
+        ]
+    }
+]

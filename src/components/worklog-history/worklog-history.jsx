@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchBox from "./search-box";
 import FilterToggle from "./filter-toggle";
 import HistoryTable from "./history-table";
-import LogData from "./../mock-data/logs.json";
+import LogData from "../../mock-data/logs.json";
 
 export default function WorklogHistory() {
     const [search, setSearch] = useState("");
