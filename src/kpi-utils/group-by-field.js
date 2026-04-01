@@ -14,7 +14,8 @@ export default function groupLogsByField(logs, field, status) {
         if(!map[key]) {
             map[key] = {
                 Name: key,
-                Downtime: 0
+                Downtime: 0,
+                Location: log.location
             };
         }
 

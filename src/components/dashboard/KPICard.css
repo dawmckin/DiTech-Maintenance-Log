@@ -26,6 +26,24 @@
   justify-content: center;
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none !important;
+  padding: 0 !important;
+
+  label>input {
+    margin: 0 .5rem;
+  }
+}
+
+.location-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* chart styles */
 .recharts-pie-label-text {
   fill: #fff;
