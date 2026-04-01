@@ -22,7 +22,7 @@ export default function IssuesOverTimeChart({logs, range}) {
 
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data.groups}>
-          <XAxis dataKey="date" stroke="#e5e7eb"/>
+          <XAxis dataKey="Date" stroke="#e5e7eb"/>
           {data.highestIssues <= 5 ? (
             <YAxis stroke="#e5e7eb" domain={[0, 5]} tickCount={6} />
           ) : (
@@ -31,7 +31,7 @@ export default function IssuesOverTimeChart({logs, range}) {
           <Tooltip />
           <Line
             type="monotone"
-            dataKey="issues"
+            dataKey="Issues"
             stroke="#0d6efd"
             strokeWidth={2}
           />
