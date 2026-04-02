@@ -25,7 +25,7 @@ export default function DowntimeChart({logs, range}) {
                 <LineChart data={data.groups}>
                     <XAxis dataKey="Date" stroke="#e5e7eb"/>
                     <YAxis tickFormatter={(v) => Math.round(v / (1000 * 60 * 60)) + "h"} stroke="#e5e7eb"/>
-                    <Tooltip formatter={(value)=> formatDuration(value)}/>
+                    <Tooltip formatter={(value)=> formatDuration(value)}  itemStyle={{color: '#000'}} />
                     <Line 
                         type="monotone"
                         dataKey="Downtime"

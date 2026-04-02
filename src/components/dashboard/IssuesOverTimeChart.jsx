@@ -28,7 +28,7 @@ export default function IssuesOverTimeChart({logs, range}) {
           ) : (
             <YAxis stroke="#e5e7eb" domain={[0, data.highestIssues + (data.highestIssues % 5)]} tickCount={6}/>
           )}
-          <Tooltip />
+          <Tooltip itemStyle={{color: '#000'}} />
           <Line
             type="monotone"
             dataKey="Issues"
