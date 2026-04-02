@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form";
-import WorkLogHistory from "./components/worklog-history";
+import WorkLogHistory from "./components/worklog-history/worklog-history";
 
 function App() {
   return (

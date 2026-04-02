@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Fragment } from "react";
+import ExpandedRow from "./expanded-row";
 import "./history-table.css";
-import OpenIcon from "./../assets/open-icon.svg";
-import ClosedIcon from "./../assets/closed-icon.svg";
+import OpenIcon from "./../../assets/open-icon.svg";
+import CompetedIcon from "./../../assets/completed-icon.svg";
 
 export default function HistoryTable({logs, toggle, search}) {
     //sorting configs
@@ -13,6 +14,9 @@ export default function HistoryTable({logs, toggle, search}) {
     //pagination
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 8;
+
+    //expanded rows
+    const [expandedRows, setExpandedRows] = useState(new Set());
 
     //sorting configs
     useEffect(() => {
@@ -57,6 +61,21 @@ export default function HistoryTable({logs, toggle, search}) {
 
         setCurrentPage(1);
     };
+
+    //expanded rows
+    const toggleRow = (id, status) => {
+        if(status !== 'completed' && expandable) return;
+
+        setExpandedRows((prev) => {
+            const newSet = new Set(prev);
+            if(newSet.has(id)) {
+                newSet.delete(id);
+            } else {
+                newSet.add(id);
+            }
+            return newSet;
+        });
+    }
 
     const getSortArrow = (column) => {
         if(sortConfig.key !== column) return null;
@@ -141,14 +160,15 @@ export default function HistoryTable({logs, toggle, search}) {
         <div>
             <table className="history-table">
                 <thead>
+                    <tr>
+                        <th>
+                            Ticket ID
+                        </th>
+                        <th className="sortable" onClick={() => handleSort("status")}>
+                            Status {getSortArrow("status")}
+                        </th>
                         {toggle === 'date' ? (
-                            <tr>
-                                <th>
-                                    Ticket ID
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("status")}>
-                                    Status {getSortArrow("status")}
-                                </th>
+                            <>
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
                                 </th>
@@ -158,24 +178,9 @@ export default function HistoryTable({logs, toggle, search}) {
                                 <th className="sortable" onClick={() => handleSort("equipment")}>
                                     Equipment {getSortArrow("equipment")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("end_time")}>
-                                    End Time {getSortArrow("end_time")}
-                                </th>                           
-                                <th className="sortable" onClick={() => handleSort("issue_type")}>
-                                    Issue Type {getSortArrow("issue_type")}
-                                </th>
-                                <th>
-                                    Issue Description
-                                </th>
-                            </tr> 
+                            </>
                         ) : (
-                            <tr>
-                                <th>
-                                    Ticket ID
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("status")}>
-                                    Status {getSortArrow("status")}
-                                </th>
+                            <>
                                 <th className="sortable" onClick={() => handleSort("workstation")}>
                                     Workstation {getSortArrow("workstation")}
                                 </th>
@@ -185,17 +190,18 @@ export default function HistoryTable({logs, toggle, search}) {
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("end_time")}>
-                                    End Time {getSortArrow("end_time")}
-                                </th>                           
-                                <th className="sortable" onClick={() => handleSort("issue_type")}>
-                                    Issue Type {getSortArrow("issue_type")}
-                                </th>
-                                <th>
-                                    Issue Description
-                                </th>
-                            </tr> 
+                            </>
                         )}
+                        <th className="sortable" onClick={() => handleSort("end_time")}>
+                            End Time {getSortArrow("end_time")}
+                        </th>                           
+                        <th className="sortable" onClick={() => handleSort("issue_type")}>
+                            Issue Type {getSortArrow("issue_type")}
+                        </th>
+                        <th>
+                            Issue Description
+                        </th>
+                    </tr> 
                 </thead>
 
                 <tbody>
@@ -206,34 +212,67 @@ export default function HistoryTable({logs, toggle, search}) {
                             </td>
                         </tr>
                     ) : (
-                        paginatedLogs.map((log) => (
-                            toggle === 'date' ? (
-                                <tr key={log.ticket_id}>
-                                    <td className="clickable">{log.ticket_id}</td>
-                                    <td>{log.status === 'open' ? <img src={OpenIcon} alt="Open" /> : <img src={ClosedIcon} alt="Closed" />}</td>
-                                    <td>{new Date(log.start_time).toLocaleString()}</td>
-                                    <td>{log.workstation}</td>
-                                    <td>{log.equipment}</td>
-                                    <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
-                                    <td>{log.issue_type}</td>
-                                    <td>{log.issue_description}</td>
-                                </tr>
-                            ) : (
-                                <tr key={log.ticket_id}>
-                                    <td className="clickable">{log.ticket_id}</td>
-                                    <td>{log.status === 'open' ? <img src={OpenIcon} alt="Open" /> : <img src={ClosedIcon} alt="Closed" />}</td>
-                                    <td>{log.workstation}</td>
-                                    <td>{log.equipment}</td>
-                                    <td>{new Date(log.start_time).toLocaleString()}</td>
-                                    <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
-                                    <td>{log.issue_type}</td>
-                                    <td>{log.issue_description}</td>
-                                </tr>
-                            )
-                        ))
+                        paginatedLogs.map((log) => {
+                            const isExpanded = expandedRows.has(log.ticket_id);
+                            const expandable = log.notes > 0;
+
+                            return (
+                                <Fragment key={log.ticket_id}>
+                                    <tr
+                                        onClick={() => toggleRow(log.ticket_id, log.status)}
+                                        style={{
+                                            cursor: (log.status === "completed" && expandable) ? "pointer" : "default"
+                                        }}
+                                    >
+                                        <td>
+                                            <div className="d-flex justify-content-between">
+                                                <div>{log.ticket_id}</div>
+                                                <div>
+                                                    {expandable ? 
+                                                        (isExpanded) ? 
+                                                            <i className="bi bi-chevron-up"></i> : 
+                                                            <i className="bi bi-chevron-down"></i> :
+                                                        <span></span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="text-center align-middle">
+                                            {log.status === 'open'
+                                                ? <img src={OpenIcon} alt="Open" />
+                                                : <img src={CompetedIcon} alt="Completed" />
+                                            }
+                                        </td>
+
+                                        {toggle === 'date' ? (
+                                            <>
+                                                <td>{new Date(log.start_time).toLocaleString()}</td>
+                                                <td>{log.workstation}</td>
+                                                <td>{log.equipment}</td>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <td>{log.workstation}</td>
+                                                <td>{log.equipment}</td>
+                                                <td>{new Date(log.start_time).toLocaleString()}</td>
+                                            </>
+                                        )}
+
+                                        <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
+                                        <td>{log.issue_type}</td>
+                                        <td>{log.issue_description}</td>
+                                    </tr>
+
+                                    {(isExpanded && expandable) && (
+                                        <ExpandedRow log={log.ticket_id} colSpan={8} isExpanded={isExpanded} />
+                                    )}
+                                </Fragment>
+                            );
+                        })
                     )}
                 </tbody>
             </table>
+
             {totalPages > 1 && (
                 <div className="pagination">
                     <p>

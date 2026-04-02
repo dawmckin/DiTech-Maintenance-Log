@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Toast({message, type = 'success', onClose}) {
     const icons = {
-        "success": (<i class="bi-check-circle-fill"></i>)
+        "success": (<i className="bi-check-circle-fill"></i>)
     }
 
     useEffect(() => {
