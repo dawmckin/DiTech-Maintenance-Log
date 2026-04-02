@@ -1,25 +1,29 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Login from "./components/login-portal/LoginPortal";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form";
 import WorkLogHistory from "./components/worklog-history/worklog-history";
 
+import AppLayout from "./components/AppLayout";
+import AuthLayout from "./components/AuthLayout";
+
 function App() {
   return (
-    <div className="app-container">
-      <div className="app-content">
-        <Header />
+    <Routes>
 
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/new-maintenance-log" element={<WorklogForm />} />
-          <Route path="/logs" element={<WorkLogHistory />} />
-        </Routes>
-      </div>
-      
-      <Footer />
-    </div>
+      {/* Login (no header/footer) */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+      </Route>
+
+      {/* Main app (with header/footer) */}
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/new-maintenance-log" element={<WorklogForm />} />
+        <Route path="/logs" element={<WorkLogHistory />} />
+      </Route>
+
+    </Routes>
   );
 }
 

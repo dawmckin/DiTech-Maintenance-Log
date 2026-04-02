@@ -26,7 +26,7 @@ export default function DowntimeByIssueTypeChart({logs}) {
                     <XAxis dataKey="Name" stroke="#e5e7eb"/>
                     <YAxis  tickFormatter={(v) => Math.round(v / (1000 * 60 * 60)) + "h"} stroke="#e5e7eb"/>
                     <Tooltip formatter={(v) => formatDuration(v)} radius={[6, 6, 0, 0]} color="#000"/>
-                    <Bar dataKey="Downtime" fill="#dc3545" radius={[6, 6, 0, 0]}/>
+                    <Bar dataKey="Downtime" fill="#22c55e" radius={[6, 6, 0, 0]}/>
                 </BarChart>
             </ResponsiveContainer>
         </div>

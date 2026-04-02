@@ -61,7 +61,7 @@ export default function DowntimeByWorkstationChart({logs}) {
                     <XAxis dataKey="Name" stroke="#e5e7eb"/>
                     <YAxis tickFormatter={(v) => Math.round(v / 3600000) + "h"} stroke="#e5e7eb"/>
                     <Tooltip formatter={(value) => formatDuration(value)} radius={[6, 6, 0, 0]}/>
-                    <Bar dataKey="Downtime" fill="#0d6efd" />
+                    <Bar dataKey="Downtime" fill="#22c55e" />
                 </BarChart>
             </ResponsiveContainer>
         </div>

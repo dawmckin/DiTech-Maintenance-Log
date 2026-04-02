@@ -32,7 +32,7 @@ export default function IssuesOverTimeChart({logs, range}) {
           <Line
             type="monotone"
             dataKey="Issues"
-            stroke="#0d6efd"
+            stroke="#22c55e"
             strokeWidth={2}
           />
         </LineChart>

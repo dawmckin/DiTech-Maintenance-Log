@@ -3,7 +3,7 @@ export default function calculateKPIs(logs) {
     const COLORS = {
         problem: "#dc3545",
         maintenance: "#0d6efd",
-        setup: "#198754",
+        setup: "#22c55e",
     };
 
     let totalDowntime = 0;

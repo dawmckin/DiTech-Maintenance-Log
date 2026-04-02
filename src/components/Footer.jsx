@@ -2,7 +2,7 @@ export default function Footer() {
     return (
     <footer className="app-footer">
       <div className="footer-left">
-        <span>© {new Date().getFullYear()} DiTech Inc. Worklog Dashboard</span>
+        <span>© {new Date().getFullYear()} DiTech Inc. Maintenance Dashboard</span>
       </div>
 
       <div className="footer-center">
