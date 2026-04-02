@@ -40,11 +40,10 @@
 /* expanded rows */
 .expanded-row td {
     padding: 0;
-    border-top: 2px solid #1e272e;
+    border-top: 1px solid #e0e6f0;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     animation: expandFade 0.25s ease-in-out;
-
 }
 
 .expanded-wrapper {
@@ -58,13 +57,12 @@
 }
 
 .expanded-content {
-    padding: 16px 20px;
-    background-color: #f8f9fa;
-    color: #000;
-
     display: flex;
     justify-content: space-between;
     gap: 40px;
+    padding: 16px 20px;
+    background-color: #f8f9fa;
+    color: #000;
 }
 
 .expanded-left {
