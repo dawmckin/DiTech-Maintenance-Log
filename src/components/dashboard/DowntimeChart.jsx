@@ -29,7 +29,7 @@ export default function DowntimeChart({logs, range}) {
                     <Line 
                         type="monotone"
                         dataKey="Downtime"
-                        stroke="#dc3545"
+                        stroke="#22c55e"
                         strokeWidth={2}
                     />
                 </LineChart>
