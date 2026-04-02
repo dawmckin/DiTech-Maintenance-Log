@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, Fragment } from "react";
 import ExpandedRow from "./expanded-row";
 import "./history-table.css";
 import OpenIcon from "./../../assets/open-icon.svg";
-import ClosedIcon from "./../../assets/closed-icon.svg";
+import CompetedIcon from "./../../assets/completed-icon.svg";
 
 export default function HistoryTable({logs, toggle, search}) {
     //sorting configs
@@ -63,8 +63,8 @@ export default function HistoryTable({logs, toggle, search}) {
     };
 
     //expanded rows
-    const toggleRow = (id, status, expandable) => {
-        if(status !== 'closed' && !expandable) return;
+    const toggleRow = (id, status) => {
+        if(status !== 'completed' && expandable) return;
 
         setExpandedRows((prev) => {
             const newSet = new Set(prev);
@@ -160,14 +160,15 @@ export default function HistoryTable({logs, toggle, search}) {
         <div>
             <table className="history-table">
                 <thead>
+                    <tr>
+                        <th>
+                            Ticket ID
+                        </th>
+                        <th className="sortable" onClick={() => handleSort("status")}>
+                            Status {getSortArrow("status")}
+                        </th>
                         {toggle === 'date' ? (
-                            <tr>
-                                <th>
-                                    Ticket ID
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("status")}>
-                                    Status {getSortArrow("status")}
-                                </th>
+                            <>
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
                                 </th>
@@ -177,24 +178,9 @@ export default function HistoryTable({logs, toggle, search}) {
                                 <th className="sortable" onClick={() => handleSort("equipment")}>
                                     Equipment {getSortArrow("equipment")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("end_time")}>
-                                    End Time {getSortArrow("end_time")}
-                                </th>                           
-                                <th className="sortable" onClick={() => handleSort("issue_type")}>
-                                    Issue Type {getSortArrow("issue_type")}
-                                </th>
-                                <th>
-                                    Issue Description
-                                </th>
-                            </tr> 
+                            </>
                         ) : (
-                            <tr>
-                                <th>
-                                    Ticket ID
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("status")}>
-                                    Status {getSortArrow("status")}
-                                </th>
+                            <>
                                 <th className="sortable" onClick={() => handleSort("workstation")}>
                                     Workstation {getSortArrow("workstation")}
                                 </th>
@@ -204,17 +190,18 @@ export default function HistoryTable({logs, toggle, search}) {
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("end_time")}>
-                                    End Time {getSortArrow("end_time")}
-                                </th>                           
-                                <th className="sortable" onClick={() => handleSort("issue_type")}>
-                                    Issue Type {getSortArrow("issue_type")}
-                                </th>
-                                <th>
-                                    Issue Description
-                                </th>
-                            </tr> 
+                            </>
                         )}
+                        <th className="sortable" onClick={() => handleSort("end_time")}>
+                            End Time {getSortArrow("end_time")}
+                        </th>                           
+                        <th className="sortable" onClick={() => handleSort("issue_type")}>
+                            Issue Type {getSortArrow("issue_type")}
+                        </th>
+                        <th>
+                            Issue Description
+                        </th>
+                    </tr> 
                 </thead>
 
                 <tbody>
@@ -232,9 +219,9 @@ export default function HistoryTable({logs, toggle, search}) {
                             return (
                                 <Fragment key={log.ticket_id}>
                                     <tr
-                                        onClick={() => toggleRow(log.ticket_id, log.status, expandable)}
+                                        onClick={() => toggleRow(log.ticket_id, log.status)}
                                         style={{
-                                            cursor: (log.status === "closed" && expandable) ? "pointer" : "default"
+                                            cursor: (log.status === "completed" && expandable) ? "pointer" : "default"
                                         }}
                                     >
                                         <td>
@@ -249,13 +236,12 @@ export default function HistoryTable({logs, toggle, search}) {
                                                     }
                                                 </div>
                                             </div>
-
-
                                         </td>
-                                        <td>
+                                        <td className="text-center align-middle">
                                             {log.status === 'open'
                                                 ? <img src={OpenIcon} alt="Open" />
-                                                : <img src={ClosedIcon} alt="Closed" />}
+                                                : <img src={CompetedIcon} alt="Completed" />
+                                            }
                                         </td>
 
                                         {toggle === 'date' ? (
@@ -277,8 +263,8 @@ export default function HistoryTable({logs, toggle, search}) {
                                         <td>{log.issue_description}</td>
                                     </tr>
 
-                                    {isExpanded && (
-                                        <ExpandedRow log={log} colSpan={8} />
+                                    {(isExpanded && expandable) && (
+                                        <ExpandedRow log={log.ticket_id} colSpan={8} isExpanded={isExpanded} />
                                     )}
                                 </Fragment>
                             );

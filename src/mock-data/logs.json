@@ -6,7 +6,7 @@
     "issue_type": "Setup",
     "start_time": "2025-05-06T07:08:00",
     "end_time": "2025-05-08T12:25:22",
-    "status": "closed",
+    "status": "completed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -30,7 +30,7 @@
     "issue_type": "Problem",
     "start_time": "2025-11-05T00:35:00",
     "end_time": "2025-11-05T15:42:02",
-    "status": "closed",
+    "status": "completed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -42,7 +42,7 @@
     "issue_type": "Problem",
     "start_time": "2025-08-18T18:17:00",
     "end_time": "2025-08-21T04:45:10",
-    "status": "closed",
+    "status": "completed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -54,7 +54,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-12-24T13:21:00",
     "end_time": "2025-12-25T10:04:43",
-    "status": "closed",
+    "status": "completed",
     "location": "walnut",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -66,7 +66,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-02-22T02:24:00",
     "end_time": "2025-02-22T10:16:00",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -78,7 +78,7 @@
     "issue_type": "Problem",
     "start_time": "2026-02-18T01:46:00",
     "end_time": "2026-02-19T11:23:08",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -102,7 +102,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-10-23T06:45:00",
     "end_time": "2025-10-23T12:41:18",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -114,7 +114,7 @@
     "issue_type": "Setup",
     "start_time": "2025-02-10T07:55:00",
     "end_time": "2025-02-10T16:05:15",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -126,7 +126,7 @@
     "issue_type": "Maintenance",
     "start_time": "2026-03-04T11:10:00",
     "end_time": "2026-03-05T14:26:58",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -138,7 +138,7 @@
     "issue_type": "Setup",
     "start_time": "2025-12-26T21:41:00",
     "end_time": "2025-12-27T03:45:10",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -150,7 +150,7 @@
     "issue_type": "Setup",
     "start_time": "2025-05-06T05:29:00",
     "end_time": "2025-05-07T09:25:28",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -162,7 +162,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-06-16T01:14:00",
     "end_time": "2025-06-18T12:34:52",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -174,7 +174,7 @@
     "issue_type": "Setup",
     "start_time": "2025-02-03T06:58:00",
     "end_time": "2025-02-06T02:54:47",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -186,7 +186,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-09-13T12:56:00",
     "end_time": "2025-09-16T06:51:58",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -198,7 +198,7 @@
     "issue_type": "Setup",
     "start_time": "2025-03-13T07:47:00",
     "end_time": "2025-03-15T00:38:25",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -222,7 +222,7 @@
     "issue_type": "Setup",
     "start_time": "2025-09-18T15:05:00",
     "end_time": "2025-09-20T21:44:37",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -234,7 +234,7 @@
     "issue_type": "Setup",
     "start_time": "2025-03-23T21:27:00",
     "end_time": "2025-03-25T16:47:42",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -246,7 +246,7 @@
     "issue_type": "Setup",
     "start_time": "2025-08-28T16:16:00",
     "end_time": "2025-08-31T14:12:47",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -258,7 +258,7 @@
     "issue_type": "Setup",
     "start_time": "2025-02-28T21:56:00",
     "end_time": "2025-03-02T13:03:29",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -270,7 +270,7 @@
     "issue_type": "Setup",
     "start_time": "2025-06-24T03:18:00",
     "end_time": "2025-06-25T11:10:05",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -282,10 +282,10 @@
     "issue_type": "Problem",
     "start_time": "2026-03-25T23:16:00",
     "end_time": "2026-03-28T21:16:14",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": 0
+    "notes": 3
   },
   {
     "ticket_id": 25,
@@ -294,10 +294,10 @@
     "issue_type": "Problem",
     "start_time": "2026-03-22T20:19:00",
     "end_time": "2026-03-25T09:04:30",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
-    "notes": 0
+    "notes": 1
   },
   {
     "ticket_id": 26,
@@ -306,7 +306,7 @@
     "issue_type": "Setup",
     "start_time": "2025-03-20T11:48:00",
     "end_time": "2025-03-21T00:16:11",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -318,7 +318,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-06-15T15:01:00",
     "end_time": "2025-06-15T23:57:33",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -330,7 +330,7 @@
     "issue_type": "Setup",
     "start_time": "2025-05-03T01:15:00",
     "end_time": "2025-05-05T16:35:19",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -342,7 +342,7 @@
     "issue_type": "Setup",
     "start_time": "2025-09-06T02:48:00",
     "end_time": "2025-09-07T17:37:19",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -354,7 +354,7 @@
     "issue_type": "Problem",
     "start_time": "2025-09-01T17:10:00",
     "end_time": "2025-09-02T12:59:08",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -366,7 +366,7 @@
     "issue_type": "Setup",
     "start_time": "2025-10-04T23:44:00",
     "end_time": "2025-10-05T15:00:54",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -378,7 +378,7 @@
     "issue_type": "Problem",
     "start_time": "2025-11-29T11:28:00",
     "end_time": "2025-12-02T04:20:21",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -390,7 +390,7 @@
     "issue_type": "Setup",
     "start_time": "2025-04-26T02:21:00",
     "end_time": "2025-04-26T04:50:36",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -402,7 +402,7 @@
     "issue_type": "Problem",
     "start_time": "2025-04-23T00:04:00",
     "end_time": "2025-04-25T03:19:24",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -414,7 +414,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-01-17T10:04:00",
     "end_time": "2025-01-18T23:34:18",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -426,7 +426,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-04-20T17:08:00",
     "end_time": "2025-04-22T21:29:28",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -438,7 +438,7 @@
     "issue_type": "Setup",
     "start_time": "2025-05-05T15:51:00",
     "end_time": "2025-05-06T21:45:04",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -450,7 +450,7 @@
     "issue_type": "Setup",
     "start_time": "2025-08-09T11:27:00",
     "end_time": "2025-08-10T17:38:17",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -462,7 +462,7 @@
     "issue_type": "Problem",
     "start_time": "2025-11-27T03:03:00",
     "end_time": "2025-11-28T08:38:09",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -474,7 +474,7 @@
     "issue_type": "Problem",
     "start_time": "2025-05-08T06:12:00",
     "end_time": "2025-05-09T21:16:34",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -498,7 +498,7 @@
     "issue_type": "Problem",
     "start_time": "2025-02-20T01:41:00",
     "end_time": "2025-02-23T01:37:56",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -510,7 +510,7 @@
     "issue_type": "Problem",
     "start_time": "2025-03-27T13:31:00",
     "end_time": "2025-03-29T00:41:35",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -522,7 +522,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-07-14T00:24:00",
     "end_time": "2025-07-14T20:13:45",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -534,7 +534,7 @@
     "issue_type": "Problem",
     "start_time": "2025-12-23T23:50:00",
     "end_time": "2025-12-25T16:17:34",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -546,7 +546,7 @@
     "issue_type": "Setup",
     "start_time": "2025-06-01T06:03:00",
     "end_time": "2025-06-03T00:10:18",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -558,7 +558,7 @@
     "issue_type": "Setup",
     "start_time": "2025-06-10T01:03:00",
     "end_time": "2025-06-11T19:31:35",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -582,7 +582,7 @@
     "issue_type": "Problem",
     "start_time": "2025-02-05T19:04:00",
     "end_time": "2025-02-07T20:00:24",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -594,7 +594,7 @@
     "issue_type": "Setup",
     "start_time": "2026-04-01T10:15:00",
     "end_time": "2026-04-01T12:49:33",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 2
@@ -606,7 +606,7 @@
     "issue_type": "Setup",
     "start_time": "2025-10-26T18:33:00",
     "end_time": "2025-10-27T18:00:44",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -618,7 +618,7 @@
     "issue_type": "Setup",
     "start_time": "2026-01-02T10:15:00",
     "end_time": "2026-01-03T06:06:31",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0
@@ -630,7 +630,7 @@
     "issue_type": "Maintenance",
     "start_time": "2025-06-03T14:20:00",
     "end_time": "2025-06-06T09:17:37",
-    "status": "closed",
+    "status": "completed",
     "location": "main",
     "issue_description": "Auto-generated log entry for testing dashboard analytics.",
     "notes": 0

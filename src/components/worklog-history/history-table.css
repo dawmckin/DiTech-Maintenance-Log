@@ -37,25 +37,92 @@
     background: rgba(255, 255, 255, 0.03);
 }
 
+/* expanded rows */
+.expanded-row td {
+    padding: 0;
+    border-top: 2px solid #1e272e;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    animation: expandFade 0.25s ease-in-out;
+
+}
+
+.expanded-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.expanded-wrapper.open {
+    max-height: 300px; /* adjust based on content */
+}
+
+.expanded-content {
+    padding: 16px 20px;
+    background-color: #f8f9fa;
+    color: #000;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.expanded-left {
+    min-width: 250px;
+}
+
+.expanded-left p {
+    margin: 6px 0;
+}
+
+.expanded-right {
+    flex: 1;
+}
+
+.notes-title {
+    margin-bottom: 6px;
+}
+
+.notes-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.notes-list li {
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+@keyframes expandFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* pagination */
 .pagination {
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
 }
 
 .pagination button {
-  padding: 6px 12px;
-  border: none;
-  background: #eee;
-  cursor: pointer;
+    padding: 6px 12px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
 }
 
 .pagination button.active {
-  background: #007bff;
-  color: white;
+    background: #007bff;
+    color: white;
 }
 
 .pagination p {
