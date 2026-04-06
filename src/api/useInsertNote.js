@@ -16,13 +16,12 @@ export default function useInsertNote() {
                 created_by: 1
             });
 
-                if (error) {
-        
-        console.log(error);
+        if (error) {
+            console.log(error);
             setError(error);
             return {'success': false, error};
         } 
-            
+        
         setStatus(data);
         return {'success': true, data};
     }

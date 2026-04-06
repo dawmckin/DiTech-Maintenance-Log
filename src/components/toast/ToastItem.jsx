@@ -2,18 +2,14 @@ import { useEffect } from "react";
 import "./toast.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function Toast({message, type = 'success', onClose}) {
-    const icons = {
-        "success": (<i className="bi-check-circle-fill"></i>)
-    }
-
+export default function ToastItem({message, type = 'success', onClose}) {
     useEffect(() => {
         const timer = setTimeout(() => {
             onClose();
         }, 3000);
 
         return () => clearTimeout(timer);
-    }, [message, onClose]);
+    }, [onClose]);
 
     return (
         <div className={`toast toast-${type}`}>
@@ -27,5 +23,3 @@ function Toast({message, type = 'success', onClose}) {
         </div>
     );
 }
-
-export default Toast;

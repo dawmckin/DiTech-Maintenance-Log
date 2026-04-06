@@ -19,6 +19,7 @@ export default function useSelectEquipment(wsId) {
             if(error) {
                 console.log(error);
             } else {
+                // setTimeout(() => setEquipment(data),3000);
                 setEquipment(data);
             }
         };

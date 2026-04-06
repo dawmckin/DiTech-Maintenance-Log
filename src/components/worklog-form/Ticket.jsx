@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Toast from "../toast";
+import { useParams, useNavigate } from "react-router-dom";
+
 import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
 
+import { useLoader } from "../loader/LoaderContext";
+import { useToast } from "../toast/ToastContext";
+
+
 export default function Ticket() {
+    const { showLoader, hideLoader } = useLoader();
+    const { showToast } = useToast();
+
+    const navigate = useNavigate();
     const { id } = useParams();
     const [notes, setNotes] = useState(null);
-    const [toast, setToast] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
+    if(!worklogData) {
+        showLoader();
+    } else {
+        hideLoader();
+    }
     const { insertNote, status, error } = useInsertNote();
-    
-    const showToast = (message, type) => {
-        setToast({message, type});
-    };
-
-    const handleCloseToast = () => setToast(null);
 
     const handleChange = (e) => {
         setNotes(e.target.value);
@@ -27,14 +33,26 @@ export default function Ticket() {
 
         if(!notes) {
             showToast("Missing required fields.", "warning");
-        } else {
+            return;
+        } 
+
+        showLoader();
+        
+        try {
             const result = await insertNote(notes, id);
 
             if(result.success) {
                 showToast("Maintenance Log Submitted.", "success");
+
+                hideLoader();
+
+                navigate(`/dashboard`);
             } else {
                 showToast("Error submitting log.", "error");
             }
+        } catch (error) {
+            console.error(error);
+            showToast("Unexpected error.", "error");
         }
     };
 
@@ -51,47 +69,38 @@ export default function Ticket() {
     }
 
     return (
-        <div>
-            {toast && (
-                <Toast
-                    message={toast.message}
-                    type={toast.type}
-                    onClose={handleCloseToast}
-                />
-            )}
-            <div className="card">
-                <div className="top-meta">
-                    <div>
-                        <strong>Start Time:</strong>
-                        <span>{formatDate((worklogData?.start_time))}</span>
-                    </div>
-                    <div>
-                        <strong>Ticket ID:</strong>
-                        <span>{id}</span>
-                    </div>
-                    <div>
-                        <strong>Issue Type:</strong>
-                        <span>{worklogData?.issue_type}</span>
-                    </div>
+        <div className="card">
+            <div className="top-meta">
+                <div>
+                    <strong>Start Time:</strong>
+                    <span>{formatDate((worklogData?.start_time))}</span>
                 </div>
-
-                <hr/>
-
-                <div className="readonly">
-                    <p><label>Workstation #:</label> {worklogData?.workstation_id} - {worklogData?.workstations?.location_site.toUpperCase()}</p>
-                    <p><label>Equipment:</label>[ID: {worklogData?.equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
-                    <p><label>Issue Description:</label> {worklogData?.issue_description}</p>
+                <div>
+                    <strong>Ticket ID:</strong>
+                    <span>{id}</span>
                 </div>
-
-                <form onSubmit={handleSubmit}>
-                    <label>Notes <span className="required-input">*</span></label>
-                    <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
-                
-                    <div className="actions">
-                        <button className="primary">Submit</button>
-                    </div>
-                </form>
+                <div>
+                    <strong>Issue Type:</strong>
+                    <span>{worklogData?.issue_type}</span>
+                </div>
             </div>
+
+            <hr/>
+
+            <div className="readonly">
+                <p><label>Workstation #:</label> {worklogData?.workstation_id} - {worklogData?.workstations?.location_site.toUpperCase()}</p>
+                <p><label>Equipment:</label>[ID: {worklogData?.equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
+                <p><label>Issue Description:</label> {worklogData?.issue_description}</p>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+                <label>Notes <span className="required-input">*</span></label>
+                <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
+            
+                <div className="actions">
+                    <button className="primary">Submit</button>
+                </div>
+            </form>
         </div>
     )
 

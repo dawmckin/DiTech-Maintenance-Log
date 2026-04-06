@@ -14,6 +14,7 @@ export default function useSelectWorkstations() {
             if(error) {
                 console.log(error);
             } else {
+                // setTimeout(() => setWorkstations(data), 3000);
                 setWorkstations(data);
             }
         };
