@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login-portal/LoginPortal";
 import Dashboard from "./components/dashboard/Dashboard";
-import WorklogForm from "./components/worklog-form";
+import WorklogForm from "./components/worklog-form/worklog-form";
+import Ticket from "./components/worklog-form/Ticket";
 import WorkLogHistory from "./components/worklog-history/worklog-history";
 
 import AppLayout from "./components/AppLayout";
@@ -20,6 +21,7 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/new-maintenance-log" element={<WorklogForm />} />
+        <Route path="/new-maintenance-log/ticket/:id" element={<Ticket />} />
         <Route path="/logs" element={<WorkLogHistory />} />
       </Route>
 

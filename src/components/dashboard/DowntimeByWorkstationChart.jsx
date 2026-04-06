@@ -21,8 +21,6 @@ export default function DowntimeByWorkstationChart({logs}) {
     const filteredData = useMemo(() => {
         return data.filter(log => log.Location === location);
     }, [location, data]);
-
-    console.log(filteredData);
   
     return (
         <div className="kpi-card">
