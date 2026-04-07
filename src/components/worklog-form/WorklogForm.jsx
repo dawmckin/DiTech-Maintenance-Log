@@ -5,8 +5,8 @@ import useSelectWorkstations from "../../api/useSelectWorkstations";
 import useSelectEquipment from "../../api/useSelectEquipment";
 import useInsertWorklog from "../../api/useInsertWorkLog";
 
-import { useLoader } from "../loader/LoaderContext";
-import { useToast } from "../toast/ToastContext";
+import { useLoader } from "../../context/LoaderContext"
+import { useToast } from "../../context/ToastContext";
 
 export default function WorklogForm() {
     const { showLoader, hideLoader } = useLoader();

@@ -1,12 +1,21 @@
 import { useState } from 'react';
+
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '../../context/ToastContext';
+
 import "./login-portal.css";
 import ditechLogo from "./../../assets/ditech-logo.png";
 
 export default function LoginPortal() {
     const [form, setForm] = useState({
-        user: "",
+        email: "",
         pass: ""
     });
+
+    const { signIn } = useAuth();
+    const { showToast } = useToast();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
@@ -19,9 +28,24 @@ export default function LoginPortal() {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("login attempt: ", form);
+
+        setLoading(true);
+        setError("");
+
+        const result = await signIn(form.email, form.pass);
+
+        if(result.success) {
+            showToast("Login Successful.", "success");
+            navigate('/dashboard');
+        } else {
+            setError(result.error);
+            showToast("Invalid Credentials.", "error");
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -39,13 +63,13 @@ export default function LoginPortal() {
 
                 <form onSubmit={handleSubmit}>
                     <div className='form-group'>
-                        <label>Username</label>
+                        <label>Email</label>
                         <input 
-                            type='text'
-                            name='user'
-                            value={form.user}
+                            type='email'
+                            name='email'
+                            value={form.email}
                             onChange={handleChange}
-                            placeholder='Enter your username'
+                            placeholder='Enter your email'
                             required
                         />
                     </div>
