@@ -14,7 +14,7 @@ import useSelectWorklogs from "../../api/useSelectWorklogs";
 
 export default function Dashboard() {
     const logs = useSelectWorklogs();
-    // console.log(logs);
+
     const [range, setRange] = useState("week");
 
     const filteredLogs = useMemo(() => {

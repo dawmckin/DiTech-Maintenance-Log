@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
+import useUpdateWorklog from "../../api/useUpdateWorklog";
 
 import { useLoader } from "../loader/LoaderContext";
 import { useToast } from "../toast/ToastContext";
@@ -17,12 +18,9 @@ export default function Ticket() {
     const [notes, setNotes] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
-    if(!worklogData) {
-        showLoader();
-    } else {
-        hideLoader();
-    }
-    const { insertNote, status, error } = useInsertNote();
+
+    const { insertNote, insertNoteStatus, insertNoteError } = useInsertNote();
+    const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
 
     const handleChange = (e) => {
         setNotes(e.target.value);
@@ -39,9 +37,10 @@ export default function Ticket() {
         showLoader();
         
         try {
-            const result = await insertNote(notes, id);
+            const notesResult = await insertNote(notes, id);
+            const worklogResult = await updateWorklog(id);
 
-            if(result.success) {
+            if(notesResult.success && worklogResult) {
                 showToast("Maintenance Log Submitted.", "success");
 
                 hideLoader();

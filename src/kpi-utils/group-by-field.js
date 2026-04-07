@@ -1,6 +1,4 @@
 export default function groupLogsByField(logs, field, status) {
-    console.log(logs);
-
     if(!Array.isArray(logs)) return [];
     
     const now = new Date();

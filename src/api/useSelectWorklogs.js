@@ -9,7 +9,7 @@ export default function useSelectWorklogs() {
 
     useEffect(() => {
         const selectWorklogs = async () => {
-            showLoader();
+            // showLoader();
 
             const {data, error} = await supabase
                 .from('tickets')
@@ -39,7 +39,7 @@ export default function useSelectWorklogs() {
                 setWorklogs(data);
             }
 
-            hideLoader();
+            // hideLoader();
         };
 
         selectWorklogs();

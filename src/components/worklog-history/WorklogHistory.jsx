@@ -5,10 +5,9 @@ import HistoryTable from "./HistoryTable";
 
 import useSelectWorklogs from "../../api/useSelectWorklogs";
 
-
 export default function WorklogHistory() {
     const [search, setSearch] = useState("");
-    const [toggle, setToggle] = useState("date");
+    const [toggle, setToggle] = useState("workstation");
 
     const worklogs = useSelectWorklogs();
 
