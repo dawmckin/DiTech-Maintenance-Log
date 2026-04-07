@@ -13,7 +13,7 @@ export default function calculateKPIs(logs) {
 
     logs.forEach((log) => {
         const start = new Date(log.start_time);
-        const end = log.end_time === "" ? now : new Date(log.end_time);
+        const end = log.end_time ? new Date(log.end_time) : now;
 
         //total downtime
         if(start) {
@@ -21,7 +21,7 @@ export default function calculateKPIs(logs) {
         }
 
         //active issues
-        if(log.status === 'open') {
+        if(log.issue_status === 'open') {
             activeIssues++;
         }
 

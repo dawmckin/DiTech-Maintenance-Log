@@ -3,7 +3,7 @@ import Login from "./components/login-portal/LoginPortal";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form/WorklogForm";
 import Ticket from "./components/worklog-form/Ticket";
-import WorkLogHistory from "./components/worklog-history/worklog-history";
+import WorkLogHistory from "./components/worklog-history/WorklogHistory";
 
 import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";

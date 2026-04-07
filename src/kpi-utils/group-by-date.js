@@ -12,9 +12,6 @@ export default function groupLogsByDate(logs, range) {
         if(range === "today" || range === "yesterday") {
             key = date.toLocaleDateString();
         } else if(range === "week") {
-            // const firstDay = new Date(date);
-            // firstDay.setDate(date.getDate() - date.getDay());
-            // key = firstDay.toLocaleDateString();
             key = date.toLocaleDateString();
         } else if(range === "month") {
             key = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
@@ -38,7 +35,7 @@ export default function groupLogsByDate(logs, range) {
 
 
         const start = new Date(log.start_time);
-        const end = log.end_time === "" ? now : new Date(log.end_time);
+        const end = log.end_time ? new Date(log.end_time) : now;
         const diff = (end - start);
         map[key].Downtime += diff;
 

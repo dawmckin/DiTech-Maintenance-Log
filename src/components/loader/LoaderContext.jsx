@@ -8,7 +8,7 @@ export function LoaderProvider({children}) {
     let timeout;
 
     const showLoader = () => {
-        timeout = setTimeout(() => setLoading(true), 300);
+        timeout = setTimeout(() => setLoading(true), 500);
     }
     const hideLoader = () => {
         clearTimeout(timeout);

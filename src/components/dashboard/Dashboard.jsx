@@ -10,10 +10,11 @@ import DowntimeByIssueTypeChart from "./DowntimeByIssueTypeChart";
 import DowntimeByWorkstationChart from "./DowntimeByWorkstationChart";
 import IssueDistributionChart from "./IssueDistributionChart";
 
-import LogData from "../../mock-data/logs.json";
+import useSelectWorklogs from "../../api/useSelectWorklogs";
 
 export default function Dashboard() {
-    const logs = LogData;
+    const logs = useSelectWorklogs();
+
     const [range, setRange] = useState("week");
 
     const filteredLogs = useMemo(() => {
