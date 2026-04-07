@@ -5,8 +5,8 @@ import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
 import useUpdateWorklog from "../../api/useUpdateWorklog";
 
-import { useLoader } from "../loader/LoaderContext";
-import { useToast } from "../toast/ToastContext";
+import { useLoader } from "../../context/LoaderContext";
+import { useToast } from "../../context/ToastContext";
 
 
 export default function Ticket() {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { useLoader } from "../components/loader/LoaderContext";
+import { useLoader } from "../context/LoaderContext";
 
 export default function useSelectWorklogs() {
     const [worklogs, setWorklogs] = useState([]);
