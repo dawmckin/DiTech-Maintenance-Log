@@ -12,10 +12,11 @@ import formatDuration from "../../kpi-utils/format-duration";
 import "./KPICard.css";
 
 export default function DowntimeByWorkstationChart({logs}) {
+
     const [location, setLocation] = useState(() => 'main');
 
     const data = useMemo(() => {
-        return groupLogsByField(logs, "workstation");
+        return groupLogsByField(logs, "workstation_id");
     }, [logs]);
 
     const filteredData = useMemo(() => {

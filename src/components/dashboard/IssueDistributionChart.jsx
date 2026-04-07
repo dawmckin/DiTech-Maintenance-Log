@@ -11,7 +11,6 @@ import calculateKPIs from "../../kpi-utils/calculate-kpis";
 import "./KPICard.css";
 
 export default function IssueDistributionChart({logs}) {
-
     let data = useMemo(() => {
         return calculateKPIs(logs).issueCountByType;
     }, [logs]);

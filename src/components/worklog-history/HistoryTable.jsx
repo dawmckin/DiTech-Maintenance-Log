@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, Fragment } from "react";
-import ExpandedRow from "./expanded-row";
+import ExpandedRow from "./ExpandedRow";
 import "./history-table.css";
 import OpenIcon from "./../../assets/open-icon.svg";
 import CompetedIcon from "./../../assets/completed-icon.svg";
@@ -27,7 +27,7 @@ export default function HistoryTable({logs, toggle, search}) {
             });
         } else if(toggle === 'workstation') {
             setSortConfig({
-                key: 'workstation',
+                key: 'workstation_id',
                 direction: 'asc'
             });
         }
@@ -64,7 +64,7 @@ export default function HistoryTable({logs, toggle, search}) {
 
     //expanded rows
     const toggleRow = (id, status) => {
-        if(status !== 'completed' && expandable) return;
+        if(status !== 'completed') return;
 
         setExpandedRows((prev) => {
             const newSet = new Set(prev);
@@ -89,11 +89,11 @@ export default function HistoryTable({logs, toggle, search}) {
 
         if(debouncedSearch) {
             const searchableFields = [
-                "workstation",
-                "equipment",
+                "workstation_id",
+                "equipment_id",
                 "issue_type",
                 "ticket_id",
-                "status",
+                "issue_status",
                 "start_time",
                 "end_time"
             ];
@@ -164,28 +164,28 @@ export default function HistoryTable({logs, toggle, search}) {
                         <th>
                             Ticket ID
                         </th>
-                        <th className="sortable" onClick={() => handleSort("status")}>
-                            Status {getSortArrow("status")}
+                        <th className="sortable" onClick={() => handleSort("issue_status")}>
+                            Status {getSortArrow("issue_status")}
                         </th>
                         {toggle === 'date' ? (
                             <>
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("workstation")}>
-                                    Workstation {getSortArrow("workstation")}
+                                <th className="sortable" onClick={() => handleSort("workstation_id")}>
+                                    Workstation {getSortArrow("workstation_id")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("equipment")}>
-                                    Equipment {getSortArrow("equipment")}
+                                <th className="sortable" onClick={() => handleSort("equipment_id")}>
+                                    Equipment {getSortArrow("equipment_id")}
                                 </th>
                             </>
                         ) : (
                             <>
-                                <th className="sortable" onClick={() => handleSort("workstation")}>
-                                    Workstation {getSortArrow("workstation")}
+                                <th className="sortable" onClick={() => handleSort("workstation_id")}>
+                                    Workstation {getSortArrow("workstation_id")}
                                 </th>
-                                <th className="sortable" onClick={() => handleSort("equipment")}>
-                                    Equipment {getSortArrow("equipment")}
+                                <th className="sortable" onClick={() => handleSort("equipment_id")}>
+                                    Equipment {getSortArrow("equipment_id")}
                                 </th>
                                 <th className="sortable" onClick={() => handleSort("start_time")}>
                                     Start Time {getSortArrow("start_time")}
@@ -214,14 +214,14 @@ export default function HistoryTable({logs, toggle, search}) {
                     ) : (
                         paginatedLogs.map((log) => {
                             const isExpanded = expandedRows.has(log.ticket_id);
-                            const expandable = log.notes > 0;
+                            const expandable = log.notes.length > 0 && log.issue_status === 'completed';
 
                             return (
                                 <Fragment key={log.ticket_id}>
                                     <tr
-                                        onClick={() => toggleRow(log.ticket_id, log.status)}
+                                        onClick={() => toggleRow(log.ticket_id, log.issue_status)}
                                         style={{
-                                            cursor: (log.status === "completed" && expandable) ? "pointer" : "default"
+                                            cursor: (expandable) ? "pointer" : "default"
                                         }}
                                     >
                                         <td>
@@ -238,7 +238,7 @@ export default function HistoryTable({logs, toggle, search}) {
                                             </div>
                                         </td>
                                         <td className="text-center align-middle">
-                                            {log.status === 'open'
+                                            {log.issue_status === 'open'
                                                 ? <img src={OpenIcon} alt="Open" />
                                                 : <img src={CompetedIcon} alt="Completed" />
                                             }
@@ -247,13 +247,13 @@ export default function HistoryTable({logs, toggle, search}) {
                                         {toggle === 'date' ? (
                                             <>
                                                 <td>{new Date(log.start_time).toLocaleString()}</td>
-                                                <td>{log.workstation}</td>
-                                                <td>{log.equipment}</td>
+                                                <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
+                                                <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
                                             </>
                                         ) : (
                                             <>
-                                                <td>{log.workstation}</td>
-                                                <td>{log.equipment}</td>
+                                                <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
+                                                <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
                                                 <td>{new Date(log.start_time).toLocaleString()}</td>
                                             </>
                                         )}
@@ -264,7 +264,12 @@ export default function HistoryTable({logs, toggle, search}) {
                                     </tr>
 
                                     {(isExpanded && expandable) && (
-                                        <ExpandedRow log={log.ticket_id} colSpan={8} isExpanded={isExpanded} />
+                                        <ExpandedRow logData={{
+                                            name: `${log.users.first_name} ${log.users.last_name}`,
+                                            start_time: log.start_time,
+                                            end_time: log.end_time,
+                                            notes: log.notes 
+                                        }} colSpan={8} isExpanded={isExpanded} />
                                     )}
                                 </Fragment>
                             );

@@ -1,14 +1,16 @@
 import { useState } from "react";
-import SearchBox from "./search-box";
-import FilterToggle from "./filter-toggle";
-import HistoryTable from "./history-table";
-import LogData from "../../mock-data/logs.json";
+import SearchBox from "./SearchBox";
+import FilterToggle from "./FilterToggle";
+import HistoryTable from "./HistoryTable";
+
+import useSelectWorklogs from "../../api/useSelectWorklogs";
+
 
 export default function WorklogHistory() {
     const [search, setSearch] = useState("");
     const [toggle, setToggle] = useState("date");
 
-    const logs = LogData;
+    const worklogs = useSelectWorklogs();
 
     return (
         <div>
@@ -30,7 +32,7 @@ export default function WorklogHistory() {
                     </div>
                 </div>
                 <div className="card">
-                    <HistoryTable logs={logs} toggle={toggle} search={search} />
+                    <HistoryTable logs={worklogs} toggle={toggle} search={search} />
                 </div>
             </div>
         </div>

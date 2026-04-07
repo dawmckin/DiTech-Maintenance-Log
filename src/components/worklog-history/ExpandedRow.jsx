@@ -1,9 +1,7 @@
 import formatDuration from "../../kpi-utils/format-duration";
-import ExpandedRowData from "./../../mock-data/log-history-expanded.json";
 import "./history-table.css";
 
-export default function ExpandedRow({ticketId, colSpan, isExpanded}) {
-    const logData = ExpandedRowData[0];
+export default function ExpandedRow({logData, colSpan, isExpanded}) {
     const duration = logData.end_time ? new Date(logData.end_time) - new Date(logData.start_time) : 
                                         new Date() - new Date(logData.start_time);
 
@@ -14,7 +12,7 @@ export default function ExpandedRow({ticketId, colSpan, isExpanded}) {
                     <div className="expanded-content">
                     
                     <div className="expanded-left">
-                        <p className="mt-0"><strong>Created By:</strong> {logData.created_by}</p>
+                        <p className="mt-0"><strong>Created By:</strong> {logData.name}</p>
                         <p><strong>Downtime:</strong> {formatDuration(duration)}</p>
                     </div>
 
@@ -23,7 +21,7 @@ export default function ExpandedRow({ticketId, colSpan, isExpanded}) {
                         <ul className="notes-list ml-3">
                         {logData.notes.map((note, index) => (
                             <li key={index}>
-                            <strong>({note.user})</strong> - {note.text}
+                            <strong>({note.users.ditech_id})</strong> - {note.note_text}
                             </li>
                         ))}
                         </ul>
