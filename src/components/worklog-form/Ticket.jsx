@@ -5,12 +5,10 @@ import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
 import useUpdateWorklog from "../../api/useUpdateWorklog";
 
-import { useLoader } from "../../context/LoaderContext";
 import { useToast } from "../../context/ToastContext";
 
 
 export default function Ticket() {
-    const { showLoader, hideLoader } = useLoader();
     const { showToast } = useToast();
 
     const navigate = useNavigate();
@@ -33,8 +31,6 @@ export default function Ticket() {
             showToast("Missing required fields.", "warning");
             return;
         } 
-
-        showLoader();
         
         try {
             const notesResult = await insertNote(notes, id);
@@ -42,8 +38,6 @@ export default function Ticket() {
 
             if(notesResult.success && worklogResult) {
                 showToast("Maintenance Log Submitted.", "success");
-
-                hideLoader();
 
                 navigate(`/dashboard`);
             } else {

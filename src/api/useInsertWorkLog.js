@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import { useLoader } from "../context/LoaderContext";
 
 export default function useInsertWorklog() {
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
 
+    const { showLoader, hideLoader } = useLoader();
+
     const insertWorklog = async (worklog) => {
         setError(null);
+
+        showLoader();
 
         const { data, error } = await supabase
             .from("tickets")
@@ -24,10 +29,16 @@ export default function useInsertWorklog() {
         if (error) {
             console.log(error);
             setError(error);
+
+            hideLoader();
+
             return {'success': false, error};
         } 
             
         setStatus(data);
+
+        hideLoader();
+        
         return {'success': true, data};
     };
 

@@ -13,7 +13,7 @@ export default function LoginPortal() {
         pass: ""
     });
 
-    const { signIn } = useAuth();
+    const { signIn, updateAuthUser } = useAuth();
     const { showToast } = useToast();
     const navigate = useNavigate();
 
