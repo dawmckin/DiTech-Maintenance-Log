@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import AdminView from "./AdminView";
@@ -7,20 +7,25 @@ import MaintenanceView from "./MaintenanceView";
 
 export default function Dashboard() {
     const user = useAuth().user;
+    
+    const navigate = useNavigate();
 
     const [range, setRange] = useState("week");
+
+    const openNewWorklog = () => {
+        navigate("/new-maintenance-log");
+    }
 
     return (
         <div>
             <div className="card">
                 <div className="d-flex justify-content-between">
                     <h2>Dashboard</h2>
-                    <Link to="/new-maintenance-log">
-                        <button className="primary log-action d-flex">
-                            <i className="bi bi-plus-lg pr-2"></i>
-                            <p className="mb-0">New Maintenance Log</p>    
-                        </button>
-                    </Link>
+                    <button className="primary log-action d-flex"
+                            onClick={() => openNewWorklog()}>
+                        <i className="bi bi-plus-lg pr-2"></i>
+                        <p className="mb-0">New Maintenance Log</p>    
+                    </button>
                 </div>
 
                 <hr/>

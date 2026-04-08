@@ -33,10 +33,17 @@ export default function Header() {
             </div>
             <nav>
                 <Link to="/dashboard">Dashboard</Link>
-                <Link to="/logs">Logs</Link>
-                <Link to="#">Settings</Link>
+                {
+                    isAdmin ? (
+                        <span>
+                            <Link to="/logs">Logs</Link>
+                            <Link to="#">Settings</Link>
+                        </span>
+                    ) : (
+                        <span></span>
+                    )
+                }
                 <Link onClick={handleLogout}>Logout</Link>
-
             </nav>
         </div>
     );
