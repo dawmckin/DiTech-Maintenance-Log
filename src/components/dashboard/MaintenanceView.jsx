@@ -82,20 +82,20 @@ export default function MaintenanceView({userId}) {
                                     <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
                                     <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
                                     <td>
-                                        <button className={`primary ${log.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center`}
+                                        <button className={`primary ${log.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center align-middle`}
                                                 onClick={() => openWorklog(log.ticket_id)}
-                                                style={{width: '6rem'}}>
+                                                style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
                                             {
                                                 (log.issue_status === 'open') ? (
-                                                    <div className="d-flex justify-content-around mx-auto">
+                                                    <div className="d-flex justify-content-center mx-auto">
                                                         <i className="bi bi-pencil-square"></i>
-                                                        <p className="mb-0">Edit</p>
+                                                        <p className="pl-2 mb-0">Edit</p>
                                                     </div>
 
                                                 ) : (
-                                                    <div className="d-flex justify-content-around mx-auto">
+                                                    <div className="d-flex justify-content-center mx-auto">
                                                         <i className="bi bi-eye"></i>
-                                                        <p className="mb-0">View</p>
+                                                        <p className="pl-2 mb-0">View</p>
                                                     </div>
                                                 )
                                             }

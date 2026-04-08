@@ -30,7 +30,6 @@ export default function useSelectWorklogsByUser(userId) {
             if(error) {
                 console.log(error);
             } else {
-                console.log(data);
                 setWorklogs(data);
             }
 
