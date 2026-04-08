@@ -36,6 +36,7 @@ export default function LoginPortal() {
         setError("");
 
         const result = await signIn(form.email, form.pass);
+        // const updateResult = await updateAuthUser();
 
         if(result.success) {
             showToast("Login Successful.", "success");

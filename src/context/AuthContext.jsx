@@ -47,7 +47,7 @@ export function AuthProvider({children}) {
     }
 
     const updateAuthUser = async () => {
-        await supabase.auth.updateUser({data: {display_name: "Dalton McKinney"}});
+        await supabase.auth.updateUser({data: {display_name: "Jhonny Test"}});
     }
 
     return (

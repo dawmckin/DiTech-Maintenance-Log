@@ -1,11 +1,11 @@
 /* table */
-.history-table {
+.history-table, .maintenance-dashboard-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 16px;
 }
 
-.history-table th {
+.history-table th, .maintenance-dashboard-table th {
     text-align: left;
     padding: 10px;
     background: #1f2937;
@@ -21,7 +21,7 @@
     background: #374151;
 }
 
-.history-table td {
+.history-table td, .maintenance-dashboard-table td {
     padding: 10px;
     border-bottom: 1px solid #374151;
     color: #000;
@@ -33,7 +33,7 @@
     }
 }
 
-.history-table tr:hover {
+.history-table tr:hover, .maintenance-dashboard-table tr:hover {
     background: rgba(255, 255, 255, 0.03);
 }
 
