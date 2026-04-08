@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { use, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+
+import '../worklog-history/history-table.css';
 
 import calculateKPIs from "../../kpi-utils/calculate-kpis";
 import formatDuration from "../../kpi-utils/format-duration";
@@ -12,6 +14,7 @@ import IssuesOverTimeChart from "./IssuesOverTimeChart";
 import DowntimeByIssueTypeChart from "./DowntimeByIssueTypeChart";
 import DowntimeByWorkstationChart from "./DowntimeByWorkstationChart";
 import IssueDistributionChart from "./IssueDistributionChart";
+import MaintenanceView from "./MaintenanceView";
 
 import useSelectWorklogs from "../../api/useSelectWorklogs";
 
@@ -36,7 +39,10 @@ export default function Dashboard() {
                 <div className="d-flex justify-content-between">
                     <h2>Dashboard</h2>
                     <Link to="/new-maintenance-log">
-                        <button className="primary log-action">New Maintenance Log</button>
+                        <button className="primary log-action d-flex">
+                            <i className="bi bi-plus-lg pr-2"></i>
+                            <p className="mb-0">New Maintenance Log</p>    
+                        </button>
                     </Link>
                 </div>
 
@@ -60,7 +66,11 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                <div className="kpi-grid">
+                <div className="card">
+                    <MaintenanceView userId={user.id}/>
+                </div>
+
+                {/* <div className="kpi-grid">
                     <div className="d-flex flex-column justify-content-between">
                         <KPICard title="Total Downtime" value={formatDuration(totalDowntime)} />
                         <KPICard title="Active Issues" value={activeIssues} />
@@ -84,7 +94,7 @@ export default function Dashboard() {
                     <div className="col-md-12">
                         <DowntimeByWorkstationChart logs={filteredLogs} />
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </div>

@@ -20,7 +20,6 @@ export default function WorklogForm() {
         "issueType": "",
         "issueDescription": "",
         "startTime": null,
-        "createdBy": 1,
         "issueStatus": "open",
         "notes": ""
     });

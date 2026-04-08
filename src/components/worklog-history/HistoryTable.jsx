@@ -226,7 +226,7 @@ export default function HistoryTable({logs, toggle, search}) {
                                     >
                                         <td>
                                             <div className="d-flex justify-content-between">
-                                                <div>{log.ticket_id}</div>
+                                                <div><strong>{log.ticket_id}</strong></div>
                                                 <div>
                                                     {expandable ? 
                                                         (isExpanded) ? 

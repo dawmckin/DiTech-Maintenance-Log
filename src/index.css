@@ -9,6 +9,8 @@
   --header: #3a3f45;
   --cancel: #dc3545;
   --cancel-dark: #bb2d3b;
+  --view-only: #4b5563;
+  --view-only-dark: #374151;
 }
 
 * {
@@ -183,6 +185,10 @@ button.primary {
   &.cancel {
     background: linear-gradient(180deg, #a71d2a 0%, var(--cancel) 100%);
   }
+
+  &.view-only {
+    background: linear-gradient(180deg, #6b7280 0%, var(--view-only) 100%);
+  }
 }
 
 button.primary:hover {
@@ -190,6 +196,10 @@ button.primary:hover {
 
   &.cancel {
       background: linear-gradient(180deg, #a71d2a 0%, var(--cancel-dark) 100%);
+  }
+
+  &.view-only {
+    background: linear-gradient(180deg, #4b5563 0%, var(--view-only-dark) 100%);
   }
 }
 

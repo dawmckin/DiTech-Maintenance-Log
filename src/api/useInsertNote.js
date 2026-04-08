@@ -17,8 +17,7 @@ export default function useInsertNote() {
             .from('notes')
             .insert({
                 ticket_id: ticketId,
-                note_text: text,
-                created_by: 1
+                note_text: text
             });
 
         if (error) {
