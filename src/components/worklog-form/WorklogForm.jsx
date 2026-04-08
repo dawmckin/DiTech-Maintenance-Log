@@ -5,11 +5,9 @@ import useSelectWorkstations from "../../api/useSelectWorkstations";
 import useSelectEquipment from "../../api/useSelectEquipment";
 import useInsertWorklog from "../../api/useInsertWorkLog";
 
-import { useLoader } from "../../context/LoaderContext"
 import { useToast } from "../../context/ToastContext";
 
 export default function WorklogForm() {
-    const { showLoader, hideLoader } = useLoader();
     const { showToast } = useToast();
 
     const navigate = useNavigate();
@@ -42,7 +40,7 @@ export default function WorklogForm() {
                 }
             ) : (
                 {[name]: value,
-                ...(name === "workstaion" && {equipmentName: ""})
+                ...(name === "workstation" && {equipmentName: ""})
                 }
             )
         }));
@@ -59,8 +57,6 @@ export default function WorklogForm() {
             showToast("Missing required fields.", "warning");
             return;
         } 
-        
-        showLoader();
 
         try {
             const startTime = new Date().toISOString();
@@ -78,8 +74,6 @@ export default function WorklogForm() {
                 localStorage.setItem('activeTicket', JSON.stringify(ticketId));
 
                 showToast("Maintenance Log Initialized.", "success");
-
-                hideLoader();
 
                 navigate(`/new-maintenance-log/ticket/${ticketId}`);
             } else {

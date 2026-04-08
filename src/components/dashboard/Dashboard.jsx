@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { use, useMemo, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+
 import calculateKPIs from "../../kpi-utils/calculate-kpis";
 import formatDuration from "../../kpi-utils/format-duration";
 import filterLogsByRanges from "../../kpi-utils/filter-by-range";
+
 import KPICard from "./KPICard";
 import DowntimeChart from "./DowntimeChart";
 import IssuesOverTimeChart from "./IssuesOverTimeChart";
@@ -13,6 +16,8 @@ import IssueDistributionChart from "./IssueDistributionChart";
 import useSelectWorklogs from "../../api/useSelectWorklogs";
 
 export default function Dashboard() {
+    const user = useAuth().user;
+
     const logs = useSelectWorklogs();
 
     const [range, setRange] = useState("week");
@@ -38,7 +43,7 @@ export default function Dashboard() {
                 <hr/>
                 <div className="row d-flex justify-content-between mb-2">
                     <div className="col-md-4 d-flex">
-                        <p className="my-auto">Welcome <strong>LoggedInUser</strong>!</p>
+                        <p className="my-auto">Welcome <strong>{user?.user_metadata?.display_name}</strong>!</p>
                     </div>
 
                     <div className="col-md-4 d-flex">

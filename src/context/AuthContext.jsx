@@ -25,7 +25,8 @@ export function AuthProvider({children}) {
         );
 
         return () => {
-            listener.subscription.unsubscribe();
+            listener.subscription.unsubscribe(),
+            user
         }
     }, []);
 
@@ -45,8 +46,12 @@ export function AuthProvider({children}) {
         setUser(null);
     }
 
+    const updateAuthUser = async () => {
+        await supabase.auth.updateUser({data: {display_name: "Dalton McKinney"}});
+    }
+
     return (
-        <AuthContext.Provider value={{user, loading, signIn, signOut}}>
+        <AuthContext.Provider value={{user, loading, signIn, signOut, updateAuthUser}}>
             {children}
         </AuthContext.Provider>
     )
