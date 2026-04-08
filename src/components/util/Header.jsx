@@ -5,6 +5,7 @@ import { useToast } from '../../context/ToastContext';
 import ditechLogo from "./../../assets/ditech-logo.png";
 
 export default function Header() {
+    const isAdmin = useAuth().user.user_metadata.user_role === 'admin';
     const { signOut } = useAuth();
     const { showToast } = useToast();
     const navigate = useNavigate();
@@ -22,6 +23,13 @@ export default function Header() {
             <div className="logo">
                 <img src={ditechLogo} alt="DITECH Logo" />
                 <span>Maintenance Log</span>
+                {
+                    isAdmin ? (
+                        <span className='role-indicator ml-2 px-2 py-1 text-center'>Admin</span>
+                    ) : (
+                        <span></span>
+                    )
+                }
             </div>
             <nav>
                 <Link to="/dashboard">Dashboard</Link>

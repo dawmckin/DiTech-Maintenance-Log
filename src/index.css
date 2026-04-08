@@ -57,6 +57,16 @@ body {
   background: white;
 }
 
+.role-indicator {
+  color: #7e22ce;
+  font-weight: 500;
+  font-size: .75rem;
+  line-height: 1rem;
+  background-color: #f3e8ff;
+  border-radius: 9999px;
+  width: 4rem;
+}
+
 nav a {
   color: #d1d5db;
   margin-left: 20px;
