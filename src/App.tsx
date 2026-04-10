@@ -4,6 +4,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form/WorklogForm";
 import Ticket from "./components/worklog-form/Ticket";
 import WorkLogHistory from "./components/worklog-history/WorklogHistory";
+import AdminSettings from "./components/settings/AdminSettings";
 
 import AppLayout from "./components/layout/AppLayout";
 import AuthLayout from "./components/layout/AuthLayout";
@@ -41,6 +42,7 @@ function AppContent() {
             <Route path="/new-maintenance-log" element={<WorklogForm />} />
             <Route path="/new-maintenance-log/ticket/:id" element={<Ticket />} />
             <Route path="/logs" element={<WorkLogHistory />} />
+            <Route path="/settings" element={<AdminSettings />} />
           </Route>
         </Routes>
       }

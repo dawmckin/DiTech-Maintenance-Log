@@ -7,7 +7,7 @@ import MaintenanceView from "./MaintenanceView";
 
 export default function Dashboard() {
     const user = useAuth().user;
-    
+
     const navigate = useNavigate();
 
     const [range, setRange] = useState("week");
@@ -29,6 +29,7 @@ export default function Dashboard() {
                 </div>
 
                 <hr/>
+                
                 <div className="row d-flex justify-content-between mb-2">
                     <div className="col-md-4 d-flex">
                         <p className="my-auto">Welcome <strong>{user?.user_metadata?.display_name}</strong>!</p>
