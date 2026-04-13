@@ -1,20 +1,43 @@
 import { useState } from "react";
+import { useToast } from "../../context/ToastContext";
 
 import AdminTable from "./AdminTable";
 import UserForm from "./UserForm";
+import WorkstationsForm from "./WorkstationsForm";
 import Modal from "../util/Modal";
 
 import "./admin-settings.css";
 
 import useSelectAll from "../../api/useSelectAll";
+import useDeleteWorkstation from "../../api/useDeleteWorkstation";
 
 export default function AdminSettings() {
     const [activeTab, setActiveTab] = useState("users");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [isDelete, setIsDelete] = useState(null);
     
     const data = useSelectAll(activeTab, refreshKey);
+    const { deleteWorkstation } = useDeleteWorkstation();
+
+    const { showToast } = useToast();
+
+    const handleDeleteWorkstation = async () => {
+        const result = await deleteWorkstation(selectedRow);
+
+        if(result.success) {
+            showToast("Workstation deleted successfully.", "success");
+
+            setIsDelete(false);
+            setIsModalOpen(false);
+            setSelectedRow(null);
+            setRefreshKey(prev => prev + 1);
+        } else {
+            console.log(result.error);
+            showToast("Unable to delete workstation.", 'error');
+        }
+    }
 
     return (
         <div>
@@ -60,30 +83,78 @@ export default function AdminSettings() {
                                 <AdminTable view={activeTab} 
                                             rowData={data} 
                                             onEdit={(row) => {
-                                                setSelectedUser(row);
+                                                setSelectedRow(row);
                                                 setIsModalOpen(true);
-                                            }}/>
+                                            }}
+                                            onDelete={(row) => {
+                                                setIsDelete(true);
+                                                setSelectedRow(row);
+                                                setIsModalOpen(true);
+                                            }}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <Modal 
-                isOpen={isModalOpen} 
+                isOpen={isModalOpen && !isDelete} 
                 onClose={() => {
                     setIsModalOpen(false);
-                    setSelectedUser(null);
+                    setSelectedRow(null);
                 }} 
-                title={`${selectedUser ? 'Edit' : 'Add'} ${activeTab.toUpperCase()}`}
+                title={`${selectedRow ? 'Edit' : 'Add'} ${activeTab.toUpperCase()}`}
             >
-                <UserForm 
-                    initialData={selectedUser}
-                    onSuccess={() => {
-                        setIsModalOpen(false);
-                        setSelectedUser(null);
-                        setRefreshKey(prev => prev + 1);
-                    }}
-                />
+                {
+                    (activeTab === 'users') ? 
+                    (
+                        <UserForm 
+                            initialData={selectedRow}
+                            onSuccess={() => {
+                                setIsModalOpen(false);
+                                setSelectedRow(null);
+                                setRefreshKey(prev => prev + 1);
+                            }}
+                        />    
+                    ) : 
+                    (
+                        (activeTab === 'workstations') ? 
+                        (
+                            <WorkstationsForm 
+                                initialData={selectedRow}
+                                onSuccess={() => {
+                                    setIsModalOpen(false);
+                                    setSelectedRow(null);
+                                    setRefreshKey(prev => prev + 1);
+                                }}
+                            />
+
+                        ) : 
+                        (
+                            <></>
+                        )
+                    )
+                }
+            </Modal>
+
+            <Modal
+                isOpen={isModalOpen && isDelete} 
+                onClose={() => {
+                    setIsDelete(false);
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                }} 
+                title={`Delete Workstation`}
+                isDelete={true}
+            >
+                <p>Are you sure?</p>
+
+                <div className="float-right">
+                    <button className="primary cancel"
+                            onClick={() => handleDeleteWorkstation()}>
+                        Delete
+                    </button>
+                </div>
             </Modal>
         </div>
     )

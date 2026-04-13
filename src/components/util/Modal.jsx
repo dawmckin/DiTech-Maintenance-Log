@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import './modal.css';
 
-export default function Modal({ isOpen, onClose, title, children }) {
+export default function Modal({ isOpen, onClose, title, children, isDelete }) {
     useEffect(() => {
         const handleEsc = (e) => {
             if(e.key === 'Escape') onClose();
@@ -21,11 +21,19 @@ export default function Modal({ isOpen, onClose, title, children }) {
 
     return (
         <div className='modal-overlay' onClick={onClose}>
-            <div className='modal-container' onClick={(e) => e.stopPropagation()}>
+            <div className={`modal-container ${isDelete ? 'modal-delete' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <div className='modal-header'>
                     <h3>{title}</h3>
-
-                    <button className="primary log-action cancel" onClick={onClose}>Cancel</button>
+                    
+                    {
+                        isDelete ? 
+                        (
+                            <div onClick={onClose}>&times;</div>
+                        ) : 
+                        (
+                            <button className="primary log-action cancel" onClick={onClose}>Cancel</button>
+                        )
+                    }
 
                 </div>
 

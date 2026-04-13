@@ -23,6 +23,10 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 
   animation: modalFade 0.25s ease;
+
+  &.modal-delete {
+      width: 30% !important;
+  }
 }
 
 .modal-header {

@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 
+import useDeleteWorkstation from "../../api/useDeleteWorkstation";
+
 import "../worklog-history/history-table.css";
 
-export default function AdminTable({view, rowData, onEdit}) {
+export default function AdminTable({view, rowData, onEdit, onDelete}) {
     const upperCaseFields = ['location_site', 'user_role'];
 
     //pagination
@@ -101,8 +103,9 @@ export default function AdminTable({view, rowData, onEdit}) {
                                                 Edit
                                             </button>
                                             <button className="primary log-action cancel mb-0 mr-2"
+                                                onClick={() => onDelete(row)}
                                                 style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
-                                                Disable
+                                                {(view === 'users') ? ("Disable") : ("Delete")}
                                             </button> 
                                         </div>
                                    
