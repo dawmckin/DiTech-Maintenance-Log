@@ -8,7 +8,7 @@ export default function useSelectAll(view, refresh) {
     const { showLoader, hideLoader} = useLoader();
 
     const tableSelects = {
-        users: 'ditech_id, first_name, last_name, user_role, created_at',
+        users: 'user_id, ditech_id, first_name, last_name, email, user_role, created_at',
         workstations: 'workstation_id, location_site, created_at',
         equipment: 'equipment_id, equipment_name, workstation_id, created_at'
     }

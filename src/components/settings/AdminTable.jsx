@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import "../worklog-history/history-table.css";
 
-export default function AdminTable({view, rowData}) {
+export default function AdminTable({view, rowData, onEdit}) {
     const upperCaseFields = ['location_site', 'user_role'];
 
     //pagination
@@ -36,8 +36,10 @@ export default function AdminTable({view, rowData}) {
                                 <th>DiTech ID</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
+                                <th>Email</th>
                                 <th>Role</th>
                                 <th>Created At</th>
+                                <th></th>
                             </tr>
                         ) : (
                             (view === 'workstations') ? (
@@ -45,6 +47,7 @@ export default function AdminTable({view, rowData}) {
                                     <th>Workstation ID</th>
                                     <th>Location</th>
                                     <th>Created At</th>
+                                    <th></th>
                                 </tr> 
                             ) : (
                                 <tr>
@@ -52,6 +55,7 @@ export default function AdminTable({view, rowData}) {
                                     <th>Equipment Name</th>
                                     <th>Workstation ID</th>
                                     <th>Created At</th>
+                                    <th></th>
                                 </tr>
                             )
                         )
@@ -76,13 +80,33 @@ export default function AdminTable({view, rowData}) {
                                 <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
                                     {
                                         Object.keys(row).map(k => (
-                                            <td key={k}>
-                                                {(upperCaseFields.includes(k)) ? 
-                                                    row[k].toUpperCase() : 
-                                                    row[k]}
-                                            </td>
+                                            (k !== 'user_id') ? 
+                                                (
+                                                   <td key={k}>
+                                                        {(upperCaseFields.includes(k)) ? 
+                                                        row[k].toUpperCase() : 
+                                                        row[k]}
+                                                    </td>  
+                                                ) : (
+                                                    <></>
+                                                )
+                                           
                                         ))
                                     }
+                                    <td>
+                                        <div className="float-right">
+                                            <button className="primary log-action edit mb-0 mr-2"
+                                                onClick={() => onEdit(row)}
+                                                style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
+                                                Edit
+                                            </button>
+                                            <button className="primary log-action cancel mb-0 mr-2"
+                                                style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
+                                                Disable
+                                            </button> 
+                                        </div>
+                                   
+                                    </td>
                                 </tr>
                             )
                         })

@@ -46,8 +46,16 @@ export function AuthProvider({children}) {
         setUser(null);
     }
 
-    const updateAuthUser = async () => {
-        await supabase.auth.updateUser({data: {display_name: "Jhonny Test"}});
+    const updateAuthUser = async (userId, userData) => {
+        console.log(userId, userData)
+        const {data, error} = await supabase.auth.admin.updateUserById(userId, userData);
+
+        if(error) {
+            console.log(error);
+            return {success: false};
+        }
+
+        return {success: true, data};
     }
 
     const signUpUser = async (email, password, display_name) => {

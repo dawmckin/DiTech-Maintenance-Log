@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import AdminTable from "./AdminTable";
-import AddUserForm from "./AddUserForm";
+import UserForm from "./UserForm";
 import Modal from "../util/Modal";
 
 import "./admin-settings.css";
@@ -12,6 +12,7 @@ export default function AdminSettings() {
     const [activeTab, setActiveTab] = useState("users");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
+    const [selectedUser, setSelectedUser] = useState(null);
     
     const data = useSelectAll(activeTab, refreshKey);
 
@@ -56,17 +57,33 @@ export default function AdminSettings() {
                             </div>
 
                             <div className="card">
-                                <AdminTable view={activeTab} rowData={data}/>
+                                <AdminTable view={activeTab} 
+                                            rowData={data} 
+                                            onEdit={(row) => {
+                                                setSelectedUser(row);
+                                                setIsModalOpen(true);
+                                            }}/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={`Add ${activeTab.toUpperCase()}`}>
-                <AddUserForm onSuccess={() => {
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={() => {
                     setIsModalOpen(false);
-                    setRefreshKey(prev => prev + 1)
-                }}/>
+                    setSelectedUser(null);
+                }} 
+                title={`${selectedUser ? 'Edit' : 'Add'} ${activeTab.toUpperCase()}`}
+            >
+                <UserForm 
+                    initialData={selectedUser}
+                    onSuccess={() => {
+                        setIsModalOpen(false);
+                        setSelectedUser(null);
+                        setRefreshKey(prev => prev + 1);
+                    }}
+                />
             </Modal>
         </div>
     )
