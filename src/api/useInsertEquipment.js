@@ -2,20 +2,20 @@ import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useInsertWorkstation() {
+export default function useInsertEquipment() {
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
 
     const { showLoader, hideLoader } = useLoader();
 
-    const insertWorkstation = async (workstationData) => {
+    const insertEquipment = async (equipmentData) => {
         setError(null);
 
         showLoader();
 
         const {data, error} = await supabase
-            .from('workstations')
-            .insert(workstationData)
+            .from('equipment')
+            .insert(equipmentData)
 
             if(error) {
                 console.log(error);
@@ -33,5 +33,5 @@ export default function useInsertWorkstation() {
             return {success: true, data};
     }
 
-    return { insertWorkstation, status, error };
+    return { insertEquipment, status, error };
 }

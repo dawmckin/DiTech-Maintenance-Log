@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import useDeleteWorkstation from "../../api/useDeleteWorkstation";
+import formatDateTime from "../../utils/format-date-time";
 
 import "../worklog-history/history-table.css";
 
@@ -85,9 +85,17 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                             (k !== 'user_id') ? 
                                                 (
                                                    <td key={k}>
-                                                        {(upperCaseFields.includes(k)) ? 
-                                                        row[k].toUpperCase() : 
-                                                        row[k]}
+                                                        {
+                                                            (k === 'created_at') ? 
+                                                            (
+                                                                formatDateTime(row[k])
+                                                            ) : 
+                                                            (
+                                                                (upperCaseFields.includes(k)) ? 
+                                                                    row[k].toUpperCase() : 
+                                                                    row[k]
+                                                            )
+                                                        }
                                                     </td>  
                                                 ) : (
                                                     <></>
@@ -100,12 +108,27 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                             <button className="primary log-action edit mb-0 mr-2"
                                                 onClick={() => onEdit(row)}
                                                 style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
+                                                <i className="bi bi-pencil-square pr-2"></i>
                                                 Edit
                                             </button>
                                             <button className="primary log-action cancel mb-0 mr-2"
                                                 onClick={() => onDelete(row)}
                                                 style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
-                                                {(view === 'users') ? ("Disable") : ("Delete")}
+                                                {
+                                                    (view === 'users') ? 
+                                                    (
+                                                        <>
+                                                            <i className="bi bi-slash-circle pr-2"></i>
+                                                            Disable
+                                                        </>
+                                                    ) : 
+                                                    (
+                                                        <>
+                                                            <i className="bi bi-trash3 pr-2"></i>
+                                                            Delete
+                                                        </>
+                                                    )
+                                                }
                                             </button> 
                                         </div>
                                    

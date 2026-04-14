@@ -1,4 +1,4 @@
-import formatDuration from "../../kpi-utils/format-duration";
+import formatDuration from "../../utils/format-duration";
 import "./history-table.css";
 
 export default function ExpandedRow({logData, colSpan, isExpanded}) {

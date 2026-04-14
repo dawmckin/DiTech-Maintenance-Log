@@ -4,12 +4,14 @@ import { useToast } from "../../context/ToastContext";
 import AdminTable from "./AdminTable";
 import UserForm from "./UserForm";
 import WorkstationsForm from "./WorkstationsForm";
+import EquipmentForm from "./EquipmentForm";
 import Modal from "../util/Modal";
 
 import "./admin-settings.css";
 
 import useSelectAll from "../../api/useSelectAll";
 import useDeleteWorkstation from "../../api/useDeleteWorkstation";
+import useDeleteEquipment from "../../api/useDeleteEquipment";
 
 export default function AdminSettings() {
     const [activeTab, setActiveTab] = useState("users");
@@ -20,6 +22,7 @@ export default function AdminSettings() {
     
     const data = useSelectAll(activeTab, refreshKey);
     const { deleteWorkstation } = useDeleteWorkstation();
+    const { deleteEquipment } = useDeleteEquipment();
 
     const { showToast } = useToast();
 
@@ -36,6 +39,22 @@ export default function AdminSettings() {
         } else {
             console.log(result.error);
             showToast("Unable to delete workstation.", 'error');
+        }
+    }
+
+    const handleDeleteEquipment = async () => {
+        const result = await deleteEquipment(selectedRow);
+
+        if(result.success) {
+            showToast("Equipment deleted successfully.", "success");
+
+            setIsDelete(false);
+            setIsModalOpen(false);
+            setSelectedRow(null);
+            setRefreshKey(prev => prev + 1);
+        } else {
+            console.log(result.error);
+            showToast("Unable to delete equipment.", 'error');
         }
     }
 
@@ -131,7 +150,14 @@ export default function AdminSettings() {
 
                         ) : 
                         (
-                            <></>
+                            <EquipmentForm 
+                                initialData={selectedRow}
+                                onSuccess={() => {
+                                    setIsModalOpen(false);
+                                    setSelectedRow(null);
+                                    setRefreshKey(prev => prev + 1);
+                                }}
+                            />
                         )
                     )
                 }
@@ -144,16 +170,28 @@ export default function AdminSettings() {
                     setIsModalOpen(false);
                     setSelectedRow(null);
                 }} 
-                title={`Delete Workstation`}
+                title={`Delete ${activeTab === 'workstations' ? 'Workstation' : 'Equipment'}`}
                 isDelete={true}
             >
                 <p>Are you sure?</p>
 
                 <div className="float-right">
-                    <button className="primary cancel"
-                            onClick={() => handleDeleteWorkstation()}>
-                        Delete
-                    </button>
+                    {
+                        (activeTab === 'workstations') ? 
+                        (
+                            <button className="primary cancel"
+                                    onClick={() => handleDeleteWorkstation()}>
+                                Delete
+                            </button>
+                        ) : 
+                        (
+                            <button className="primary cancel"
+                                    onClick={() => handleDeleteEquipment()}>
+                                Delete
+                            </button>
+                        )
+                    }
+
                 </div>
             </Modal>
         </div>

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-import calculateKPIs from "../../kpi-utils/calculate-kpis";
-import formatDuration from "../../kpi-utils/format-duration";
-import filterLogsByRanges from "../../kpi-utils/filter-by-range";
+import calculateKPIs from "../../utils/calculate-kpis";
+import formatDuration from "../../utils/format-duration";
+import filterLogsByRanges from "../../utils/filter-by-range";
 
 import KPICard from "./KPICard";
 import DowntimeChart from "./DowntimeChart";

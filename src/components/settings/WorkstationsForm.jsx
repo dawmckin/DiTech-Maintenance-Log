@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useToast } from "../../context/ToastContext";
 
-import useInsertWorkstion from "../../api/useInsertWorkstation";
+import useInsertWorkstation from "../../api/useInsertWorkstation";
 import useUpdateWorkstation from "../../api/useUpdateWorkstation";
 
 export default function WorkstationsForm({onSuccess, initialData}) {
@@ -12,7 +12,7 @@ export default function WorkstationsForm({onSuccess, initialData}) {
     });
 
     const { showToast } = useToast();
-    const { insertWorkstation } = useInsertWorkstion();
+    const { insertWorkstation } = useInsertWorkstation();
     const { updateWorkstation } = useUpdateWorkstation();
 
     useEffect(() => {
