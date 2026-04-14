@@ -37,7 +37,7 @@ export default function Header() {
                     isAdmin ? (
                         <span>
                             <Link to="/logs">Logs</Link>
-                            <Link to="#">Settings</Link>
+                            <Link to="/settings">Settings</Link>
                         </span>
                     ) : (
                         <span></span>

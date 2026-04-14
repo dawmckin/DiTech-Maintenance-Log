@@ -7,7 +7,7 @@ import {
   Sector,
 } from "recharts";
 import { useMemo } from "react";
-import calculateKPIs from "../../kpi-utils/calculate-kpis";
+import calculateKPIs from "../../utils/calculate-kpis";
 import "./KPICard.css";
 
 export default function IssueDistributionChart({logs}) {

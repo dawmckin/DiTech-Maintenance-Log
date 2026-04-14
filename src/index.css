@@ -142,7 +142,7 @@ label {
   color: red;
 }
 
-select, textarea {
+select, textarea, input[type=text] {
   width: 100%;
   padding: 10px;
   border-radius: 8px;

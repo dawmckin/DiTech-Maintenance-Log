@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
+import formatDateTime from "../../utils/format-date-time";
 
 import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
@@ -49,28 +51,12 @@ export default function Ticket() {
         }
     };
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-
-        });
-    }
-
     return (
         <div className="card">
             <div className="top-meta">
                 <div>
                     <strong>Start Time:</strong>
-                    <span>{formatDate((worklogData?.start_time))}</span>
-                </div>
-                <div>
-                    <strong>Ticket ID:</strong>
-                    <span>{id}</span>
+                    <span>{formatDateTime((worklogData?.start_time))}</span>
                 </div>
                 <div>
                     <strong>Issue Type:</strong>

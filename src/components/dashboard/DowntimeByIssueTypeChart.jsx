@@ -7,8 +7,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useMemo } from "react";
-import groupLogsByField from "../../kpi-utils/group-by-field";
-import formatDuration from "../../kpi-utils/format-duration";
+import groupLogsByField from "../../utils/group-by-field";
+import formatDuration from "../../utils/format-duration";
 import "./KPICard.css";
 
 export default function DowntimeByIssueTypeChart({logs}) {

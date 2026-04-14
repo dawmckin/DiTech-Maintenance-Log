@@ -6,7 +6,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import groupLogsByDate  from "../../kpi-utils/group-by-date";
+import groupLogsByDate  from "../../utils/group-by-date";
 import { useMemo } from "react";
 import "./KPICard.css";
 

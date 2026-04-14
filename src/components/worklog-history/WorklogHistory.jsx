@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+import { exportToExcel } from "../../utils/export-to-excel";
+
 import SearchBox from "./SearchBox";
 import FilterToggle from "./FilterToggle";
 import HistoryTable from "./HistoryTable";
@@ -10,6 +13,23 @@ export default function WorklogHistory() {
     const [toggle, setToggle] = useState("workstation");
 
     const worklogs = useSelectWorklogs();
+    console.log(worklogs);
+
+    const handleExport = () => {
+        const formattedData = worklogs.map(log => ({
+            TicketID: log.ticketId,
+            Workstation: log.workstation_id,
+            Location: log.workstations?.location_site,
+            EquipmentID: log.equipment_id,
+            EquipmentName: log.equipment?.equipment_name,
+            IssueType: log.issue_type,
+            Status: log.issue_status,
+            StartTime: log.start_time,
+            CreatedBy: `${log.users?.first_name} ${log.users?.last_name}`
+        }));
+
+        exportToExcel(formattedData, "worklogs.xlsx");
+    }
 
     return (
         <div>
@@ -28,6 +48,12 @@ export default function WorklogHistory() {
                     <div className="d-flex">
                         <p className="my-auto mr-2"><strong>View By: </strong></p>
                         <FilterToggle value={toggle} onChange={setToggle} />
+                    </div>
+
+                    <div>
+                        <button onClick={handleExport}>
+                            Export to Excel
+                        </button>
                     </div>
                 </div>
                 <div className="card">

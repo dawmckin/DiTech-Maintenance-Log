@@ -6,8 +6,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import groupLogsByDate  from "../../kpi-utils/group-by-date";
-import formatDuration from "../../kpi-utils/format-duration";
+import groupLogsByDate  from "../../utils/group-by-date";
+import formatDuration from "../../utils/format-duration";
 import { useMemo } from "react";
 import "./KPICard.css";
 
