@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/login-portal/LoginPortal";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form/WorklogForm";
@@ -14,7 +14,6 @@ import ProtectedRoute from "./components/util/ProtectedRoute";
 
 import { LoaderProvider, useLoader } from "./context/LoaderContext";
 import Loader from './components/loader/Loader';
-
 import { ToastProvider } from "./context/ToastContext";
 
 function AppContent() {
@@ -27,7 +26,7 @@ function AppContent() {
         <Routes>
           {/* Login (no header/footer) */}
           <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
           </Route>
 
           {/* Main app (with header/footer) */}
