@@ -15,7 +15,7 @@ export default function Header() {
 
         showToast("Logged out successfully.", "success");
 
-        navigate('/login');
+        navigate('/');
     };
 
     return (

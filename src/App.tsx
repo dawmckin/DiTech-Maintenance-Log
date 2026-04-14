@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/login-portal/LoginPortal";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form/WorklogForm";
