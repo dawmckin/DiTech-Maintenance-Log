@@ -2,47 +2,43 @@ import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useSelectWorklogs() {
-    const [worklogs, setWorklogs] = useState([]);
+import type { WorklogSummary } from "../types/worklog";
+
+export default function useSelectWorklogsByUser(userId: string): WorklogSummary[] {
+    const [worklogs, setWorklogs] = useState<WorklogSummary[]>([]);
 
     const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
-        const selectWorklogs = async () => {
+        const selectWorklogsByUser = async () => {
             showLoader();
 
             const {data, error} = await supabase
                 .from('tickets')
-                .select(`*,
-                        users(
-                            first_name,
-                            last_name
-                        ),
+                .select(`ticket_id,
+                        issue_status,
+                        workstation_id,
+                        equipment_id,
                         workstations (
                             location_site
                         ),
                         equipment (
                             equipment_name
-                        ),
-                        notes (
-                            note_text,
-                            users (
-                                ditech_id
-                            )
                         )
                         `)
-                .order('start_time');
+                .eq('created_by', userId)
+                .order('issue_status', {ascending: false});
 
             if(error) {
                 console.log(error);
             } else {
-                setWorklogs(data);
+                setWorklogs(data as unknown as WorklogSummary[]);
             }
 
             hideLoader();
-        };
+        }
 
-        selectWorklogs();
+        selectWorklogsByUser();
     }, []);
 
     return worklogs;

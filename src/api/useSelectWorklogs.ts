@@ -1,42 +1,49 @@
 import { useState, useEffect } from "react";
+import type { Worklog } from "../types/worklog"; 
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useSelectWorklogsByUser(userId) {
-    const [worklogs, setWorklogs] = useState([]);
+export default function useSelectWorklogs(): Worklog[] {
+    const [worklogs, setWorklogs] = useState<Worklog[]>([]);
 
     const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
-        const selectWorklogsByUser = async () => {
+        const selectWorklogs = async () => {
             showLoader();
 
             const {data, error} = await supabase
                 .from('tickets')
-                .select(`ticket_id,
-                        issue_status,
-                        workstation_id,
-                        equipment_id,
+                .select(`*,
+                        users(
+                            first_name,
+                            last_name
+                        ),
                         workstations (
                             location_site
                         ),
                         equipment (
                             equipment_name
+                        ),
+                        notes (
+                            note_text,
+                            users (
+                                ditech_id
+                            )
                         )
                         `)
-                .eq('created_by', userId)
-                .order('issue_status', {ascending: false});
+                .order('start_time');
 
             if(error) {
                 console.log(error);
             } else {
-                setWorklogs(data);
+                setWorklogs(data as Worklog[]);
             }
 
             hideLoader();
-        }
+        };
 
-        selectWorklogsByUser();
+        selectWorklogs();
     }, []);
 
     return worklogs;

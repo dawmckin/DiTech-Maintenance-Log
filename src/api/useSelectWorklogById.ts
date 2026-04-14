@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import type { Worklog } from "../types/worklog";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useSelectWorklogById(ticketId) {
-    const [ logData, setLogData ] = useState(null);
+export default function useSelectWorklogById(ticketId: number): Worklog | undefined {
+    const [ logData, setLogData ] = useState<Worklog | undefined>(undefined);
 
     const { showLoader, hideLoader } = useLoader();
 
@@ -13,18 +14,13 @@ export default function useSelectWorklogById(ticketId) {
         const selectWorklogById = async () => {
             const { data, error } = await supabase
                 .from('tickets')
-                .select(`workstation_id,
+                .select(`*,
                         workstations (
                             location_site
                         ),
-                        equipment_id,
                         equipment (
                             equipment_name
-                        ),
-                        issue_type,
-                        issue_description,
-                        issue_status,
-                        start_time
+                        )
                     `)
                 .eq('ticket_id', ticketId)
                 .single()
@@ -32,7 +28,7 @@ export default function useSelectWorklogById(ticketId) {
             if(error) {
                 console.log(error);
             } else {
-                setLogData(data);
+                setLogData(data as Worklog);
             }
 
             hideLoader();
