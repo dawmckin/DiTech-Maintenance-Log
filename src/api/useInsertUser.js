@@ -8,7 +8,7 @@ export default function useInsertUser() {
 
     const { showLoader, hideLoader } = useLoader();
 
-    const insertUser = async (user_id, ditech_id, first_name, last_name, user_role) => {
+    const insertUser = async (user_id, ditech_id, first_name, last_name, user_role, email) => {
         setError(null);
 
         showLoader();
@@ -20,7 +20,8 @@ export default function useInsertUser() {
                 ditech_id,
                 first_name,
                 last_name,
-                user_role
+                user_role,
+                email
             })
 
             if(error) {

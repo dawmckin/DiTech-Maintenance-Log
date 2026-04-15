@@ -56,7 +56,8 @@ export default function UserForm({onSuccess, initialData}) {
 
         console.log(updatedFields);
 
-        if(Object.entries(userForm).some(i => i[1] === "" && i[0] !== 'password')) {
+        if(Object.entries(userForm).some(i => (i[1] === "" && i[0] !== 'user_id') && (initialData && i[0] !== 'password'))) {
+            console.log(userForm);
             showToast("Missing required fields.", "error");
             return;
         } else if(initialData && updatedFields.length === 0) {
@@ -109,14 +110,14 @@ export default function UserForm({onSuccess, initialData}) {
                 showToast("Unable to add user.", 'error')  
             }
         } else {
-            const authResult = await signUpUser(userForm.email, userForm.password, `${userForm.first_name} ${userForm.last_name}`);
+            const authResult = await signUpUser(userForm.email, userForm.password, `${userForm.first_name} ${userForm.last_name}`, userForm.user_role);
 
             if(authResult.success) {
                 // showToast("User added to Auth successfully.", "success");
 
                 const userId = authResult.data.user.id;
 
-                const dbResult = await insertUser(userId, userForm.ditech_id, userForm.first_name, userForm.last_name, userForm.user_role);
+                const dbResult = await insertUser(userId, userForm.ditech_id, userForm.first_name, userForm.last_name, userForm.user_role, userForm.email);
                 
                 if(dbResult.success) {
                     showToast("User added successfully.", "success");
