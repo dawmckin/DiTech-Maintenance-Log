@@ -40,3 +40,30 @@ export interface WorklogSummary {
         equipment_name: string;
     }
 }
+
+export interface WorklogInsert {
+    workstationId: number;
+    equipmentId: number;
+    createdBy: string | null;
+    issueType: IssueType;
+    issueStatus: IssueStatus;
+    issueDescription: string;
+    startTime: Date;
+}
+
+export interface WorklogRow {
+    ticket_id: number;
+    workstation_id: number;
+    equipment_id: number;
+    created_by: string | null;
+    issue_type: IssueType;
+    issue_status: IssueStatus;
+    issue_description: string;
+    start_time: Date;
+}
+
+export interface InsertResult {
+    success: boolean;
+    data?: WorklogRow[];
+    error?: any;
+}

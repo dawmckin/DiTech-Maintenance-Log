@@ -2,13 +2,15 @@ import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
+import type { Worklog, WorklogInsert, WorklogRow, InsertResult } from "../types/worklog";
+
 export default function useInsertWorklog() {
-    const [status, setStatus] = useState(null);
-    const [error, setError] = useState(null);
+    const [status, setStatus] = useState<WorklogRow[] | null>(null);
+    const [error, setError] = useState<any>(null);
 
     const { showLoader, hideLoader } = useLoader();
 
-    const insertWorklog = async (worklog) => {
+    const insertWorklog = async (worklog: WorklogInsert): Promise<InsertResult> => {
         setError(null);
 
         showLoader();
@@ -39,7 +41,7 @@ export default function useInsertWorklog() {
 
         hideLoader();
         
-        return {'success': true, data};
+        return {success: true, data};
     };
 
     return { insertWorklog, status, error };
