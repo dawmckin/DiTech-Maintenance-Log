@@ -38,7 +38,7 @@ export default function Dashboard() {
                         user.user_metadata.user_role === 'admin' ? (
                             <div className="col-md-4 d-flex">
                                 {/* <p className="ml-auto mr-2 my-auto"><strong>View by:</strong></p> */}
-                                <select className="col-md-9" value={range} onChange={(e) => setRange(e.target.value)}>
+                                <select className="col-md-9 ml-auto" value={range} onChange={(e) => setRange(e.target.value)}>
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
                                     <option value="week">Last 7 Days</option>
