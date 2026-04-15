@@ -74,10 +74,13 @@ export default function MaintenanceView({userId}) {
                                 <tr key={log.ticket_id}>
                                     <td><strong>{log.ticket_id}</strong></td>
                                     <td className="align-middle">
-                                        {log.issue_status === 'open'
-                                            ? <img src={OpenIcon} alt="Open" />
-                                            : <img src={CompetedIcon} alt="Completed" />
-                                        }
+                                        <div className="status-tooltip">
+                                            {log.issue_status === 'open'
+                                                ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
+                                                : <img src={CompetedIcon} alt="Completed" />
+                                            }
+                                            <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
+                                        </div>
                                     </td>
                                     <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
                                     <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>

@@ -238,10 +238,13 @@ export default function HistoryTable({logs, toggle, search}) {
                                             </div>
                                         </td>
                                         <td className="text-center align-middle">
-                                            {log.issue_status === 'open'
-                                                ? <img src={OpenIcon} alt="Open" />
-                                                : <img src={CompetedIcon} alt="Completed" />
-                                            }
+                                            <div className="status-tooltip">
+                                                {log.issue_status === 'open'
+                                                    ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
+                                                    : <img src={CompetedIcon} alt="Completed" />
+                                                }
+                                                <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
+                                            </div>
                                         </td>
 
                                         {toggle === 'date' ? (
