@@ -1,3 +1,7 @@
+.mobile-kpi-container {
+  display: none;
+}
+
 .kpi-card {
   background: #1f2937; /* dark card */
   color: white;
@@ -65,12 +69,25 @@
 
 /* MOBILE */
 @media (max-width: 600px) {
+  .mobile-kpi-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .desktop-kpi {
+    display: none;
+  }
 
   /* KPI CARD */
   .kpi-card {
     padding: 14px;
     border-radius: 8px;
     margin-bottom: 4px;
+
+    &.mobile-kpi {
+      width: 49%;
+    }
   }
 
   .kpi-title {
