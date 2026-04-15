@@ -69,3 +69,60 @@
   width: 100%;
   margin-top: 10px;
 }
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  /* PAGE */
+  .login-portal {
+    padding: 16px;
+    align-items: center;
+    padding-top: 40px;
+  }
+
+  /* CARD */
+  .login-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  /* HEADER */
+  .login-card h2 {
+    font-size: 20px;
+  }
+
+  .login-subtitle {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  /* FORM */
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .form-group input {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  /* PASSWORD TOGGLE */
+  .toggle-password {
+    font-size: 13px;
+    right: 12px;
+  }
+
+  /* BUTTON */
+  .login-btn {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+}
