@@ -14,7 +14,7 @@ export default function FilterToggle({ value, onChange }) {
         className={value === "workstation" ? "active" : ""}
         onClick={() => onChange("workstation")}
       >
-        Workstation
+        WS
       </button>
 
       <div

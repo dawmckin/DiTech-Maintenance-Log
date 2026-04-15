@@ -35,12 +35,12 @@ export default function Header() {
                 <Link to="/dashboard">Dashboard</Link>
                 {
                     isAdmin ? (
-                        <span>
+                        <>
                             <Link to="/logs">Logs</Link>
                             <Link to="/settings">Settings</Link>
-                        </span>
+                        </>
                     ) : (
-                        <span></span>
+                        <></>
                     )
                 }
                 <Link onClick={handleLogout}>Logout</Link>

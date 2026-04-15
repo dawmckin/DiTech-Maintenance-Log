@@ -41,7 +41,7 @@ export default function MaintenanceView({userId}) {
     }, [logs, currentPage, pageSize]);
 
     return (
-        <div>
+        <div className="table-wrapper">
             <table className="maintenance-dashboard-table">
                 <thead>
                     <tr>
@@ -114,16 +114,18 @@ export default function MaintenanceView({userId}) {
                         Showing <strong>{(currentPage * pageSize) - (pageSize - 1)} - {(currentPage * pageSize) > logs.length ? logs.length : (currentPage * pageSize)}</strong> of
                         <strong> {logs.length}</strong> results
                     </p>
+                    <div>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <button
+                                key={page}
+                                className={page === currentPage ? "active" : ""}
+                                onClick={() => setCurrentPage(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
 
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                        <button
-                            key={page}
-                            className={page === currentPage ? "active" : ""}
-                            onClick={() => setCurrentPage(page)}
-                        >
-                            {page}
-                        </button>
-                    ))}
                 </div>
             )}   
         </div>

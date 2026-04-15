@@ -63,6 +63,13 @@ export default function AdminSettings() {
             <div className="card">
                 <div className="d-flex justify-content-between">
                     <h2>Admin Settings</h2>
+
+                    <div className="d-flex justify-content-end">
+                        <button className="primary log-action d-flex" onClick={() => setIsModalOpen(true)}>
+                            <i className="bi bi-plus-lg pr-2"></i>
+                            <p className="mb-0">Add</p>
+                        </button>
+                    </div>
                 </div>
 
                 <hr />
@@ -91,14 +98,7 @@ export default function AdminSettings() {
                         </div>
 
                         <div className="tabs-content ">
-                            <div className="d-flex justify-content-end">
-                                <button className="primary log-action d-flex" onClick={() => setIsModalOpen(true)}>
-                                    <i className="bi bi-plus-lg pr-2"></i>
-                                    <p className="mb-0">Add {activeTab?.toUpperCase()}</p>
-                                </button>
-                            </div>
-
-                            <div className="card">
+                            <div>
                                 <AdminTable view={activeTab} 
                                             rowData={data} 
                                             onEdit={(row) => {

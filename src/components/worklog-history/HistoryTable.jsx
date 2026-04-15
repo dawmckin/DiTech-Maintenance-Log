@@ -157,7 +157,7 @@ export default function HistoryTable({logs, toggle, search}) {
     }, [sortedLogs, currentPage, pageSize]);
 
     return (
-        <div>
+        <div className="table-wrapper">
             <table className="history-table">
                 <thead>
                     <tr>
@@ -285,15 +285,17 @@ export default function HistoryTable({logs, toggle, search}) {
                         <strong> {sortedLogs.length}</strong> results
                     </p>
 
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                        <button
-                            key={page}
-                            className={page === currentPage ? "active" : ""}
-                            onClick={() => setCurrentPage(page)}
-                        >
-                            {page}
-                        </button>
-                    ))}
+                    <div>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <button
+                                key={page}
+                                className={page === currentPage ? "active" : ""}
+                                onClick={() => setCurrentPage(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}                       
+                    </div>
                 </div>
             )}   
         </div>

@@ -52,3 +52,25 @@
 .toggle button:active {
   transform: scale(0.98);
 }
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .toggle {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* BUTTONS */
+  .toggle button {
+    padding: 12px 0;
+    font-size: 14px;
+  }
+
+  /* SLIDER */
+  .toggle-slider {
+    height: 92%;
+    border-radius: 8px;
+  }
+
+}

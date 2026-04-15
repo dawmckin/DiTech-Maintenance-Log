@@ -59,3 +59,52 @@
     transform: translateY(0) scale(1);
   }
 }
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  /* OVERLAY */
+  .modal-overlay {
+    align-items: flex-end;
+  }
+
+  /* CONTAINER */
+  .modal-container {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 16px;
+
+    max-height: 90vh;
+    overflow: hidden;
+
+    animation: modalSlideUp 0.25s ease;
+  }
+
+  /* DELETE MODAL */
+  .modal-container.modal-delete {
+    width: 100% !important;
+  }
+
+  /* HEADER */
+  .modal-header {
+    margin-bottom: 12px;
+  }
+
+  .modal-header h2 {
+    font-size: 18px;
+  }
+
+  .modal-close {
+    font-size: 24px;
+    padding: 4px;
+  }
+
+  /* BODY */
+  .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+}
