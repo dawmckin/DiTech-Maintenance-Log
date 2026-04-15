@@ -45,16 +45,16 @@ export default function WorklogHistory() {
                         />
                     </div>
 
-                    <div className="d-flex">
-                        <p className="my-auto mr-2"><strong>View By: </strong></p>
+                    <div className="d-flex toggle-container">
+                        {/* <p className="my-auto mr-2"><strong>View By: </strong></p> */}
                         <FilterToggle value={toggle} onChange={setToggle} />
                     </div>
-
+{/* 
                     <div>
                         <button onClick={handleExport}>
                             Export to Excel
                         </button>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card">
                     <HistoryTable logs={worklogs} toggle={toggle} search={search} />

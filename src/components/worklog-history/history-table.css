@@ -126,3 +126,90 @@
 .pagination p {
     margin: auto .25rem;
 }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+
+  .table-wrapper::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .table-wrapper::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+    border-radius: 4px;
+  }
+
+  .history-table,
+  .maintenance-dashboard-table,
+  .admin-table {
+    min-width: 700px;
+    table-layout: auto;
+  }
+
+  /* HEADERS + CELLS */
+  .history-table th,
+  .maintenance-dashboard-table th,
+  .admin-table th,
+  .history-table td,
+  .maintenance-dashboard-table td,
+  .admin-table td {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .expanded-content {
+    flex-direction: column;
+    gap: 16px;
+    padding: 14px;
+  }
+
+  .expanded-left {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .expanded-right {
+    width: 100%;
+  }
+
+  /* NOTES */
+  .notes-list {
+    padding-left: 16px;
+  }
+
+  .notes-list li {
+    font-size: 0.85rem;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .pagination p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .pagination button {
+    margin: 0 4px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .history-table tr:hover,
+  .maintenance-dashboard-table tr:hover,
+  .admin-table tr:hover {
+    background: none;
+  }
+}

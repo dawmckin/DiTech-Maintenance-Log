@@ -10,6 +10,7 @@
   padding: 8px 12px;
   width: 100%;
   max-width: 400px;
+  height: 3rem;
 
   transition: border 0.2s ease, box-shadow 0.2s ease;
 }
@@ -48,4 +49,32 @@
   color: #9ca3af;
   cursor: pointer;
   font-size: 16px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .search-box {
+    max-width: 70%;
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 8px;
+  }
+
+  /* INPUT */
+  .search-box input {
+    font-size: 16px;
+  }
+
+  /* ICON */
+  .search-icon {
+    font-size: 16px;
+  }
+
+  /* CLEAR BUTTON */
+  .clear-btn {
+    font-size: 18px;
+    padding: 4px;
+  }
+
 }

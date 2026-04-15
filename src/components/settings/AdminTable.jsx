@@ -29,7 +29,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
     }, [rowData, currentPage, pageSize]);
 
     return (
-        <div>
+        <div className="table-wrapper">
             <table className="admin-table">
                 <thead>
                     {
@@ -147,15 +147,17 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                         <strong> {rowData.length}</strong> results
                     </p>
 
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                        <button
-                            key={page}
-                            className={page === currentPage ? "active" : ""}
-                            onClick={() => setCurrentPage(page)}
-                        >
-                            {page}
-                        </button>
-                    ))}
+                    <div>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <button
+                                key={page}
+                                className={page === currentPage ? "active" : ""}
+                                onClick={() => setCurrentPage(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}   
         </div>

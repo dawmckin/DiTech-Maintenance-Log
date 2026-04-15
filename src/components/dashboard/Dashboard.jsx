@@ -24,7 +24,7 @@ export default function Dashboard() {
                     <button className="primary log-action d-flex"
                             onClick={() => openNewWorklog()}>
                         <i className="bi bi-plus-lg pr-2"></i>
-                        <p className="mb-0">New Maintenance Log</p>    
+                        <p className="mb-0">New Worklog</p>    
                     </button>
                 </div>
 
@@ -32,12 +32,12 @@ export default function Dashboard() {
                 
                 <div className="row d-flex justify-content-between mb-2">
                     <div className="col-md-4 d-flex">
-                        <p className="my-auto">Welcome <strong>{user?.user_metadata?.display_name}</strong>!</p>
+                        <p className="welcome-user my-auto">Welcome <strong>{user?.user_metadata?.display_name}</strong>!</p>
                     </div>
                     {
                         user.user_metadata.user_role === 'admin' ? (
                             <div className="col-md-4 d-flex">
-                                <p className="ml-auto mr-2 my-auto"><strong>View by:</strong></p>
+                                {/* <p className="ml-auto mr-2 my-auto"><strong>View by:</strong></p> */}
                                 <select className="col-md-9" value={range} onChange={(e) => setRange(e.target.value)}>
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
