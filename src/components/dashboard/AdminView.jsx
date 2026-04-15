@@ -29,8 +29,12 @@ export default function AdminView({range}) {
             <div className="kpi-grid">
                 <div className="d-flex flex-column justify-content-between">
                     <KPICard title="Total Downtime" value={formatDuration(totalDowntime)} />
-                    <KPICard title="Active Issues" value={activeIssues} />
-                    <KPICard title="Issues Today" value={issuesToday}/>
+                    <div className="mobile-kpi-container">
+                        <KPICard title="Active Issues" value={activeIssues} optionalClass="mobile-kpi" />
+                        <KPICard title="Issues Today" value={issuesToday} optionalClass="mobile-kpi"/>
+                    </div>
+                    <KPICard title="Active Issues" value={activeIssues} optionalClass="desktop-kpi"/>
+                    <KPICard title="Issues Today" value={issuesToday} optionalClass="desktop-kpi"/>                       
                 </div>
                 <IssueDistributionChart logs={filteredLogs} />
                 <DowntimeByIssueTypeChart logs={filteredLogs} />
