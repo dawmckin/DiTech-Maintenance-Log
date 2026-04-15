@@ -128,6 +128,77 @@
     margin: auto .25rem;
 }
 
+.pulse-icon {
+  display: inline-block;
+  transform-origin: center;
+  animation: pulseGlow 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(13, 110, 253, 0.6));
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 2px rgba(13, 110, 253, 0.4));
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.75;
+    filter: drop-shadow(0 0 6px rgba(13, 110, 253, 0.8));
+  }
+}
+
+.status-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Tooltip bubble */
+.status-tooltip-text {
+  position: absolute;
+  bottom: 125%; /* above icon */
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #1f2937;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  font-size: 12px;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Arrow */
+.status-tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1f2937 transparent transparent transparent;
+}
+
+/* Show on hover */
+.status-tooltip:hover .status-tooltip-text {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.tooltip:active .tooltip-text {
+  opacity: 1;
+}
+
 /* MOBILE */
 @media (max-width: 768px) {
   .table-wrapper {

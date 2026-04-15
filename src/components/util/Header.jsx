@@ -22,7 +22,7 @@ export default function Header() {
         <div className="header">
             <div className="logo">
                 <img src={ditechLogo} alt="DITECH Logo" />
-                <span>Maintenance Log</span>
+                <span>Maintenance Portal</span>
                 {
                     isAdmin ? (
                         <span className='role-indicator ml-2 px-2 py-1 text-center'>Admin</span>

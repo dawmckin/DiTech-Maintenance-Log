@@ -92,7 +92,7 @@ export default function WorklogForm() {
     return (
         <div className="card">
             <div className="d-flex justify-content-between">
-                <h2>New Maintenance Report</h2>
+                <h2>New Worklog</h2>
                 <Link to="/dashboard">
                     <button className="primary log-action cancel">Cancel</button>
                 </Link>
