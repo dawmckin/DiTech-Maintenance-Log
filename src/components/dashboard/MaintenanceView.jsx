@@ -46,7 +46,7 @@ export default function MaintenanceView({userId}) {
                 <thead>
                     <tr>
                         <th>
-                            Ticket ID
+                            ID
                         </th>                            
                         <th className="text-center">
                             Status
@@ -86,18 +86,16 @@ export default function MaintenanceView({userId}) {
                                     <td>
                                         <button className={`primary ${log.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center align-middle`}
                                                 onClick={() => openWorklog(log.ticket_id)}
-                                                style={{width: '6rem', maxHeight: '2rem', padding: '5px 9px'}}>
+                                                style={{width: '3.5rem', height: '2.5rem', padding: '5px'}}>
                                             {
                                                 (log.issue_status === 'open') ? (
                                                     <div className="d-flex justify-content-center mx-auto">
                                                         <i className="bi bi-pencil-square"></i>
-                                                        <p className="pl-2 mb-0">Edit</p>
                                                     </div>
 
                                                 ) : (
                                                     <div className="d-flex justify-content-center mx-auto">
                                                         <i className="bi bi-eye"></i>
-                                                        <p className="pl-2 mb-0">View</p>
                                                     </div>
                                                 )
                                             }
