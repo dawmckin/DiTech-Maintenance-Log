@@ -48,15 +48,10 @@ export default function MaintenanceView({userId}) {
                         <th>
                             Ticket ID
                         </th>                            
-                        <th>
+                        <th className="text-center">
                             Status
                         </th>                            
-                        <th>
-                            Workstation
-                        </th>                            
-                        <th>
-                            Equipment
-                        </th>
+                        <th></th>                            
                         <th></th>
                     </tr>
                 </thead>
@@ -73,7 +68,7 @@ export default function MaintenanceView({userId}) {
                             return (
                                 <tr key={log.ticket_id}>
                                     <td><strong>{log.ticket_id}</strong></td>
-                                    <td className="align-middle">
+                                    <td className="align-middle text-center">
                                         <div className="status-tooltip">
                                             {log.issue_status === 'open'
                                                 ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
@@ -82,8 +77,12 @@ export default function MaintenanceView({userId}) {
                                             <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
                                         </div>
                                     </td>
-                                    <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
-                                    <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
+                                    <td>
+                                        <div className="d-flex flex-column">
+                                            <span>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</span>
+                                            <span>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</span>
+                                        </div>
+                                    </td>
                                     <td>
                                         <button className={`primary ${log.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center align-middle`}
                                                 onClick={() => openWorklog(log.ticket_id)}

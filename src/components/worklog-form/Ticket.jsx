@@ -9,6 +9,9 @@ import useUpdateWorklog from "../../api/useUpdateWorklog";
 
 import { useToast } from "../../context/ToastContext";
 
+import OpenIcon from "../../assets/open-icon.svg";
+import CompetedIcon from "../../assets/completed-icon.svg";
+
 
 export default function Ticket() {
     const { showToast } = useToast();
@@ -18,6 +21,7 @@ export default function Ticket() {
     const [notes, setNotes] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
+    console.log(worklogData);
 
     const { insertNote, insertNoteStatus, insertNoteError } = useInsertNote();
     const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
@@ -54,13 +58,23 @@ export default function Ticket() {
     return (
         <div className="card">
             <div className="top-meta">
-                <div>
-                    <strong>Start Time:</strong>
-                    <span>{formatDateTime((worklogData?.start_time))}</span>
+                <div className="d-flex">
+                    <strong>Status:</strong>
+                    <div className="status-tooltip align-items-start ml-2">
+                        {worklogData?.issue_status === 'open'
+                            ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
+                            : <img src={CompetedIcon} alt="Completed" />
+                        }
+                        <span className="status-tooltip-text">{worklogData?.issue_status.toUpperCase()}</span>
+                    </div>
                 </div>
                 <div>
                     <strong>Issue Type:</strong>
                     <span>{worklogData?.issue_type}</span>
+                </div>
+                <div>
+                    <strong>Start Time:</strong>
+                    <span>{formatDateTime((worklogData?.start_time))}</span>
                 </div>
             </div>
 
