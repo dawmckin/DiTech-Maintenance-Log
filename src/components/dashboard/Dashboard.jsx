@@ -24,7 +24,7 @@ export default function Dashboard() {
                     <button className="primary log-action d-flex"
                             onClick={() => openNewWorklog()}>
                         <i className="bi bi-plus-lg pr-2"></i>
-                        <p className="mb-0">New Worklog</p>    
+                        <p className="mb-0">Worklog</p>    
                     </button>
                 </div>
 
