@@ -13,7 +13,7 @@ export default function LoginPortal() {
         pass: ""
     });
 
-    const { signIn, updateAuthUser } = useAuth();
+    const { signIn, updateAuthUser, resetPassword } = useAuth();
     const { showToast } = useToast();
     const navigate = useNavigate();
 
@@ -44,6 +44,25 @@ export default function LoginPortal() {
         } else {
             setError(result.error);
             showToast("Invalid Credentials.", "error");
+        }
+
+        setLoading(false);
+    }
+
+    const handleForgotPassword = async () => {
+        if(!form.email) {
+            showToast("Enter your email first.", "warning");
+            return;
+        }
+
+        setLoading(true);
+
+        const result = await resetPassword(form.email);
+
+        if(result.success) {
+            showToast("Password reset email sent.", 'success');
+        } else {
+            showToast("Unable to sent reset email.", "error");
         }
 
         setLoading(false);
@@ -93,6 +112,17 @@ export default function LoginPortal() {
                                 {showPassword ? 'Hide' : 'Show'}
                             </span>
                         </div>
+                    </div>
+
+                    <div className='forgot-password-row'>
+                        <button
+                            type='button'
+                            className='forgot-password-btn'
+                            onClick={handleForgotPassword}
+                            disabled={loading}
+                        >
+                            Forgot Password?
+                        </button>
                     </div>
 
                     <button type='submit' className='login-btn primary'>Sign In</button>

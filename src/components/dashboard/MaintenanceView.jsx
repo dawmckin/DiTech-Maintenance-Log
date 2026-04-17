@@ -78,7 +78,7 @@ export default function MaintenanceView({userId}) {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="d-flex flex-column">
+                                        <div className="cell-stack">
                                             <span>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</span>
                                             <span>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</span>
                                         </div>
