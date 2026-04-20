@@ -85,15 +85,24 @@ export default function Ticket() {
                 <p><label>Equipment:</label>[ID: {worklogData?.equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
                 <p><label>Issue Description:</label> {worklogData?.issue_description}</p>
             </div>
-
-            <form onSubmit={handleSubmit}>
-                <label>Notes <span className="required-input">*</span></label>
-                <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
             
-                <div className="actions">
-                    <button className="primary">Submit</button>
-                </div>
-            </form>
+            {
+                (worklogData?.issue_status === 'completed') ? 
+                (
+                    <p><label>Notes:</label> {worklogData?.notes[0]?.note_text}</p>
+
+                ) : 
+                (
+                    <form onSubmit={handleSubmit}>
+                        <label>Notes <span className="required-input">*</span></label>
+                        <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
+                    
+                        <div className="actions">
+                            <button className="primary">Submit</button>
+                        </div>
+                    </form>
+                )
+            }
         </div>
     )
 
