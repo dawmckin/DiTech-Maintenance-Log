@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login-portal/LoginPortal";
+import ResetPassword from "./components/login-portal/ResetPassword";
 import Dashboard from "./components/dashboard/Dashboard";
 import WorklogForm from "./components/worklog-form/WorklogForm";
 import Ticket from "./components/worklog-form/Ticket";
@@ -15,6 +16,8 @@ import ProtectedRoute from "./components/util/ProtectedRoute";
 import { LoaderProvider, useLoader } from "./context/LoaderContext";
 import Loader from './components/loader/Loader';
 import { ToastProvider } from "./context/ToastContext";
+import ResetPasswordRouteGuard from "./components/util/ResetPasswordRouteGuard";
+import ProtectedLayout from "./components/layout/ProtectedLayout";
 
 function AppContent() {
   const { loading } = useLoader();
@@ -29,19 +32,19 @@ function AppContent() {
             <Route path="/" element={<Login />} />
           </Route>
 
+          <Route element={<ResetPasswordRouteGuard />}>
+            <Route path="/reset-password" element={<ResetPassword />} />
+          </Route>
+
           {/* Main app (with header/footer) */}
-          <Route 
-            element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/new-maintenance-log" element={<WorklogForm />} />
-            <Route path="/new-maintenance-log/ticket/:id" element={<Ticket />} />
-            <Route path="/logs" element={<WorkLogHistory />} />
-            <Route path="/settings" element={<AdminSettings />} />
+          <Route element={<ProtectedLayout />}>
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/new-maintenance-log" element={<WorklogForm />} />
+              <Route path="/new-maintenance-log/ticket/:id" element={<Ticket />} />
+              <Route path="/logs" element={<WorkLogHistory />} />
+              <Route path="/settings" element={<AdminSettings />} />
+            </Route>
           </Route>
         </Routes>
       }

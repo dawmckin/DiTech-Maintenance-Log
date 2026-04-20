@@ -6,28 +6,53 @@ const AuthContext = createContext();
 export function AuthProvider({children}) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isRecoveryMode, setIsRecoveryMode] = useState(false);
 
     useEffect(() => {
-        //get current session
-        const getSession = async () => {
+        const init = async () => {
             const { data } = await supabase.auth.getSession();
+
             setUser(data?.session?.user ?? null);
-            setLoading(false);
-        }
 
-        getSession();
+            const onResetPage =
+                window.location.pathname === "/reset-password";
 
-        //listen for auth changes
-        const { data: listener } = supabase.auth.onAuthStateChange(
-            (_event, session) => {
-                setUser(session?.user ?? null);
+            const hasRecoveryToken =
+                window.location.hash.includes("access_token") ||
+                window.location.hash.includes("type=recovery");
+
+            if (onResetPage && (hasRecoveryToken || data.session)) {
+                setIsRecoveryMode(true);
             }
-        );
 
-        return () => {
-            listener.subscription.unsubscribe(),
-            user
-        }
+            setLoading(false);
+        };
+
+        init();
+
+        const {
+        data: { subscription }
+        } = supabase.auth.onAuthStateChange((event, session) => {
+            setUser(session?.user ?? null);
+
+            if (event === "PASSWORD_RECOVERY") {
+                setIsRecoveryMode(true);
+            }
+
+            if (event === "SIGNED_OUT") {
+                setIsRecoveryMode(false);
+            }
+
+            if (event === "SIGNED_IN") {
+                if (window.location.pathname !== "/reset-password") {
+                    setIsRecoveryMode(false);
+                }
+            }
+
+            setLoading(false);
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
     const signIn = async (email, password) => {
@@ -75,8 +100,20 @@ export function AuthProvider({children}) {
         return {success: true, data};
     }
 
+    const resetPassword = async (email) => {
+        const {error} = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/reset-password`        
+        });
+
+        if(error) {
+            return {success: false, error}
+        }
+
+        return {success: true}
+    }
+
     return (
-        <AuthContext.Provider value={{user, loading, signIn, signOut, updateAuthUser, signUpUser}}>
+        <AuthContext.Provider value={{user, loading, signIn, signOut, updateAuthUser, signUpUser, resetPassword, isRecoveryMode}}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,10 +1,12 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AuthLayout() {
-    const { user } = useAuth();
+    const { user, loading, isRecoveryMode } = useAuth();
 
-    if(user) {
+    if(loading) return null;
+
+    if(user && !isRecoveryMode) {
         return <Navigate to="/dashboard" replace/>
     }
 
