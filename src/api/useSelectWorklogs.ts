@@ -23,6 +23,7 @@ export default function useSelectWorklogs(): Worklog[] {
                             location_site
                         ),
                         equipment (
+                            ditech_equipment_id,
                             equipment_name
                         ),
                         notes (

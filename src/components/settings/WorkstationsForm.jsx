@@ -42,9 +42,6 @@ export default function WorkstationsForm({onSuccess, initialData}) {
     const handleAddWorkstation = async (e) => {
         e.preventDefault();
 
-        console.log(workstationForm);
-        console.log(updatedFields);
-
         if(Object.entries(workstationForm).some(i => i[1] === "")) {
             showToast("Missing required fields.", "error");
             return;
@@ -111,7 +108,7 @@ export default function WorkstationsForm({onSuccess, initialData}) {
                 </select>
 
                 <div className="actions">
-                    <button type='submit' className="primary">Add Workstation</button>
+                    <button type='submit' className="primary">{initialData ? 'Update' : 'Add'} Workstation</button>
                 </div>
             </form>
         </>

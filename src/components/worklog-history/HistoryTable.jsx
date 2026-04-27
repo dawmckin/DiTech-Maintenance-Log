@@ -251,12 +251,12 @@ export default function HistoryTable({logs, toggle, search}) {
                                             <>
                                                 <td>{new Date(log.start_time).toLocaleString()}</td>
                                                 <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
-                                                <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
+                                                <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
                                             </>
                                         ) : (
                                             <>
                                                 <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
-                                                <td>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</td>
+                                                <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
                                                 <td>{new Date(log.start_time).toLocaleString()}</td>
                                             </>
                                         )}

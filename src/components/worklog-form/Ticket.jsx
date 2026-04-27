@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import formatDateTime from "../../utils/format-date-time";
 
@@ -21,7 +21,6 @@ export default function Ticket() {
     const [notes, setNotes] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
-    console.log(worklogData);
 
     const { insertNote, insertNoteStatus, insertNoteError } = useInsertNote();
     const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
@@ -57,26 +56,47 @@ export default function Ticket() {
 
     return (
         <div className="card">
-            <div className="top-meta">
-                <div className="d-flex">
-                    <strong>Status:</strong>
-                    <div className="status-tooltip align-items-start ml-2">
-                        {worklogData?.issue_status === 'open'
-                            ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
-                            : <img src={CompetedIcon} alt="Completed" />
-                        }
-                        <span className="status-tooltip-text">{worklogData?.issue_status.toUpperCase()}</span>
+            <div className="row m-0">
+                <div className="top-meta col-8 p-0">
+                    <div className="d-flex">
+                        <strong>Status:</strong>
+                        <div className="status-tooltip align-items-start ml-2">
+                            {worklogData?.issue_status === 'open'
+                                ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
+                                : <img src={CompetedIcon} alt="Completed" />
+                            }
+                            <span className="status-tooltip-text">{worklogData?.issue_status.toUpperCase()}</span>
+                        </div>
                     </div>
+                    <div>
+                        <strong>Issue Type:</strong>
+                        <span>{worklogData?.issue_type}</span>
+                    </div>
+                    <div>
+                        <strong>Start Time:</strong>
+                        <span>{formatDateTime((worklogData?.start_time))}</span>
+                    </div>
+                    {
+                        (worklogData?.end_time) ? 
+                        (
+                            <div>
+                                <strong>End Time:</strong>
+                                <span>{formatDateTime((worklogData?.end_time))}</span>
+                            </div>
+                        ) : (
+                            <></>
+                        )
+                    }
+            
+
                 </div>
-                <div>
-                    <strong>Issue Type:</strong>
-                    <span>{worklogData?.issue_type}</span>
-                </div>
-                <div>
-                    <strong>Start Time:</strong>
-                    <span>{formatDateTime((worklogData?.start_time))}</span>
-                </div>
+                <div className="col-4 p-0 d-flex justify-content-end">
+                    <Link to="/dashboard">
+                        <button className="primary log-action cancel">{worklogData?.issue_status === 'completed' ? 'Close' : 'Cancel'}</button>
+                    </Link>    
+                </div>  
             </div>
+
 
             <hr/>
 

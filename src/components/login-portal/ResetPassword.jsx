@@ -24,7 +24,6 @@ export default function ResetPassword() {
     useEffect(() => {
         const initRecovery = async () => {
             const hash = window.location.hash;
-            console.log(hash);
 
             if(hash.includes("access_token")) {
                 const {error} = await supabase.auth.exchangeCodeForSession(window.location.href);

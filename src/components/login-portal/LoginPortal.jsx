@@ -30,7 +30,7 @@ export default function LoginPortal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("login attempt: ", form);
+        // console.log("login attempt: ", form);
 
         setLoading(true);
         setError("");

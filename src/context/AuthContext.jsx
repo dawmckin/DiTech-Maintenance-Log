@@ -72,8 +72,13 @@ export function AuthProvider({children}) {
     }
 
     const updateAuthUser = async (userId, userData) => {
-        console.log(userId, userData)
+        // console.log(userId, userData)
         const {data, error} = await supabase.auth.admin.updateUserById(userId, userData);
+        // const {data, error} = await supabase.auth.updateUser({
+        //     data: {
+        //         display_name: "Jhonny Test"
+        //     }
+        // });
 
         if(error) {
             console.log(error);
