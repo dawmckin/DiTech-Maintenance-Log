@@ -13,7 +13,7 @@ import "./KPICard.css";
 
 export default function DowntimeByWorkstationChart({logs}) {
 
-    const [location, setLocation] = useState(() => 'main');
+    const [location, setLocation] = useState(() => 'walnut');
 
     const data = useMemo(() => {
         return groupLogsByField(logs, "workstation_id");

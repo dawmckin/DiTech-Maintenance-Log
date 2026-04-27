@@ -3,8 +3,6 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function ProtectedLayout() {
     const { user, loading, isRecoveryMode } = useAuth();
-    console.log(user);
-    console.log(isRecoveryMode);
 
     if (loading) return null;
 

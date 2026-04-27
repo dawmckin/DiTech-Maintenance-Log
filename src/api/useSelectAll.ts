@@ -9,7 +9,7 @@ import type { Equipment } from "../types/equipment";
 const TABLE_SELECTS = {
     users: 'user_id, ditech_id, first_name, last_name, email, user_role, created_at',
     workstations: 'workstation_id, location_site, created_at',
-    equipment: 'equipment_id, equipment_name, workstation_id, created_at'
+    equipment: 'ditech_equipment_id, asset_number, equipment_name, workstation_id, created_at'
 } as const;
 
 export type SelectableView = keyof typeof TABLE_SELECTS;
@@ -36,7 +36,7 @@ export default function useSelectAll<V extends SelectableView>(view: V, refresh:
             if(error) {
                 console.log(error);
             } else {
-                console.log(data);
+                // console.log(data);
                 setRowData(data as ViewRowMap[V][]);
             }
 

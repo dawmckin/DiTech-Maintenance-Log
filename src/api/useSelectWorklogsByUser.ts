@@ -23,6 +23,7 @@ export default function useSelectWorklogsByUser(userId: string): WorklogSummary[
                             location_site
                         ),
                         equipment (
+                            ditech_equipment_id,
                             equipment_name
                         )
                         `)

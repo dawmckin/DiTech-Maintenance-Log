@@ -80,7 +80,7 @@ export default function MaintenanceView({userId}) {
                                     <td>
                                         <div className="cell-stack">
                                             <span>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</span>
-                                            <span>[ID: {log.equipment_id}] - {log.equipment.equipment_name}</span>
+                                            <span>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</span>
                                         </div>
                                     </td>
                                     <td>

@@ -16,7 +16,7 @@ export default function useDeleteEquipment() {
         const {data, error} = await supabase
             .from('equipment')
             .delete()
-            .eq('equipment_id', equipmentData.equipment_id);
+            .eq('ditech_equipment_id', equipmentData.ditech_equipment_id);
 
         if (error) {
             console.log(error);

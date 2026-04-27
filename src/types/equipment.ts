@@ -1,5 +1,7 @@
 export interface Equipment {
     equipment_id: number;
+    ditech_equipment_id: string;
+    asset_number: string;
     equipment_name: string;
     workstation_id: number;
     workstations?: {

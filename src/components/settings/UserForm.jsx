@@ -54,10 +54,7 @@ export default function UserForm({onSuccess, initialData}) {
     const handleAddUser = async (e) => {
         e.preventDefault();
 
-        console.log(updatedFields);
-
         if(Object.entries(userForm).some(i => (i[1] === "" && i[0] !== 'user_id') && (initialData && i[0] !== 'password'))) {
-            console.log(userForm);
             showToast("Missing required fields.", "error");
             return;
         } else if(initialData && updatedFields.length === 0) {
@@ -201,7 +198,7 @@ export default function UserForm({onSuccess, initialData}) {
                 </select>
 
                 <div className="actions">
-                    <button type='submit' className="primary">Add User</button>
+                    <button type='submit' className="primary">{initialData ? 'Update' : 'Add'} User</button>
                 </div>
             </form>
         </>

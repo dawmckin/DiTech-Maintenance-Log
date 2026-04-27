@@ -85,9 +85,9 @@ export default function WorklogForm() {
     };
 
     
-    useEffect(() => {
-        // console.log(worklogFormData);
-    }, [worklogFormData]);
+    // useEffect(() => {
+    //     console.log(worklogFormData);
+    // }, [worklogFormData]);
 
     return (
         <div className="card">

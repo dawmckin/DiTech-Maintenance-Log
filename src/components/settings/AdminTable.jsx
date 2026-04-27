@@ -53,7 +53,8 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                 </tr> 
                             ) : (
                                 <tr>
-                                    <th>Equipment ID</th>
+                                    <th>Ditech Equipment ID</th>
+                                    <th>Asset Number</th>
                                     <th>Equipment Name</th>
                                     <th>Workstation ID</th>
                                     <th>Created At</th>
@@ -76,7 +77,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
                             if(view === 'users') rowKey = row.ditech_id;
                             else if(view === 'workstations') rowKey = row.workstation_id;
-                            else rowKey = row.equipment_id;
+                            else rowKey = row.ditech_equipment_id;
 
                             return (
                                 <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>

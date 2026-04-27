@@ -8,7 +8,8 @@ import useSelectWorkstations from "../../api/useSelectWorkstations";
 export default function EquipmentForm({onSuccess, initialData}) {
     const [updatedFields, setUpdatedFields] = useState([]);
     const [equipmentForm, setEquipmentForm] = useState({
-        equipment_id: "",
+        ditech_equipment_id: "",
+        asset_number: "",
         equipment_name: "",
         workstation_id: ""
     });
@@ -21,7 +22,8 @@ export default function EquipmentForm({onSuccess, initialData}) {
     useEffect(() => {
         if(initialData) {
             setEquipmentForm({
-                equipment_id: initialData.equipment_id || "",
+                ditech_equipment_id: initialData.ditech_equipment_id || "",
+                asset_number: initialData.asset_number || "",
                 equipment_name: initialData.equipment_name || "",
                 workstation_id: initialData.workstation_id || ""
             })
@@ -46,9 +48,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
     const handleAddEquipment = async (e) => {
         e.preventDefault();
 
-        console.log(equipmentForm);
-        console.log(updatedFields);
-
+        console.log(Object.entries(equipmentForm));
         if(Object.entries(equipmentForm).some(i => i[1] === "")) {
             showToast("Missing required fields.", "error");
             return;
@@ -66,7 +66,8 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 onSuccess?.();
 
                 setEquipmentForm({
-                    equipment_id: "",
+                    ditech_equipment_id: "",
+                    asset_number: "",
                     equipment_name: "",
                     workstation_id: ""
                 });
@@ -83,7 +84,8 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 onSuccess?.();
 
                 setEquipmentForm({
-                    equipment_id: "",
+                    ditech_equipment_id: "",
+                    asset_number: "",
                     equipment_name: "",
                     workstation_id: ""
                 });
@@ -98,11 +100,19 @@ export default function EquipmentForm({onSuccess, initialData}) {
     return (
         <>
             <form onSubmit={handleAddEquipment}>
-                <label>Equipment ID <span className="required-input">*</span></label>
+                <label>Ditech Equipment ID <span className="required-input">*</span></label>
                 <input 
-                    name='equipment_id' 
+                    name='ditech_equipment_id' 
                     type="text"
-                    value={equipmentForm.equipment_id || ""}
+                    value={equipmentForm.ditech_equipment_id || ""}
+                    onChange={handleChange}
+                />
+
+                <label>Asset Number <span className="required-input">*</span></label>
+                <input 
+                    name='asset_number' 
+                    type="text"
+                    value={equipmentForm.asset_number || ""}
                     onChange={handleChange}
                 />
 
@@ -136,7 +146,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 </select>
 
                 <div className="actions">
-                    <button type='submit' className="primary">Add Workstation</button>
+                    <button type='submit' className="primary">{initialData ? 'Update' : 'Add'} Equipment</button>
                 </div>
             </form>
         </>
