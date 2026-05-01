@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState, Fragment } from "react";
+import usePagination from "../../utils/usePagination";
+import Pagination from "../util/Pagination";
 import ExpandedRow from "./ExpandedRow";
 import "./history-table.css";
 import OpenIcon from "./../../assets/open-icon.svg";
@@ -10,10 +12,6 @@ export default function HistoryTable({logs, toggle, search}) {
     
     //search
     const [debouncedSearch, setDebouncedSearch] = useState(search);
-    
-    //pagination
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 8;
 
     //expanded rows
     const [expandedRows, setExpandedRows] = useState(new Set());
@@ -41,11 +39,6 @@ export default function HistoryTable({logs, toggle, search}) {
 
         return () => clearTimeout(timer);
     }, [search]);
-
-    //pagination
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [debouncedSearch, toggle]);
 
     //handle col click sorting
     const handleSort = (key) => {
@@ -85,7 +78,7 @@ export default function HistoryTable({logs, toggle, search}) {
 
     //sorting logic
     const sortedLogs = useMemo(() => {
-        let filtered = [...logs];
+        let filtered = Array.isArray(logs) ? [...logs] : [];
 
         if(debouncedSearch) {
             const searchableFields = [
@@ -148,166 +141,144 @@ export default function HistoryTable({logs, toggle, search}) {
         return filtered;
     }, [logs, debouncedSearch, sortConfig]);
 
-    //pagination logic
-    const totalPages = Math.ceil(sortedLogs.length / pageSize);
-
-    useEffect(() => {
-        if (currentPage > totalPages) {
-            setCurrentPage(totalPages || 1);
-        }
-    }, [totalPages]);
-
-    const paginatedLogs = useMemo(() => {
-        const start = (currentPage - 1) * pageSize;
-        return sortedLogs.slice(start, start + pageSize);
-    }, [sortedLogs, currentPage, pageSize]);
+    const pageSize = 8;
+    const {currentPage, setCurrentPage, paginatedData: paginatedLogs, totalPages} = usePagination(sortedLogs, pageSize);
 
     return (
-        <div className="table-wrapper">
-            <table className="history-table">
-                <thead>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th className="sortable" onClick={() => handleSort("issue_status")}>
-                            Status {getSortArrow("issue_status")}
-                        </th>
-                        {toggle === 'date' ? (
-                            <>
-                                <th className="sortable" onClick={() => handleSort("start_time")}>
-                                    Start Time {getSortArrow("start_time")}
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("workstation_id")}>
-                                    Workstation {getSortArrow("workstation_id")}
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("equipment_id")}>
-                                    Equipment {getSortArrow("equipment_id")}
-                                </th>
-                            </>
-                        ) : (
-                            <>
-                                <th className="sortable" onClick={() => handleSort("workstation_id")}>
-                                    Workstation {getSortArrow("workstation_id")}
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("equipment_id")}>
-                                    Equipment {getSortArrow("equipment_id")}
-                                </th>
-                                <th className="sortable" onClick={() => handleSort("start_time")}>
-                                    Start Time {getSortArrow("start_time")}
-                                </th>
-                            </>
-                        )}
-                        <th className="sortable" onClick={() => handleSort("end_time")}>
-                            End Time {getSortArrow("end_time")}
-                        </th>                           
-                        <th className="sortable" onClick={() => handleSort("issue_type")}>
-                            Issue Type {getSortArrow("issue_type")}
-                        </th>
-                        <th>
-                            Issue Description
-                        </th>
-                    </tr> 
-                </thead>
-
-                <tbody>
-                    {paginatedLogs.length === 0 ? (
+        <>
+            <div className="table-wrapper">
+                <table className="history-table">
+                    <thead>
                         <tr>
-                            <td colSpan="8" style={{ textAlign: "center", padding: "16px" }}>
-                                No results found
-                            </td>
-                        </tr>
-                    ) : (
-                        paginatedLogs.map((log) => {
-                            const isExpanded = expandedRows.has(log.ticket_id);
-                            const expandable = log.notes.length > 0 && log.issue_status === 'completed';
+                            <th>
+                                ID
+                            </th>
+                            <th className="sortable" onClick={() => handleSort("issue_status")}>
+                                Status {getSortArrow("issue_status")}
+                            </th>
+                            {toggle === 'date' ? (
+                                <>
+                                    <th className="sortable" onClick={() => handleSort("start_time")}>
+                                        Start Time {getSortArrow("start_time")}
+                                    </th>
+                                    <th className="sortable" onClick={() => handleSort("workstation_id")}>
+                                        Workstation {getSortArrow("workstation_id")}
+                                    </th>
+                                    <th className="sortable" onClick={() => handleSort("equipment_id")}>
+                                        Equipment {getSortArrow("equipment_id")}
+                                    </th>
+                                </>
+                            ) : (
+                                <>
+                                    <th className="sortable" onClick={() => handleSort("workstation_id")}>
+                                        Workstation {getSortArrow("workstation_id")}
+                                    </th>
+                                    <th className="sortable" onClick={() => handleSort("equipment_id")}>
+                                        Equipment {getSortArrow("equipment_id")}
+                                    </th>
+                                    <th className="sortable" onClick={() => handleSort("start_time")}>
+                                        Start Time {getSortArrow("start_time")}
+                                    </th>
+                                </>
+                            )}
+                            <th className="sortable" onClick={() => handleSort("end_time")}>
+                                End Time {getSortArrow("end_time")}
+                            </th>                           
+                            <th className="sortable" onClick={() => handleSort("issue_type")}>
+                                Issue Type {getSortArrow("issue_type")}
+                            </th>
+                            <th>
+                                Issue Description
+                            </th>
+                        </tr> 
+                    </thead>
 
-                            return (
-                                <Fragment key={log.ticket_id}>
-                                    <tr
-                                        onClick={() => toggleRow(log.ticket_id, log.issue_status)}
-                                        style={{
-                                            cursor: (expandable) ? "pointer" : "default"
-                                        }}
-                                    >
-                                        <td>
-                                            <div className="d-flex justify-content-between">
-                                                <div><strong>{log.ticket_id}</strong></div>
-                                                <div>
-                                                    {expandable ? 
-                                                        (isExpanded) ? 
-                                                            <i className="bi bi-chevron-up"></i> : 
-                                                            <i className="bi bi-chevron-down"></i> :
-                                                        <span></span>
-                                                    }
+                    <tbody>
+                        {paginatedLogs?.length === 0 ? (
+                            <tr>
+                                <td colSpan="8" style={{ textAlign: "center", padding: "16px" }}>
+                                    No results found
+                                </td>
+                            </tr>
+                        ) : (
+                            paginatedLogs?.map((log) => {
+                                const isExpanded = expandedRows.has(log.ticket_id);
+                                const expandable = log.notes?.length > 0 && log.issue_status === 'completed';
+
+                                return (
+                                    <Fragment key={log.ticket_id}>
+                                        <tr
+                                            onClick={() => toggleRow(log.ticket_id, log.issue_status)}
+                                            style={{
+                                                cursor: (expandable) ? "pointer" : "default"
+                                            }}
+                                        >
+                                            <td>
+                                                <div className="d-flex justify-content-between">
+                                                    <div><strong>{log.ticket_id}</strong></div>
+                                                    <div className="ml-2"> 
+                                                        {expandable ? 
+                                                            (isExpanded) ? 
+                                                                <i className="bi bi-chevron-up"></i> : 
+                                                                <i className="bi bi-chevron-down"></i> :
+                                                            <span></span>
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center align-middle">
-                                            <div className="status-tooltip">
-                                                {log.issue_status === 'open'
-                                                    ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
-                                                    : <img src={CompetedIcon} alt="Completed" />
-                                                }
-                                                <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
-                                            </div>
-                                        </td>
+                                            </td>
+                                            <td className="text-center align-middle">
+                                                <div className="status-tooltip">
+                                                    {log.issue_status === 'open'
+                                                        ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
+                                                        : <img src={CompetedIcon} alt="Completed" />
+                                                    }
+                                                    <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
+                                                </div>
+                                            </td>
 
-                                        {toggle === 'date' ? (
-                                            <>
-                                                <td>{new Date(log.start_time).toLocaleString()}</td>
-                                                <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
-                                                <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <td>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</td>
-                                                <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
-                                                <td>{new Date(log.start_time).toLocaleString()}</td>
-                                            </>
+                                            {toggle === 'date' ? (
+                                                <>
+                                                    <td>{new Date(log.start_time).toLocaleString()}</td>
+                                                    <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
+                                                    <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
+                                                    <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
+                                                    <td>{new Date(log.start_time).toLocaleString()}</td>
+                                                </>
+                                            )}
+
+                                            <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
+                                            <td>{log.issue_type}</td>
+                                            <td>{log.issue_description}</td>
+                                        </tr>
+
+                                        {(isExpanded && expandable) && (
+                                            <ExpandedRow logData={{
+                                                name: `${log.users.first_name} ${log.users.last_name}`,
+                                                start_time: log.start_time,
+                                                end_time: log.end_time,
+                                                notes: log.notes 
+                                            }} colSpan={8} isExpanded={isExpanded} />
                                         )}
+                                    </Fragment>
+                                );
+                            })
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
-                                        <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
-                                        <td>{log.issue_type}</td>
-                                        <td>{log.issue_description}</td>
-                                    </tr>
-
-                                    {(isExpanded && expandable) && (
-                                        <ExpandedRow logData={{
-                                            name: `${log.users.first_name} ${log.users.last_name}`,
-                                            start_time: log.start_time,
-                                            end_time: log.end_time,
-                                            notes: log.notes 
-                                        }} colSpan={8} isExpanded={isExpanded} />
-                                    )}
-                                </Fragment>
-                            );
-                        })
-                    )}
-                </tbody>
-            </table>
-
-            {totalPages > 1 && (
-                <div className="pagination">
-                    <p>
-                        Showing <strong>{(currentPage * pageSize) - (pageSize - 1)} - {(currentPage * pageSize) > sortedLogs.length ? sortedLogs.length : (currentPage * pageSize)}</strong> of
-                        <strong> {sortedLogs.length}</strong> results
-                    </p>
-
-                    <div>
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                            <button
-                                key={page}
-                                className={page === currentPage ? "active" : ""}
-                                onClick={() => setCurrentPage(page)}
-                            >
-                                {page}
-                            </button>
-                        ))}                       
-                    </div>
-                </div>
-            )}   
-        </div>
+            <Pagination 
+                currentPage={currentPage} 
+                totalPages={totalPages} 
+                onPageChange={setCurrentPage} 
+                totalItems={sortedLogs.length} 
+                pageSize={pageSize}
+            />
+        </>
 
     );
 
