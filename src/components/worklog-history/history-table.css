@@ -218,13 +218,13 @@
 
   .pagination p {
     margin: 0;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
 
   .pagination button {
     margin: 0 4px;
-    padding: 4px 5px;
-    font-size: 0.75rem;
+    padding: 4px 6px;
+    font-size: 0.85rem;
   }
 
   .history-table tr:hover,
