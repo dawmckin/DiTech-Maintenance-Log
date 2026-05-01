@@ -90,7 +90,8 @@ export default function HistoryTable({logs, toggle, search}) {
         if(debouncedSearch) {
             const searchableFields = [
                 "workstation_id",
-                "equipment_id",
+                "workstations",
+                "equipment",
                 "issue_type",
                 "ticket_id",
                 "issue_status",
@@ -105,12 +106,17 @@ export default function HistoryTable({logs, toggle, search}) {
 
                     if(value === null || value === undefined) return false;
 
-                    if (field === "start_time" || field === "end_time") {
-                        return new Date(value)
-                            .toLocaleString()
-                            .toLowerCase()
-                            .includes(lowercasedSearch);
+                    if(field === "start_time" || field === "end_time") {
+                        return new Date(value).toLocaleString().toLowerCase().includes(lowercasedSearch);
                     }
+
+                    if(field === 'equipment') {
+                        return String(value?.equipment_name).toLowerCase().includes(lowercasedSearch) || String(value?.ditech_equipment_id).toLowerCase().includes(lowercasedSearch);
+                    }
+
+                    if(field === 'workstations') {
+                        return String(value?.location_site).toLowerCase().includes(lowercasedSearch);
+                    } 
 
                     return String(value).toLowerCase().includes(lowercasedSearch);
                 })
@@ -162,7 +168,7 @@ export default function HistoryTable({logs, toggle, search}) {
                 <thead>
                     <tr>
                         <th>
-                            Ticket ID
+                            ID
                         </th>
                         <th className="sortable" onClick={() => handleSort("issue_status")}>
                             Status {getSortArrow("issue_status")}

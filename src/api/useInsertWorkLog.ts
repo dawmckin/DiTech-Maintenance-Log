@@ -11,6 +11,7 @@ export default function useInsertWorklog() {
     const { showLoader, hideLoader } = useLoader();
 
     const insertWorklog = async (worklog: WorklogInsert): Promise<InsertResult> => {
+        console.log(worklog);
         setError(null);
 
         showLoader();
