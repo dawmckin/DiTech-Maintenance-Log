@@ -219,6 +219,10 @@ button.primary:hover {
   }
 }
 
+button.primary:disabled {
+  background: grey;
+}
+
 /* DASHBOARD */
 .log-action {
   margin-bottom: 20px;
