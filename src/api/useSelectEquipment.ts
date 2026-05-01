@@ -22,7 +22,7 @@ export default function useSelectEquipment(wsId: number | null): Equipment[] {
                 .from('equipment')
                 .select('*')
                 .eq('workstation_id', wsId)
-                .order('equipment_id');
+                .order('plex_equipment_id');
 
             if(error) {
                 console.log(error);

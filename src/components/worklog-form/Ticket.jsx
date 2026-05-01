@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import formatDateTime from "../../utils/format-date-time";
+import formatDuration from "../../utils/format-duration";
 
 import useSelectWorklogById from "../../api/useSelectWorklogById";
 import useInsertNote from "../../api/useInsertNote";
@@ -21,6 +22,10 @@ export default function Ticket() {
     const [notes, setNotes] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
+
+    const duration = (worklogData?.end_time) ? 
+                        new Date(worklogData?.end_time) - new Date(worklogData?.start_time) : 
+                        new Date() - new Date(worklogData?.start_time);
 
     const { insertNote, insertNoteStatus, insertNoteError } = useInsertNote();
     const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
@@ -74,21 +79,23 @@ export default function Ticket() {
                     </div>
                     <div>
                         <strong>Start Time:</strong>
-                        <span>{formatDateTime((worklogData?.start_time))}</span>
+                        <span>{formatDateTime(worklogData?.start_time)}</span>
                     </div>
                     {
                         (worklogData?.end_time) ? 
                         (
                             <div>
                                 <strong>End Time:</strong>
-                                <span>{formatDateTime((worklogData?.end_time))}</span>
+                                <span>{formatDateTime(worklogData?.end_time)}</span>
                             </div>
                         ) : (
                             <></>
                         )
                     }
-            
-
+                    <div>
+                        <strong>Downtime:</strong>
+                        <span>{formatDuration(duration)}</span>
+                    </div>
                 </div>
                 <div className="col-3 p-0 d-flex justify-content-end">
                     <Link to="/dashboard">
@@ -102,7 +109,7 @@ export default function Ticket() {
 
             <div className="readonly">
                 <p><label>Workstation #:</label> {worklogData?.workstation_id} - {worklogData?.workstations?.location_site.toUpperCase()}</p>
-                <p><label>Equipment:</label>[ID: {worklogData?.equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
+                <p><label>Equipment:</label>[ID: {worklogData?.equipment?.plex_equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
                 <p><label>Issue Description:</label> {worklogData?.issue_description}</p>
             </div>
             

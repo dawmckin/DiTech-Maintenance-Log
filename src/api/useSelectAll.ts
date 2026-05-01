@@ -7,9 +7,15 @@ import type { Workstation } from "../types/workstation";
 import type { Equipment } from "../types/equipment";
 
 const TABLE_SELECTS = {
-    users: 'user_id, ditech_id, first_name, last_name, email, user_role, created_at',
+    users: 'user_id, ditech_id, last_name, first_name, email, user_role, created_at',
     workstations: 'workstation_id, location_site, created_at',
     equipment: 'plex_equipment_id, asset_number, equipment_name, workstation_id, created_at'
+} as const;
+
+const TABLE_ORDERS = {
+    users: 'last_name',
+    workstations: 'workstation_id',
+    equipment: 'plex_equipment_id'
 } as const;
 
 export type SelectableView = keyof typeof TABLE_SELECTS;
@@ -32,6 +38,7 @@ export default function useSelectAll<V extends SelectableView>(view: V, refresh:
             const {data, error} = await supabase
                 .from(view)
                 .select(TABLE_SELECTS[view])
+                .order(TABLE_ORDERS[view])
 
             if(error) {
                 console.log(error);
