@@ -13,7 +13,6 @@ export default function WorklogHistory() {
     const [toggle, setToggle] = useState("workstation");
 
     const worklogs = useSelectWorklogs();
-    console.log(worklogs);
 
     const handleExport = () => {
         const formattedData = worklogs.map(log => ({

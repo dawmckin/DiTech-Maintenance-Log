@@ -57,7 +57,7 @@ export default function Ticket() {
     return (
         <div className="card">
             <div className="row m-0">
-                <div className="top-meta col-8 p-0">
+                <div className="top-meta col-9 p-0">
                     <div className="d-flex">
                         <strong>Status:</strong>
                         <div className="status-tooltip align-items-start ml-2">
@@ -90,7 +90,7 @@ export default function Ticket() {
             
 
                 </div>
-                <div className="col-4 p-0 d-flex justify-content-end">
+                <div className="col-3 p-0 d-flex justify-content-end">
                     <Link to="/dashboard">
                         <button className="primary log-action cancel">{worklogData?.issue_status === 'completed' ? 'Close' : 'Cancel'}</button>
                     </Link>    

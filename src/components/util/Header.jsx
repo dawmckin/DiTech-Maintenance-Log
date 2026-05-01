@@ -1,5 +1,5 @@
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
 
 import ditechLogo from "./../../assets/ditech-logo.png";
@@ -32,12 +32,27 @@ export default function Header() {
                 }
             </div>
             <nav>
-                <Link to="/dashboard">Dashboard</Link>
+                <NavLink 
+                    to="/dashboard"
+                    className={({isActive}) => isActive ? "active" : ""}  
+                >
+                    Dashboard
+                </NavLink>
                 {
                     isAdmin ? (
                         <>
-                            <Link to="/logs">Logs</Link>
-                            <Link to="/settings">Settings</Link>
+                            <NavLink 
+                                to="/logs"
+                                className={({isActive}) => isActive ? "active" : ""}
+                            >
+                                Logs
+                            </NavLink>
+                            <NavLink 
+                                to="/settings"
+                                className={({isActive}) => isActive ? "active" : ""}
+                            >
+                                Settings
+                            </NavLink>
                         </>
                     ) : (
                         <></>

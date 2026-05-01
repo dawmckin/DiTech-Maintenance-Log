@@ -32,7 +32,7 @@ export default function WorklogForm() {
 
         setWorklogFormData((prev) => ({
             ...prev,
-            ...(value.includes(',')) ? (
+            ...(name === "equipmentName" && value.includes(',')) ? (
                 {
                     equipmentId: value.split(',')[0], 
                     equipmentName : value.split(',')[1]
@@ -58,12 +58,14 @@ export default function WorklogForm() {
         } 
 
         try {
+            console.log(worklogFormData);
             const startTime = new Date().toISOString();
             
             const updatedForm = {
                 ...worklogFormData,
                 startTime
             }
+            console.log(updatedForm);
             setWorklogFormData(updatedForm);
             const result = await insertWorklog(updatedForm);
 
