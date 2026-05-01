@@ -19,7 +19,7 @@ export default function WorklogHistory() {
             TicketID: log.ticketId,
             Workstation: log.workstation_id,
             Location: log.workstations?.location_site,
-            DitechEquipmentID: log.ditech_equipment_id,
+            DitechEquipmentID: log.plex_equipment_id,
             AssetNumber: log.asset_number,
             EquipmentName: log.equipment?.equipment_name,
             IssueType: log.issue_type,

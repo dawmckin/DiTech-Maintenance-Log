@@ -64,7 +64,7 @@ export default function MaintenanceView({userId}) {
                                         <td>
                                             <div className="cell-stack">
                                                 <span>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</span>
-                                                <span>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</span>
+                                                <span>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</span>
                                             </div>
                                         </td>
                                         <td>
@@ -92,7 +92,7 @@ export default function MaintenanceView({userId}) {
                     </tbody>
                 </table> 
             </div>
-            
+
             <Pagination 
                 currentPage={currentPage} 
                 totalPages={totalPages} 

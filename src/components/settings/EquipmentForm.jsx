@@ -8,7 +8,7 @@ import useSelectWorkstations from "../../api/useSelectWorkstations";
 export default function EquipmentForm({onSuccess, initialData}) {
     const [updatedFields, setUpdatedFields] = useState([]);
     const [equipmentForm, setEquipmentForm] = useState({
-        ditech_equipment_id: "",
+        plex_equipment_id: "",
         asset_number: "",
         equipment_name: "",
         workstation_id: ""
@@ -22,7 +22,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
     useEffect(() => {
         if(initialData) {
             setEquipmentForm({
-                ditech_equipment_id: initialData.ditech_equipment_id || "",
+                plex_equipment_id: initialData.plex_equipment_id || "",
                 asset_number: initialData.asset_number || "",
                 equipment_name: initialData.equipment_name || "",
                 workstation_id: initialData.workstation_id || ""
@@ -66,7 +66,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 onSuccess?.();
 
                 setEquipmentForm({
-                    ditech_equipment_id: "",
+                    plex_equipment_id: "",
                     asset_number: "",
                     equipment_name: "",
                     workstation_id: ""
@@ -84,7 +84,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 onSuccess?.();
 
                 setEquipmentForm({
-                    ditech_equipment_id: "",
+                    plex_equipment_id: "",
                     asset_number: "",
                     equipment_name: "",
                     workstation_id: ""
@@ -102,9 +102,9 @@ export default function EquipmentForm({onSuccess, initialData}) {
             <form onSubmit={handleAddEquipment}>
                 <label>Ditech Equipment ID <span className="required-input">*</span></label>
                 <input 
-                    name='ditech_equipment_id' 
+                    name='plex_equipment_id' 
                     type="text"
-                    value={equipmentForm.ditech_equipment_id || ""}
+                    value={equipmentForm.plex_equipment_id || ""}
                     onChange={handleChange}
                 />
 

@@ -9,7 +9,7 @@ import type { Equipment } from "../types/equipment";
 const TABLE_SELECTS = {
     users: 'user_id, ditech_id, first_name, last_name, email, user_role, created_at',
     workstations: 'workstation_id, location_site, created_at',
-    equipment: 'ditech_equipment_id, asset_number, equipment_name, workstation_id, created_at'
+    equipment: 'plex_equipment_id, asset_number, equipment_name, workstation_id, created_at'
 } as const;
 
 export type SelectableView = keyof typeof TABLE_SELECTS;
