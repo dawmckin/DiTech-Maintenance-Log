@@ -120,8 +120,8 @@ export default function HistoryTable({logs, toggle, search}) {
         filtered.sort((a, b) => {
             const {key, direction} = sortConfig;
 
-            let valueA = a[key];
-            let valueB = b[key];
+            let valueA = key !== 'equipment' ? a[key] : a[key].plex_equipment_id;
+            let valueB = key !== 'equipment' ? b[key] : b[key].plex_equipment_id;
 
             if (valueA == null) return 1;
             if (valueB == null) return -1;
@@ -164,8 +164,8 @@ export default function HistoryTable({logs, toggle, search}) {
                                     <th className="sortable" onClick={() => handleSort("workstation_id")}>
                                         Workstation {getSortArrow("workstation_id")}
                                     </th>
-                                    <th className="sortable" onClick={() => handleSort("equipment_id")}>
-                                        Equipment {getSortArrow("equipment_id")}
+                                    <th className="sortable" onClick={() => handleSort("equipment")}>
+                                        Equipment {getSortArrow("equipment")}
                                     </th>
                                 </>
                             ) : (
@@ -173,8 +173,8 @@ export default function HistoryTable({logs, toggle, search}) {
                                     <th className="sortable" onClick={() => handleSort("workstation_id")}>
                                         Workstation {getSortArrow("workstation_id")}
                                     </th>
-                                    <th className="sortable" onClick={() => handleSort("equipment_id")}>
-                                        Equipment {getSortArrow("equipment_id")}
+                                    <th className="sortable" onClick={() => handleSort("equipment")}>
+                                        Equipment {getSortArrow("equipment")}
                                     </th>
                                     <th className="sortable" onClick={() => handleSort("start_time")}>
                                         Start Time {getSortArrow("start_time")}

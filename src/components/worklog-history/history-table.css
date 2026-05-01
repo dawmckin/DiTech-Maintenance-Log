@@ -124,6 +124,10 @@
     color: white;
 }
 
+.pagination button:disabled {
+  cursor: not-allowed;
+}
+
 .pagination p {
     margin: auto .25rem;
 }
@@ -208,19 +212,19 @@
   .pagination {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 4px;
     text-align: center;
   }
 
   .pagination p {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 
   .pagination button {
     margin: 0 4px;
-    padding: 8px 10px;
-    font-size: 0.85rem;
+    padding: 4px 5px;
+    font-size: 0.75rem;
   }
 
   .history-table tr:hover,

@@ -19,7 +19,9 @@ export default function useSelectWorklogById(ticketId: number): Worklog | undefi
                             location_site
                         ),
                         equipment (
-                            equipment_name
+                            equipment_name,
+                            plex_equipment_id,
+                            asset_number
                         ),
                         notes (
                             note_text,

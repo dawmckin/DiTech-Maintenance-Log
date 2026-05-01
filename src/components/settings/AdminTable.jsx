@@ -42,30 +42,30 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                         {
                             (view === 'users') ? (
                                 <tr>
-                                    <th>DiTech ID</th>
-                                    <th>First Name</th>
+                                    <th>ID</th>
                                     <th>Last Name</th>
+                                    <th>First Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Created At</th>
-                                    <th className="text-center">Edit / Disable</th>
+                                    <th></th>
                                 </tr>
                             ) : (
                                 (view === 'workstations') ? (
                                     <tr>
-                                        <th>Workstation ID</th>
+                                        <th>ID</th>
                                         <th>Location</th>
                                         <th>Created At</th>
-                                        <th className="text-center">Edit / Delete</th>
+                                        <th></th>
                                     </tr> 
                                 ) : (
                                     <tr>
-                                        <th>PLEX Equipment ID</th>
+                                        <th>PLEX ID</th>
                                         <th>Asset Number</th>
                                         <th>Equipment Name</th>
                                         <th>Workstation ID</th>
                                         <th>Created At</th>
-                                        <th className="text-center">Edit / Delete</th>
+                                        <th></th>
                                     </tr>
                                 )
                             )
@@ -112,7 +112,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                             ))
                                         }
                                         <td>
-                                            <div className="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+                                            <div className="d-flex justify-content-end align-items-center gap-2 flex-nowrap">
                                                 <button className="primary log-action edit mb-0 mx-2"
                                                     onClick={() => onEdit(row)}
                                                     style={{width: '3rem', maxHeight: '2rem', padding: '5px'}}>
