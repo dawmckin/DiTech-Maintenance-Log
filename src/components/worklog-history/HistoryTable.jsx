@@ -104,7 +104,7 @@ export default function HistoryTable({logs, toggle, search}) {
                     }
 
                     if(field === 'equipment') {
-                        return String(value?.equipment_name).toLowerCase().includes(lowercasedSearch) || String(value?.ditech_equipment_id).toLowerCase().includes(lowercasedSearch);
+                        return String(value?.equipment_name).toLowerCase().includes(lowercasedSearch) || String(value?.plex_equipment_id).toLowerCase().includes(lowercasedSearch);
                     }
 
                     if(field === 'workstations') {
@@ -240,12 +240,12 @@ export default function HistoryTable({logs, toggle, search}) {
                                                 <>
                                                     <td>{new Date(log.start_time).toLocaleString()}</td>
                                                     <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
-                                                    <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
+                                                    <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
                                                 </>
                                             ) : (
                                                 <>
                                                     <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
-                                                    <td>[{log.equipment?.ditech_equipment_id}] - {log.equipment.equipment_name}</td>
+                                                    <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
                                                     <td>{new Date(log.start_time).toLocaleString()}</td>
                                                 </>
                                             )}

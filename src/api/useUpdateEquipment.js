@@ -16,7 +16,7 @@ export default function useUpdateEquipment() {
         const {data, error} = await supabase
             .from('equipment')
             .update(equipmentData)
-            .eq('ditech_equipment_id', equipmentData.ditech_equipment_id);
+            .eq('plex_equipment_id', equipmentData.plex_equipment_id);
 
         if (error) {
             console.log(error);

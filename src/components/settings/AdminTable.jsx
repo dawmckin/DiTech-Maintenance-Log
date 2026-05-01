@@ -48,7 +48,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Created At</th>
-                                    <th></th>
+                                    <th className="text-center">Edit / Disable</th>
                                 </tr>
                             ) : (
                                 (view === 'workstations') ? (
@@ -56,16 +56,16 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                         <th>Workstation ID</th>
                                         <th>Location</th>
                                         <th>Created At</th>
-                                        <th></th>
+                                        <th className="text-center">Edit / Delete</th>
                                     </tr> 
                                 ) : (
                                     <tr>
-                                        <th>Ditech Equipment ID</th>
+                                        <th>PLEX Equipment ID</th>
                                         <th>Asset Number</th>
                                         <th>Equipment Name</th>
                                         <th>Workstation ID</th>
                                         <th>Created At</th>
-                                        <th></th>
+                                        <th className="text-center">Edit / Delete</th>
                                     </tr>
                                 )
                             )
@@ -84,7 +84,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
                                 if(view === 'users') rowKey = row.ditech_id;
                                 else if(view === 'workstations') rowKey = row.workstation_id;
-                                else rowKey = row.ditech_equipment_id;
+                                else rowKey = row.plex_equipment_id;
 
                                 return (
                                     <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
@@ -112,7 +112,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                             ))
                                         }
                                         <td>
-                                            <div className="d-flex justify-content-end align-items-center gap-2 flex-nowrap">
+                                            <div className="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
                                                 <button className="primary log-action edit mb-0 mx-2"
                                                     onClick={() => onEdit(row)}
                                                     style={{width: '3rem', maxHeight: '2rem', padding: '5px'}}>

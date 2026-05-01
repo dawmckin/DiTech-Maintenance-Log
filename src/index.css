@@ -221,6 +221,7 @@ button.primary:hover {
 
 button.primary:disabled {
   background: grey;
+  cursor: not-allowed;
 }
 
 /* DASHBOARD */
