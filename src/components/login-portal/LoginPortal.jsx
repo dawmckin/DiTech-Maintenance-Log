@@ -43,7 +43,7 @@ export default function LoginPortal() {
             navigate('/dashboard');
         } else {
             setError(result.error);
-            showToast("Invalid Credentials.", "error");
+            showToast(result.error?.message ?? "Invalid Credentials.", "error");
         }
 
         setLoading(false);

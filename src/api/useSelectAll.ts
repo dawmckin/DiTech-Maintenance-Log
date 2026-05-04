@@ -7,7 +7,7 @@ import type { Workstation } from "../types/workstation";
 import type { Equipment } from "../types/equipment";
 
 const TABLE_SELECTS = {
-    users: 'user_id, ditech_id, last_name, first_name, email, user_role, created_at',
+    users: 'user_id, ditech_id, last_name, first_name, email, user_role, user_status, created_at',
     workstations: 'workstation_id, location_site, created_at',
     equipment: 'plex_equipment_id, asset_number, equipment_name, workstation_id, created_at'
 } as const;
