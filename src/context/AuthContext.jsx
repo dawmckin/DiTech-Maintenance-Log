@@ -12,7 +12,14 @@ export function AuthProvider({children}) {
         const init = async () => {
             const { data } = await supabase.auth.getSession();
 
-            setUser(data?.session?.user ?? null);
+            const sessionUser = data?.session?.user ?? null;
+
+            if(sessionUser?.user_metadata?.status === 'disabled') {
+                await supabase.auth.signOut();
+                setUser(null);
+            } else {
+                setUser(sessionUser);
+            }
 
             const onResetPage =
                 window.location.pathname === "/reset-password";
@@ -30,10 +37,16 @@ export function AuthProvider({children}) {
 
         init();
 
-        const {
-        data: { subscription }
-        } = supabase.auth.onAuthStateChange((event, session) => {
-            setUser(session?.user ?? null);
+        const {data: { subscription }} = supabase.auth.onAuthStateChange(async (event, session) => {
+            const sessionUser = session?.user ?? null;
+
+            if(sessionUser?.user_metadata?.status === 'disabled') {
+                await supabase.auth.signOut();
+                setUser(null);
+                return;
+            }
+
+            setUser(sessionUser);
 
             if (event === "PASSWORD_RECOVERY") {
                 setIsRecoveryMode(true);
@@ -62,6 +75,11 @@ export function AuthProvider({children}) {
             return {success: false, error};
         }
 
+        if(data?.user?.user_metadata?.status === 'disabled') {
+            await supabase.auth.signOut();
+            return {success: false, error: {message: 'User is disabled.'}};
+        }
+
         setUser(data.user);
         return {success: true};
     }
@@ -72,20 +90,27 @@ export function AuthProvider({children}) {
     }
 
     const updateAuthUser = async (userId, userData) => {
-        // console.log(userId, userData)
-        const {data, error} = await supabase.auth.admin.updateUserById(userId, userData);
-        // const {data, error} = await supabase.auth.updateUser({
-        //     data: {
-        //         display_name: "Jhonny Test"
-        //     }
-        // });
+        const session = await supabase.auth.getSession();
 
-        if(error) {
-            console.log(error);
-            return {success: false};
+        const res = await fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-update-user`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${session.data.session.access_token}`
+                },
+                body: JSON.stringify({user_id: userId, ...userData})
+            }
+        );
+
+        const result = await res.json();
+
+        if(!res.ok) {
+            return {success: false, error: result.error}
         }
 
-        return {success: true, data};
+        return {success: true, data: result.data}
     }
 
     const signUpUser = async (email, password, display_name, user_role) => {
@@ -93,7 +118,7 @@ export function AuthProvider({children}) {
             email,
             password,
             options: {
-                data: {display_name, user_role}
+                data: {display_name, user_role, status: 'active'}
             }
         });
 

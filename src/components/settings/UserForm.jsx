@@ -65,20 +65,18 @@ export default function UserForm({onSuccess, initialData}) {
         if(initialData) {
             let authUpdatedData = {
                 email: userForm.email,
-                user_metadata: {display_name: `${userForm.first_name} ${userForm.last_name}`}
+                user_metadata: {
+                    display_name: `${userForm.first_name} ${userForm.last_name}`,
+                    user_role: userForm.user_role,
+                    sub: userForm.user_id,
+                    email: userForm.email,
+                }
             };
-            // if(updatedFields.includes('email') && (updatedFields.includes('first_name') || updatedFields.includes('last_name'))) {
-            //     authUpdatedData = {email: userForm.email, data: {display_name: `${userForm.first_name} ${userForm.last_name}`}};
-            // } else if(updatedFields.includes('email')) {
-            //     authUpdatedData = {email: userForm.email};
-            // } else if (updatedFields.includes('first_name') || updatedFields.includes('last_name')) {
-            //     authUpdatedData = {display_name: `${userForm.first_name} ${userForm.last_name}`};
-            // }
 
             const authResult = await updateAuthUser(initialData.user_id, authUpdatedData);
 
             if(authResult.success) {
-                showToast("User updated to Auth successfully.", "success");
+                // showToast("User updated to Auth successfully.", "success");
                 
                 const userId = authResult.data.user.id;
                 
@@ -104,7 +102,7 @@ export default function UserForm({onSuccess, initialData}) {
                 }
             } else {
                 console.log(authResult.error);
-                showToast("Unable to add user.", 'error')  
+                showToast("Unable to update user.", 'error')  
             }
         } else {
             const authResult = await signUpUser(userForm.email, userForm.password, `${userForm.first_name} ${userForm.last_name}`, userForm.user_role);

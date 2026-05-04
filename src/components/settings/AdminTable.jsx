@@ -8,28 +8,7 @@ import formatDateTime from "../../utils/format-date-time";
 import "../worklog-history/history-table.css";
 
 export default function AdminTable({view, rowData, onEdit, onDelete}) {
-    const upperCaseFields = ['location_site', 'user_role'];
-
-    //pagination
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const pageSize = 8;
-
-    // useEffect(() => {
-    //     setCurrentPage(1);
-    // }, [view]);
-
-    // const totalPages = Math.ceil(rowData.length / pageSize);
-
-    // useEffect(() => {
-    //     if (currentPage > totalPages) {
-    //         setCurrentPage(totalPages || 1);
-    //     }
-    // }, [totalPages]);
-
-    // const paginatedData = useMemo(() => {
-    //     const start = (currentPage - 1) * pageSize;
-    //     return rowData.slice(start, start + pageSize);
-    // }, [rowData, currentPage, pageSize]);
+    const upperCaseFields = ['location_site', 'user_role', 'user_status'];
 
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData, totalPages} = usePagination(rowData, pageSize);
@@ -47,6 +26,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                     <th>First Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
                                     <th></th>
                                 </tr>
@@ -118,15 +98,24 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                                     style={{width: '3rem', maxHeight: '2rem', padding: '5px'}}>
                                                     <i className="bi bi-pencil-square"></i>
                                                 </button>
-                                                <button className="primary log-action cancel mb-0 mx-2"
+                                                <button className={`primary log-action ${view === 'users' && row?.user_status === 'disabled' ? 'edit': 'cancel'} mb-0 mx-2`}
                                                     onClick={() => onDelete(row)}
                                                     style={{width: '3rem', maxHeight: '2rem', padding: '5px'}}>
                                                     {
                                                         (view === 'users') ? 
                                                         (
-                                                            <>
-                                                                <i className="bi bi-slash-circle"></i>
-                                                            </>
+                                                            (row?.user_status === 'active') ? 
+                                                            (
+                                                                <>
+                                                                    <i className="bi bi-slash-circle"></i>
+                                                                </>
+                                                            ) : 
+                                                            (
+                                                                <>
+                                                                    <i className="bi bi-check-square"></i>
+                                                                </>
+                                                            )
+
                                                         ) : 
                                                         (
                                                             <>
