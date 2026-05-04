@@ -4,7 +4,7 @@ import { useLoader } from "../context/LoaderContext";
 
 import type { WorklogSummary } from "../types/worklog";
 
-export default function useSelectWorklogsByUser(userId: string): WorklogSummary[] {
+export default function useSelectWorklogsByUser(userId: string, refreshKey: number = 0): WorklogSummary[] {
     const [worklogs, setWorklogs] = useState<WorklogSummary[]>([]);
 
     const { showLoader, hideLoader } = useLoader();
@@ -40,7 +40,7 @@ export default function useSelectWorklogsByUser(userId: string): WorklogSummary[
         }
 
         selectWorklogsByUser();
-    }, []);
+    }, [userId, refreshKey]);
 
     return worklogs;
 }

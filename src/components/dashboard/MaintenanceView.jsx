@@ -11,8 +11,8 @@ import CompetedIcon from "./../../assets/completed-icon.svg";
 
 import useSelectWorklogsByUser from "../../api/useSelectWorklogsByUser";
 
-export default function MaintenanceView({userId}) {
-    const logs = useSelectWorklogsByUser(userId);
+export default function MaintenanceView({userId, refreshKey}) {
+    const logs = useSelectWorklogsByUser(userId, refreshKey);
 
     const navigate = useNavigate();
 
@@ -50,29 +50,29 @@ export default function MaintenanceView({userId}) {
                         ) : (
                             paginatedLogs?.map((log) => {
                                 return (
-                                    <tr key={log.ticket_id}>
-                                        <td><strong>{log.ticket_id}</strong></td>
+                                    <tr key={log?.ticket_id}>
+                                        <td><strong>{log?.ticket_id}</strong></td>
                                         <td className="align-middle text-center">
                                             <div className="status-tooltip">
-                                                {log.issue_status === 'open'
+                                                {log?.issue_status === 'open'
                                                     ? <img src={OpenIcon} className="pulse-icon" alt="Open" />
                                                     : <img src={CompetedIcon} alt="Completed" />
                                                 }
-                                                <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
+                                                <span className="status-tooltip-text">{log?.issue_status?.toUpperCase()}</span>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="cell-stack">
-                                                <span>{log.workstation_id} - {log.workstations.location_site.toUpperCase()}</span>
-                                                <span>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</span>
+                                                <span>{log?.workstation_id} - {log?.workstations?.location_site?.toUpperCase()}</span>
+                                                <span>[{log?.equipment?.plex_equipment_id}] - {log?.equipment.equipment_name}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <button className={`primary ${log.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center align-middle`}
-                                                    onClick={() => openWorklog(log.ticket_id)}
+                                            <button className={`primary ${log?.issue_status === 'open' ? 'edit' : 'view-only'} float-right text-center align-middle`}
+                                                    onClick={() => openWorklog(log?.ticket_id)}
                                                     style={{width: '3.5rem', height: '2.5rem', padding: '5px'}}>
                                                 {
-                                                    (log.issue_status === 'open') ? (
+                                                    (log?.issue_status === 'open') ? (
                                                         <div className="d-flex justify-content-center mx-auto">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </div>
