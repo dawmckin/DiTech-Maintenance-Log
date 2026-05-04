@@ -76,7 +76,7 @@ export default function WorklogForm() {
 
                 showToast("Maintenance Log Initialized.", "success");
 
-                navigate(`/new-maintenance-log/ticket/${ticketId}`);
+                navigate(`/dashboard`);
             } else {
                 showToast("Error initializing log.", "error");
             }
