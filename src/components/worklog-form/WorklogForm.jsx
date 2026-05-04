@@ -127,10 +127,10 @@ export default function WorklogForm() {
                         equipmentOptions.length > 0 ? (
                             equipmentOptions.map(eq => (
                                 <option 
-                                    key={eq.equipment_id} 
-                                    value={[eq.equipment_id, eq.equipment_name]} 
+                                    key={eq.plex_equipment_id} 
+                                    value={[eq.plex_equipment_id, eq.equipment_name]} 
                                 >
-                                    [ID: {eq.equipment_id}] - {eq.equipment_name}
+                                    [{eq.plex_equipment_id}] - {eq.equipment_name}
                                 </option>
                             ))
                         ) : (
