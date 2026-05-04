@@ -22,7 +22,8 @@ export default function Dashboard() {
             <div className="card">
                 <div className="d-flex justify-content-between">
                     <h2>Dashboard</h2>
-                    <button className="primary log-action d-flex" disabled={user.user_metadata.user_role !== 'admin'}
+                    {/* <button className="primary log-action d-flex" disabled={user.user_metadata.user_role !== 'admin'} */}
+                    <button className="primary log-action d-flex"
                             onClick={() => openNewWorklog()}>
                         <i className="bi bi-plus-lg pr-2"></i>
                         <p className="mb-0">Worklog</p>    
