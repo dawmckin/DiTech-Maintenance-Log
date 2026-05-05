@@ -3,7 +3,7 @@ import type { Worklog } from "../types/worklog";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useSelectWorklogs(): Worklog[] {
+export default function useSelectWorklogs(refreshKey: number = 0): Worklog[] {
     const [worklogs, setWorklogs] = useState<Worklog[]>([]);
 
     const { showLoader, hideLoader } = useLoader();
@@ -45,7 +45,7 @@ export default function useSelectWorklogs(): Worklog[] {
         };
 
         selectWorklogs();
-    }, []);
+    }, [refreshKey]);
 
     return worklogs;
 }

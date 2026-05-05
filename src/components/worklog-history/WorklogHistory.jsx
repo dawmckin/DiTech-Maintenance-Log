@@ -10,9 +10,10 @@ import useSelectWorklogs from "../../api/useSelectWorklogs";
 
 export default function WorklogHistory() {
     const [search, setSearch] = useState("");
-    const [toggle, setToggle] = useState("workstation");
+    const [toggle, setToggle] = useState("date");
+    const [refreshKey, setRefreshKey] = useState(0);
 
-    const worklogs = useSelectWorklogs();
+    const worklogs = useSelectWorklogs(refreshKey);
 
     const handleExport = () => {
         const formattedData = worklogs.map(log => ({
@@ -45,12 +46,19 @@ export default function WorklogHistory() {
                         />
                     </div>
 
-                    <div className="d-flex toggle-container">
-                        {/* <p className="my-auto mr-2"><strong>View By: </strong></p> */}
-                        <FilterToggle value={toggle} onChange={setToggle} />
+                    <div className="d-flex">
+                        <button className="primary ml-auto"
+                                onClick={() => setRefreshKey(prev => prev + 1)}
+                        >
+                            <i className="bi bi-arrow-clockwise"></i>
+                        </button>
                     </div>
-{/* 
-                    <div>
+
+                    {/* <div className="d-flex toggle-container">
+                        <FilterToggle value={toggle} onChange={setToggle} />
+                    </div> */}
+
+                    {/* <div>
                         <button onClick={handleExport}>
                             Export to Excel
                         </button>

@@ -19,11 +19,11 @@ export default function ExpandedRow({logData, colSpan, isExpanded}) {
                     <div className="expanded-right">
                         <p className="notes-title"><strong>Notes:</strong></p>
                         <ul className="notes-list ml-3">
-                        {logData.notes.map((note, index) => (
-                            <li key={index}>
-                            <strong>({note.users.ditech_id})</strong> - {note.note_text}
-                            </li>
-                        ))}
+                            {logData.notes.map((note, index) => (
+                                <li key={index}>
+                                    {note.note_text}
+                                </li>
+                            ))}
                         </ul>
                     </div>
 

@@ -38,27 +38,23 @@ export default function Header() {
                 >
                     Dashboard
                 </NavLink>
+                <NavLink 
+                    to="/logs"
+                    className={({isActive}) => isActive ? "active" : ""}
+                >
+                    Logs
+                </NavLink>
                 {
-                    isAdmin ? (
-                        <>
-                            <NavLink 
-                                to="/logs"
-                                className={({isActive}) => isActive ? "active" : ""}
-                            >
-                                Logs
-                            </NavLink>
-                            <NavLink 
-                                to="/settings"
-                                className={({isActive}) => isActive ? "active" : ""}
-                            >
-                                Settings
-                            </NavLink>
-                        </>
-                    ) : (
-                        <></>
+                    isAdmin && (
+                        <NavLink 
+                            to="/settings"
+                            className={({isActive}) => isActive ? "active" : ""}
+                        >
+                            Settings
+                        </NavLink>
                     )
                 }
-                <Link onClick={handleLogout}>Logout</Link>
+                <Link onClick={handleLogout} style={{color: '#dc3545'}}>Logout</Link>
             </nav>
         </div>
     );
