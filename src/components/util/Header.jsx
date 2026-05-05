@@ -54,7 +54,7 @@ export default function Header() {
                         </NavLink>
                     )
                 }
-                <Link onClick={handleLogout} style={{color: '#dc3545'}}>Logout</Link>
+                <Link onClick={handleLogout} style={{color: '#dc3545', fontWeight: 'bold'}}>Logout</Link>
             </nav>
         </div>
     );
