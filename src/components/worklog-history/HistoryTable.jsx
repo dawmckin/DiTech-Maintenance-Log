@@ -89,7 +89,8 @@ export default function HistoryTable({logs, toggle, search}) {
                 "ticket_id",
                 "issue_status",
                 "start_time",
-                "end_time"
+                "end_time",
+                "users"
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
 
@@ -109,7 +110,11 @@ export default function HistoryTable({logs, toggle, search}) {
 
                     if(field === 'workstations') {
                         return String(value?.location_site).toLowerCase().includes(lowercasedSearch);
-                    } 
+                    }
+
+                    if(field === 'users') {
+                        return String(value?.first_name).toLowerCase().includes(lowercasedSearch) || String(value?.last_name).toLowerCase().includes(lowercasedSearch);
+                    }
 
                     return String(value).toLowerCase().includes(lowercasedSearch);
                 })

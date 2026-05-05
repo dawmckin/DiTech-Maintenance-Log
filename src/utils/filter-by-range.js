@@ -13,6 +13,7 @@ export default function filterLogsByRanges(logs, range) {
             start.setHours(0, 0, 0, 0);
 
             const endYesterday = new Date();
+            endYesterday.setDate(endYesterday.getDate() - 1);
             endYesterday.setHours(23, 59, 59, 999);
 
             return logs.filter(log => {
