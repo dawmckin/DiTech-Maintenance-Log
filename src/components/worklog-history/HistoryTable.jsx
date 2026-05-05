@@ -94,7 +94,6 @@ export default function HistoryTable({logs, toggle, search}) {
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
 
-            console.log(filtered);
             filtered = filtered.filter((log) =>
                 searchableFields.some((field) => {
                     const value = log[field];

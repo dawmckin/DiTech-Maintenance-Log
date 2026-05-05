@@ -11,12 +11,10 @@ export default function filterLogsByRanges(logs, range) {
             start = new Date();
             start.setDate(start.getDate() - 1);
             start.setHours(0, 0, 0, 0);
-            console.log(start);
 
             const endYesterday = new Date();
             endYesterday.setDate(endYesterday.getDate() - 1);
             endYesterday.setHours(23, 59, 59, 999);
-            console.log(endYesterday);
 
             return logs.filter(log => {
                 const date = new Date(log.start_time);
