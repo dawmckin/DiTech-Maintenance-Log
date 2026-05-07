@@ -3,20 +3,16 @@ export default function groupLogsByDate(logs, range) {
     
     const now = new Date();
     const map = {};
-    let highestIssues = 0; 
+    let highestIssues = 0;
 
     logs.forEach((log) => {
         const date = new Date(log.start_time);
 
         let key;
-        if(range === "today" || range === "yesterday") {
-            key = date.toLocaleDateString();
-        } else if(range === "week") {
-            key = date.toLocaleDateString();
-        } else if(range === "month") {
-            key = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-        } else if(range === "quarter-year" || range === "half-year" || range === "year") {
-            key = `${date.toLocaleString('default', { month: 'short' })}-${date.getFullYear()}`;
+        if(range === "quarterYear" || range === "halfYear" || range === "year") {
+            key = `${date.toLocaleString('default', { month: 'short' })}-${date.getYear() - 100}`;
+        } else {
+            key = `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100}`;
         }
 
         if(!map[key]) {

@@ -12,7 +12,7 @@ import "./KPICard.css";
 
 export default function IssueDistributionChart({logs}) {
     let data = useMemo(() => {
-        return calculateKPIs(logs).issueCountByType;
+        return calculateKPIs(logs, ['issueCountByType']).issueCountByType;
     }, [logs]);
 
     return (
