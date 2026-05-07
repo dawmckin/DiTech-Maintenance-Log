@@ -11,7 +11,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     const [refreshKey, setRefreshKey] = useState(0);
-    const [range, setRange] = useState("week");
+    const [range, setRange] = useState("today");
 
     const openNewWorklog = () => {
         navigate("/new-maintenance-log");
@@ -54,8 +54,8 @@ export default function Dashboard() {
                                     <option value="yesterday">Yesterday</option>
                                     <option value="week">Last 7 Days</option>
                                     <option value="month">Last 30 Days</option>
-                                    <option value="quarter-year">Last 3 Months</option>
-                                    <option value="half-year">Last 6 Months</option>
+                                    <option value="quarterYear">Last 3 Months</option>
+                                    <option value="halfYear">Last 6 Months</option>
                                     <option value="year">Last 12 Months</option>
                                 </select>
                             </div>

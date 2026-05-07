@@ -57,8 +57,6 @@ export default function HistoryTable({logs, toggle, search}) {
 
     //expanded rows
     const toggleRow = (id, status) => {
-        if(status !== 'completed') return;
-
         setExpandedRows((prev) => {
             const newSet = new Set(prev);
             if(newSet.has(id)) {
@@ -208,25 +206,21 @@ export default function HistoryTable({logs, toggle, search}) {
                         ) : (
                             paginatedLogs?.map((log) => {
                                 const isExpanded = expandedRows.has(log.ticket_id);
-                                const expandable = log.notes?.length > 0 && log.issue_status === 'completed';
 
                                 return (
                                     <Fragment key={log.ticket_id}>
                                         <tr
                                             onClick={() => toggleRow(log.ticket_id, log.issue_status)}
-                                            style={{
-                                                cursor: (expandable) ? "pointer" : "default"
-                                            }}
+                                            style={{ cursor: "pointer" }}
                                         >
                                             <td>
                                                 <div className="d-flex justify-content-between">
                                                     <div><strong>{log.ticket_id}</strong></div>
                                                     <div className="ml-2"> 
-                                                        {expandable ? 
+                                                        {
                                                             (isExpanded) ? 
                                                                 <i className="bi bi-chevron-up"></i> : 
-                                                                <i className="bi bi-chevron-down"></i> :
-                                                            <span></span>
+                                                                <i className="bi bi-chevron-down"></i>
                                                         }
                                                     </div>
                                                 </div>
@@ -260,12 +254,12 @@ export default function HistoryTable({logs, toggle, search}) {
                                             <td>{log.issue_description}</td>
                                         </tr>
 
-                                        {(isExpanded && expandable) && (
+                                        {(isExpanded) && (
                                             <ExpandedRow logData={{
                                                 name: `${log.users.first_name} ${log.users.last_name}`,
                                                 start_time: log.start_time,
                                                 end_time: log.end_time,
-                                                notes: log.notes 
+                                                notes: log.notes
                                             }} colSpan={8} isExpanded={isExpanded} />
                                         )}
                                     </Fragment>
