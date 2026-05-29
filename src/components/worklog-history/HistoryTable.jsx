@@ -147,6 +147,24 @@ export default function HistoryTable({logs, toggle, search}) {
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData: paginatedLogs, totalPages} = usePagination(sortedLogs, pageSize);
 
+    const formatShift = (startTime) => {
+        const startHour = new Date(startTime).getHours();
+
+        const firstShift = [6, 14];
+        const secondShift = [14, 21];
+        const thirdShift = [21, 6];
+
+        if(startHour >= firstShift[0] && startHour < firstShift[1]) {
+            return '1st';
+        } else if(startHour >= secondShift[0] && startHour < secondShift[1]) {
+            return '2nd';
+        } else if(startHour >= thirdShift[0] && startHour <= 23 || startHour < thirdShift[1]) {
+            return '3rd';
+        } else {
+            return 'error';
+        }
+    }
+
     return (
         <>
             <div className="table-wrapper">
@@ -164,6 +182,9 @@ export default function HistoryTable({logs, toggle, search}) {
                                     <th className="sortable" onClick={() => handleSort("start_time")}>
                                         Start Time {getSortArrow("start_time")}
                                     </th>
+                                    <th>
+                                        Shift
+                                    </th>  
                                     <th className="sortable" onClick={() => handleSort("workstation_id")}>
                                         Workstation {getSortArrow("workstation_id")}
                                     </th>
@@ -176,6 +197,9 @@ export default function HistoryTable({logs, toggle, search}) {
                                     <th className="sortable" onClick={() => handleSort("workstation_id")}>
                                         Workstation {getSortArrow("workstation_id")}
                                     </th>
+                                    <th>
+                                        Shift
+                                    </th> 
                                     <th className="sortable" onClick={() => handleSort("equipment")}>
                                         Equipment {getSortArrow("equipment")}
                                     </th>
@@ -184,15 +208,15 @@ export default function HistoryTable({logs, toggle, search}) {
                                     </th>
                                 </>
                             )}
-                            <th className="sortable" onClick={() => handleSort("end_time")}>
-                                End Time {getSortArrow("end_time")}
-                            </th>                           
                             <th className="sortable" onClick={() => handleSort("issue_type")}>
                                 Issue Type {getSortArrow("issue_type")}
                             </th>
-                            <th>
+                            <th className="sortable" onClick={() => handleSort("end_time")}>
+                                End Time {getSortArrow("end_time")}
+                            </th>                       
+                            {/* <th>
                                 Issue Description
-                            </th>
+                            </th> */}
                         </tr> 
                     </thead>
 
@@ -238,25 +262,28 @@ export default function HistoryTable({logs, toggle, search}) {
                                             {toggle === 'date' ? (
                                                 <>
                                                     <td>{new Date(log.start_time).toLocaleString()}</td>
+                                                    <td>{formatShift(log.start_time)}</td>
                                                     <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
                                                     <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
                                                 </>
                                             ) : (
                                                 <>
                                                     <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
+                                                    <td>{formatShift(log.start_time)}</td>
                                                     <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
                                                     <td>{new Date(log.start_time).toLocaleString()}</td>
                                                 </>
                                             )}
 
-                                            <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
                                             <td>{log.issue_type}</td>
-                                            <td>{log.issue_description}</td>
+                                            <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
+                                            {/* <td>{log.issue_description}</td> */}
                                         </tr>
 
                                         {(isExpanded) && (
                                             <ExpandedRow logData={{
                                                 name: `${log.users.first_name} ${log.users.last_name}`,
+                                                issue_description: log?.issue_description,
                                                 start_time: log.start_time,
                                                 end_time: log.end_time,
                                                 notes: log.notes

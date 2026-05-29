@@ -1,0 +1,138 @@
+/* WRAPPER */
+.date-range-wrapper {
+    width: 100%;
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #ffffff;
+
+    padding: 12px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* MAIN CALENDAR */
+.rdrCalendarWrapper {
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+}
+
+/* MONTHS CONTAINER */
+.rdrMonths {
+    justify-content: center;
+}
+
+/* MONTH */
+.rdrMonth {
+    width: 100%;
+}
+
+/* MONTH HEADER */
+.rdrMonthName {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* WEEKDAY LABELS */
+.rdrWeekDay {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* DAY BUTTON */
+.rdrDayNumber span {
+    color: var(--text);
+    font-size: 14px;
+}
+
+/* DAY HOVER */
+.rdrDay:hover .rdrDayNumber span {
+    color: blue;
+}
+
+/* SELECTED RANGE */
+.rdrStartEdge,
+.rdrEndEdge,
+.rdrInRange {
+    background: var(--primary) !important;
+}
+
+/* SELECTED DAY TEXT */
+.rdrDayStartPreview,
+.rdrDayEndPreview,
+.rdrDayInPreview {
+    border-color: var(--primary);
+}
+
+/* RANGE PREVIEW */
+.rdrDayHovered {
+    border-color: var(--primary) !important;
+}
+
+/* TODAY */
+.rdrDayToday .rdrDayNumber span:after {
+    background: var(--primary);
+}
+
+/* INPUTS */
+.rdrDateDisplayWrapper {
+    background: #f9fafb;
+    border-bottom: 1px solid var(--border);
+}
+
+.rdrDateDisplayItem {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: none;
+}
+
+.rdrDateDisplayItem input {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* NAV BUTTONS */
+.rdrNextPrevButton {
+    background: #f3f4f6;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.rdrNextPrevButton:hover {
+    background: var(--primary);
+}
+
+.rdrNextPrevButton:hover i {
+    border-color: transparent transparent transparent white;
+}
+
+/* REMOVE DEFAULT BLUE */
+.rdrDayPassive .rdrDayNumber span {
+    color: #cbd5e1;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .rdrMonths {
+        flex-direction: column !important;
+    }
+
+    .rdrMonth {
+        width: 100% !important;
+    }
+
+    .rdrCalendarWrapper {
+        font-size: 13px;
+    }
+
+    .rdrDateDisplay {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

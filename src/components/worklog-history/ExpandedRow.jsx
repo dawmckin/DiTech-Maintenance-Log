@@ -11,25 +11,33 @@ export default function ExpandedRow({logData, colSpan, isExpanded}) {
                 <div className={`expanded-wrapper ${isExpanded ? "open" : ""}`}>
                     <div className="expanded-content">
                     
-                    <div className="expanded-left">
-                        <p className="mt-0"><strong>Created By:</strong> {logData.name}</p>
-                        <p><strong>Downtime:</strong> {formatDuration(duration)}</p>
-                    </div>
+                        <div className="expanded-left">
+                            <p className="mt-0"><strong>Created By:</strong> {logData.name}</p>
+                            <p><strong>Downtime:</strong> {formatDuration(duration)}</p>
+                        </div>
 
-                    {
-                        logData.notes?.length > 0 && (
-                            <div className="expanded-right">
-                                <p className="notes-title"><strong>Notes:</strong></p>
-                                <ul className="notes-list ml-3">
-                                    {logData.notes?.map((note, index) => (
-                                        <li key={index}>
-                                            {note.note_text}
-                                        </li>
-                                    ))}
-                                </ul>
+                        <div className="expanded-right row">
+                            <div className="col-md-5">
+                                <p className="notes-title"><strong>Description:</strong></p>
+                                <p>{logData?.issue_description}</p>
                             </div>
-                        )
-                    }
+
+                            {
+                                logData.notes?.length > 0 && (
+                                    <div className="col-md-7">
+                                        <p className="notes-title"><strong>Notes:</strong></p>
+                                        <p>{logData?.notes[0]?.note_text}</p>
+                                        {/* <ul className="notes-list ml-3">
+                                            {logData.notes?.map((note, index) => (
+                                                <li key={index}>
+                                                    {note.note_text}
+                                                </li>
+                                            ))}
+                                        </ul> */}
+                                    </div>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </td>

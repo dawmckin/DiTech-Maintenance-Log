@@ -49,7 +49,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
         e.preventDefault();
 
         console.log(Object.entries(equipmentForm));
-        if(Object.entries(equipmentForm).some(i => i[1] === "")) {
+        if(Object.entries(equipmentForm).some(i => i[1] === "" && i[0] !== 'asset_number')) {
             showToast("Missing required fields.", "error");
             return;
         } else if(initialData && updatedFields.length === 0) {
@@ -108,7 +108,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
                     onChange={handleChange}
                 />
 
-                <label>Asset Number <span className="required-input">*</span></label>
+                <label>Asset Number</label>
                 <input 
                     name='asset_number' 
                     type="text"
