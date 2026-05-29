@@ -28,10 +28,10 @@ export default function Modal({ isOpen, onClose, title, children, isDelete }) {
                     {
                         isDelete ? 
                         (
-                            <div onClick={onClose}>&times;</div>
+                            <button className="primary log-action cancel my-auto" onClick={onClose}>&times;</button>
                         ) : 
                         (
-                            <button className="primary log-action cancel" onClick={onClose}>Cancel</button>
+                            <button className="primary log-action cancel my-auto" onClick={onClose}>Cancel</button>
                         )
                     }
 

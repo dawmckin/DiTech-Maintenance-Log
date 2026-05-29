@@ -70,25 +70,21 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                     <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
                                         {
                                             Object.keys(row).map(k => (
-                                                (k !== 'user_id') ? 
-                                                    (
+                                                (k !== 'user_id') && (
                                                     <td key={k}>
-                                                            {
-                                                                (k === 'created_at') ? 
-                                                                (
-                                                                    formatDateTime(row[k])
-                                                                ) : 
-                                                                (
-                                                                    (upperCaseFields.includes(k)) ? 
-                                                                        row[k].toUpperCase() : 
-                                                                        row[k]
-                                                                )
-                                                            }
-                                                        </td>  
-                                                    ) : (
-                                                        <></>
-                                                    )
-                                            
+                                                        {
+                                                            (k === 'created_at') ? 
+                                                            (
+                                                                formatDateTime(row[k])
+                                                            ) : 
+                                                            (
+                                                                (upperCaseFields.includes(k)) ? 
+                                                                    row[k].toUpperCase() : 
+                                                                    row[k]
+                                                            )
+                                                        }
+                                                    </td> 
+                                                )
                                             ))
                                         }
                                         <td>
