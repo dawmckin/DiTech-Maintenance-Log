@@ -9,7 +9,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
     const [updatedFields, setUpdatedFields] = useState([]);
     const [equipmentForm, setEquipmentForm] = useState({
         plex_equipment_id: "",
-        asset_number: "",
+        asset_number: null,
         equipment_name: "",
         workstation_id: ""
     });
@@ -23,7 +23,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
         if(initialData) {
             setEquipmentForm({
                 plex_equipment_id: initialData.plex_equipment_id || "",
-                asset_number: initialData.asset_number || "",
+                asset_number: initialData.asset_number || null,
                 equipment_name: initialData.equipment_name || "",
                 workstation_id: initialData.workstation_id || ""
             })
@@ -67,7 +67,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
 
                 setEquipmentForm({
                     plex_equipment_id: "",
-                    asset_number: "",
+                    asset_number: null,
                     equipment_name: "",
                     workstation_id: ""
                 });
@@ -85,7 +85,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
 
                 setEquipmentForm({
                     plex_equipment_id: "",
-                    asset_number: "",
+                    asset_number: null,
                     equipment_name: "",
                     workstation_id: ""
                 });
@@ -112,7 +112,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
                 <input 
                     name='asset_number' 
                     type="text"
-                    value={equipmentForm.asset_number || ""}
+                    value={equipmentForm.asset_number || null}
                     onChange={handleChange}
                 />
 

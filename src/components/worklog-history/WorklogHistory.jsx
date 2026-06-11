@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-import { exportToExcel } from "../../utils/export-to-excel";
+import { generateWorkbook } from "../../utils/reports/generateWorkbook";
 
 import SearchBox from "./SearchBox";
 import FilterToggle from "./FilterToggle";
