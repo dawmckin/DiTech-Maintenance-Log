@@ -2,7 +2,11 @@ import { useEffect, useMemo, useState, Fragment } from "react";
 import usePagination from "../../utils/usePagination";
 import Pagination from "../util/Pagination";
 import ExpandedRow from "./ExpandedRow";
+
+import formatShift from "../../utils/format-shift";
+
 import "./history-table.css";
+
 import OpenIcon from "./../../assets/open-icon.svg";
 import CompetedIcon from "./../../assets/completed-icon.svg";
 
@@ -146,24 +150,6 @@ export default function HistoryTable({logs, toggle, search}) {
 
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData: paginatedLogs, totalPages} = usePagination(sortedLogs, pageSize);
-
-    const formatShift = (startTime) => {
-        const startHour = new Date(startTime).getHours();
-
-        const firstShift = [6, 14];
-        const secondShift = [14, 21];
-        const thirdShift = [21, 6];
-
-        if(startHour >= firstShift[0] && startHour < firstShift[1]) {
-            return '1st';
-        } else if(startHour >= secondShift[0] && startHour < secondShift[1]) {
-            return '2nd';
-        } else if(startHour >= thirdShift[0] && startHour <= 23 || startHour < thirdShift[1]) {
-            return '3rd';
-        } else {
-            return 'error';
-        }
-    }
 
     return (
         <>

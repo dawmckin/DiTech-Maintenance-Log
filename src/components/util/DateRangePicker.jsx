@@ -5,13 +5,6 @@ import { startOfDay, endOfDay, subDays, subMonths, sub } from "date-fns";
 import './date-range-picker.css';
 
 export default function DateRangePicker({value, onChange}) {
-    // const [range, setRange] = useState("today");
-    // const [customRange, setCustomRange] = useState({
-    //     startDate: new Date(),
-    //     endDate: new Date(),
-    //     key: 'selection'
-    // });
-
     const handleRangeChange = (selectedRange) => {
         onChange({
             ...value,

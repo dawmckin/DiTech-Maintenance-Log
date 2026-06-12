@@ -1,5 +1,4 @@
 export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 50, excludedColumns = []) {
-    console.log('asdfasdfas')
     worksheet.columns.forEach((col) => {
         if(excludedColumns.includes(col.key)) {
             return;
@@ -16,8 +15,11 @@ export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 50, 
                         : cell.value.toString();    
             
             maxColWidth = Math.max(maxColWidth, cellText.length);
+            cell.alignment = {
+                vertical: "top"
+            }
         });
 
-        col.width = Math.min(maxColWidth + 2, maxWidth);
+        col.width = Math.min(maxColWidth + 3, maxWidth);
     });
 }

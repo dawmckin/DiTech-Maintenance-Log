@@ -1,29 +1,16 @@
-import ExcelJS from "exceljs";
-import autoFitColumns from "./autofitColumns";
+import autoFitColumns from "../autoFitColumns";
 import formatDateTime from "../../format-date-time";
 import formatDuration from "../../format-duration";
+import formatShift from "../../format-shift";
 
-export function addWorklogDetailsWorksheet(workbook, worklogs) {
+export default function addWorklogDetailsWorksheet(workbook, worklogs) {
     const worksheet = workbook.addWorksheet('Worklog Details');
 
-    // worksheet.columns = [
-    //     {header: 'Status', key: 'status', width: 15},
-    //     {header: 'Start Time', key: 'start_time', width: 22},
-    //     {header: 'End Time', key: 'end_time', width: 22},
-    //     {header: 'Workstation ID', key: 'workstation_id', width: 20},
-    //     {header: 'Location', key: 'location_site', width: 20},
-    //     {header: 'Equipment ID', key: 'equipment_id', width: 30},
-    //     {header: 'Equipment Name', key: 'equipment_name', width: 30},
-    //     {header: 'Issue Type', key: 'issue_type', width: 20},
-    //     {header: 'Issue Description', key: 'issue_description', width: 50},
-    //     {header: 'Work Performed', key: 'notes', width: 50},
-    //     {header: 'Created By', key: 'created_by', width: 25},
-    //     {header: 'Downtime', key: 'downtime', width: 15}
-    // ]
     worksheet.columns = [
         {header: 'Status', key: 'status', width: 10},
         {header: 'Start Time', key: 'start_time'},
         {header: 'End Time', key: 'end_time'},
+        {header: 'Shift', key: 'shift'},
         {header: 'Workstation ID', key: 'workstation_id'},
         {header: 'Location', key: 'location_site'},
         {header: 'PLEX Equipment ID', key: 'equipment_id'},
@@ -40,6 +27,7 @@ export function addWorklogDetailsWorksheet(workbook, worklogs) {
             status: log.issue_status,
             start_time: formatDateTime(log.start_time),
             end_time: formatDateTime(log.end_time) ?? "",
+            shift: formatShift(log.start_time),
             workstation_id: log.workstation_id,
             location_site: log.workstations.location_site?.toUpperCase(),
             equipment_id: log.equipment.plex_equipment_id,

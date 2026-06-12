@@ -21,23 +21,6 @@ export default function WorklogHistory() {
 
     const worklogs = useSelectWorklogs(refreshKey);
 
-    const handleExport = () => {
-        const formattedData = worklogs.map(log => ({
-            TicketID: log.ticket_id,
-            Workstation: log.workstation_id,
-            Location: log.workstations?.location_site,
-            DitechEquipmentID: log.plex_equipment_id,
-            AssetNumber: log.asset_number,
-            EquipmentName: log.equipment?.equipment_name,
-            IssueType: log.issue_type,
-            Status: log.issue_status,
-            StartTime: log.start_time,
-            CreatedBy: `${log.users?.first_name} ${log.users?.last_name}`
-        }));
-
-        exportToExcel(formattedData, "worklogs.xlsx");
-    }
-
     return (
         <div>
             <div className="card">
@@ -75,12 +58,6 @@ export default function WorklogHistory() {
 
                     {/* <div className="d-flex toggle-container">
                         <FilterToggle value={toggle} onChange={setToggle} />
-                    </div> */}
-
-                    {/* <div>
-                        <button onClick={handleExport}>
-                            Export to Excel
-                        </button>
                     </div> */}
                 </div>
                 <div className="card">

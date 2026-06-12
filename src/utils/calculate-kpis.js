@@ -1,4 +1,4 @@
-export default function calculateKPIs(logs, kpis) {
+export default function calculateKPIs(logs, kpis = []) {
     const now = new Date();
     const nowHour = now.getHours();
     
