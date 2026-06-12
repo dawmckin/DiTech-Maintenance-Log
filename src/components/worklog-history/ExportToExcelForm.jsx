@@ -3,92 +3,73 @@ import { useToast } from "../../context/ToastContext";
 
 import DateRangePicker from "../util/DateRangePicker";
 
+import { generateWorkbook } from "../../utils/reports/generateWorkbook";
+import { useSelectFilteredWorklogs } from "../../api/useSelectFilteredWorklogs";
+import { subDays } from "date-fns";
+
 export default function ExportToExcel({onSuccess}) {
     const [exportExcelForm, setExportExcelForm] = useState({
         report_type: '',
-        shift: {
-            all: false,
-            first: false,
-            second: false,
-            third: false
+        dateRange: {
+            range: 'month',
+            startDate: subDays(new Date(), 30),
+            endDate: new Date()
         },
-        range: 'today',
-        custom_start: null,
-        custom_end: null
+        status: 'all',
+        workstationIds: [],
+        equipmentIds: [],
+        createdBy: [],
+        includeCharts: true,
+        includeRawData: true
     });
 
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
         // console.log(name, value, type, checked);
 
-        //handle checkboxes
-        if(type === 'checkbox') {
-
-            //all checkbox
-            if(name === 'all') {
-                setExportExcelForm(prev => ({
-                    ...prev,
-                    shift: {
-                        ...prev.shift,
-                        all: checked,
-                        first: checked,
-                        second: checked,
-                        third: checked
-                    }
-                }));
-
-                return;
-            }
-
-            //individual checkboxes
-            const updatedShift = {
-                ...exportExcelForm.shift,
-                [name]: checked
-            }
-
-            //auto toggle all
-            updatedShift.all = 
-                updatedShift.first && 
-                updatedShift.second && 
-                updatedShift.third
-
-            setExportExcelForm(prev => ({
-                ...prev,
-                shift: updatedShift
-            }));
-            
-            return;
-        }
-
-        //handle normal inputs
-        setExportExcelForm({
-            ...exportExcelForm,
-            [name]: value
-        });
+        setExportExcelForm(prev => ({
+            ...prev,
+            [name]: 
+                type === 'checkbox' 
+                    ? checked 
+                    : value
+        }));
     }
 
-    const handleExport = () => {
+    const handleExport = async (e) => {
         e.preventDefault();
 
-        console.log(exportExcelForm);
+        const filters = {
+            startDate: exportExcelForm.dateRange.startDate?.toISOString(),
+            endDate: exportExcelForm.dateRange.endDate?.toISOString()
+        };
+        // console.log(filters);
+
+        const worklogs = await useSelectFilteredWorklogs(filters);
+        // console.log(worklogs);
+        
+        await generateWorkbook(worklogs);
     }
 
     return (
         <>
             <form onSubmit={handleExport}>
-                <label>Report Type <span className="required-input">*</span></label>
+                {/* <label>Report Type <span className="required-input">*</span></label>
                 <select 
                     name='report_type' 
                     value={exportExcelForm.report_type || ""}
                     onChange={handleChange}
                 >
                     <option value="">--Select--</option>
-                    <option value="worklogs_by_shift">Worklogs by Shift</option>
-                    <option value="problem_workstations">Problem Workstations</option>
-                    <option value="problem_equipment">Problem Equipment</option>
-                </select>
+                    <option value="worklog-detail">Worklog Detail Report</option>
+                    <option value="downtime-summary">Downtime Summary</option>
+                    <option value="problem-workstations">Problem Workstations</option>
+                    <option value="problem-equipment">Problem Equipment</option>
+                    <option value="issue-trends">Issue Type Trends</option>
+                    <option value="shift-performance">Shift Performance</option>
+                </select> */}
 
-                <fieldset>
+                {/* <fieldset>
                     <label>Shift(s)</label>
                     <div className="d-flex flex-wrap">
                         <div className="d-flex mr-3">
@@ -129,10 +110,43 @@ export default function ExportToExcel({onSuccess}) {
                             <label className="ml-1 my-auto">3rd</label>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> */}
 
                 <label>Date Range</label>
-                <DateRangePicker />
+                <DateRangePicker 
+                    value={exportExcelForm.dateRange}
+                    onChange={(dateRange) => 
+                        setExportExcelForm(prev => ({
+                            ...prev,
+                            dateRange
+                        }))
+                    }
+                />
+
+                <div className="d-flex">
+                    <label className="mr-3">
+                        <input 
+                            type="checkbox"
+                            checked={exportExcelForm.includeRawData}
+                            name="includeRawData"
+                            onChange={handleChange}
+                            className="mr-1"
+                        /> 
+                        Include Raw Worklogs
+                    </label>
+                
+                    
+                    <label className="mr-3">
+                        <input 
+                            type="checkbox"
+                            checked={exportExcelForm.includeCharts}
+                            name="includeCharts"
+                            onChange={handleChange}
+                            className="mr-1"
+                        />
+                        Include Charts
+                    </label>
+                </div>
 
                 <div className="actions">
                     <button type='submit' className="primary">Generate Report</button>
