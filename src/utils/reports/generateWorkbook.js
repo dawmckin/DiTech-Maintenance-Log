@@ -3,12 +3,16 @@ import { saveAs } from "file-saver";
 
 import addExecutiveSummaryWorksheet  from "./worksheets/executiveSummaryReport";
 import addWorklogDetailsWorksheet from "./worksheets/worklogDetailsReport";
+import addDowntimeSummaryReport from "./worksheets/downtimeSummaryReport";
+import addProblemEquipmentReport from "./worksheets/problemEquipmentReport";
 
 export async function generateWorkbook(reportData) {
     const workbook = new ExcelJS.Workbook();
 
     addExecutiveSummaryWorksheet(workbook, reportData);
     addWorklogDetailsWorksheet(workbook, reportData);
+    addDowntimeSummaryReport(workbook, reportData);
+    addProblemEquipmentReport(workbook, reportData);
 
     const buffer = await workbook.xlsx.writeBuffer();
 
