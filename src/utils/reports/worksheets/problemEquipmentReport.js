@@ -1,7 +1,7 @@
 import formatDuration from "../../format-duration";
 import autoFitColumns from "../autoFitColumns";
 
-export default function addProblemEquipmentReport(workbook, worklogs) {
+export default function addProblemEquipmentWorksheet(workbook, worklogs) {
     const worksheet = workbook.addWorksheet('Problem Equipment');
 
     const equipmentSummary = {};
@@ -36,20 +36,20 @@ export default function addProblemEquipmentReport(workbook, worklogs) {
             equipmentName: data.equipmentName,
             ticketCount: data.ticketCount,
             totalDowntime: data.totalDowntime,
-            averageDowntime: data.totalDowntime / data.ticketCount
+            avgDowntime: data.totalDowntime / data.ticketCount
         }
     ));
 
     rows.sort((a, b) => b.ticketCount - a.ticketCount);
 
-        worksheet.columns = [
+    worksheet.columns = [
         {header: 'Rank', key: 'rank'},
-        {header: 'Equipment Id', key: 'equipmentId'},
+        {header: 'Equipment ID', key: 'equipmentId'},
         {header: 'Equipment Name', key: 'equipmentName'},
         {header: 'Tickets', key: 'ticketCount'},
         {header: 'Total Downtime', key: 'totalDowntime'},
-        {header: 'Average Downtime', key: 'averageDowntime'}
-    ]
+        {header: 'Average Downtime', key: 'avgDowntime'}
+    ];
 
     rows.forEach((row, index) => {
         worksheet.addRow({
@@ -58,7 +58,7 @@ export default function addProblemEquipmentReport(workbook, worklogs) {
             equipmentName: row.equipmentName,
             ticketCount: row.ticketCount,
             totalDowntime: formatDuration(row.totalDowntime),
-            averageDowntime: formatDuration(row.averageDowntime), 
+            avgDowntime: formatDuration(row.avgDowntime), 
         });
     });
 
@@ -103,7 +103,7 @@ export default function addProblemEquipmentReport(workbook, worklogs) {
                 }
             }
         }
-    })
+    });
 
     autoFitColumns(worksheet, 10, 60, ['rank']);
 

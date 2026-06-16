@@ -1,7 +1,7 @@
 import formatDuration from "../../format-duration";
 import autoFitColumns from "../autoFitColumns";
 
-export default function addDowntimeSummaryReport(workbook, worklogs) {
+export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
     const worksheet = workbook.addWorksheet('Downtime Summary');
 
     const equipmentSummary = {};
@@ -32,7 +32,7 @@ export default function addDowntimeSummaryReport(workbook, worklogs) {
             equipmentName: data.equipmentName,
             ticketCount: data.ticketCount,
             totalDowntime: data.totalDowntime,
-            averageDowntime: data.totalDowntime / data.ticketCount
+            avgDowntime: data.totalDowntime / data.ticketCount
 
         }
     ));
@@ -41,12 +41,12 @@ export default function addDowntimeSummaryReport(workbook, worklogs) {
 
     worksheet.columns = [
         {header: 'Rank', key: 'rank'},
-        {header: 'Equipment Id', key: 'equipmentId'},
+        {header: 'Equipment ID', key: 'equipmentId'},
         {header: 'Equipment Name', key: 'equipmentName'},
         {header: 'Tickets', key: 'ticketCount'},
         {header: 'Total Downtime', key: 'totalDowntime'},
-        {header: 'Average Downtime', key: 'averageDowntime'}
-    ]
+        {header: 'Average Downtime', key: 'avgDowntime'}
+    ];
 
     rows.forEach((row, index) => {
         worksheet.addRow({
@@ -55,7 +55,7 @@ export default function addDowntimeSummaryReport(workbook, worklogs) {
             equipmentName: row.equipmentName,
             ticketCount: row.ticketCount,
             totalDowntime: formatDuration(row.totalDowntime),
-            averageDowntime: formatDuration(row.averageDowntime), 
+            avgDowntime: formatDuration(row.avgDowntime), 
         });
     });
 
@@ -103,7 +103,7 @@ export default function addDowntimeSummaryReport(workbook, worklogs) {
     worksheet.getColumn('A').alignment = {
         horizontal: 'center'
     };
-    
+
     worksheet.getColumn('D').alignment = {
         horizontal: 'center'
     };

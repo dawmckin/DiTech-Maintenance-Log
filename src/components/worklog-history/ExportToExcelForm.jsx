@@ -46,9 +46,10 @@ export default function ExportToExcel({onSuccess}) {
         // console.log(filters);
 
         const worklogs = await useSelectFilteredWorklogs(filters);
-        // console.log(worklogs);
-        
-        await generateWorkbook(worklogs);
+        // console.log(worklogs);            
+        // console.log(exportExcelForm.dateRange);
+
+        await generateWorkbook(worklogs, exportExcelForm.dateRange);
     }
 
     return (

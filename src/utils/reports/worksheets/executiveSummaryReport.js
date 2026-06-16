@@ -1,7 +1,10 @@
 import calculateKPIs from "../../calculate-kpis";
 import formatDuration from "../../format-duration";
 
-export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
+export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRange = {}) {
+    const startDate = `${dateRange.startDate.getMonth() + 1}/${dateRange.startDate.getDate()}/${dateRange.startDate.getFullYear()}`;
+    const endDate = `${dateRange.endDate.getMonth() + 1}/${dateRange.endDate.getDate()}/${dateRange.endDate.getFullYear()}`;
+
     const worksheet = workbook.addWorksheet("Executive Summary");
 
     const totalTickets = worklogs.length;
@@ -10,9 +13,10 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
     
     const totalDowntimeMS = calculateKPIs(worklogs, ['totalDowntime']).totalDowntime;
     const totalDowntimeFormatted = formatDuration(totalDowntimeMS);
-    const averageDowntimeFormatted = formatDuration(totalDowntimeMS / totalTickets);
+    const avgDowntimeFormatted = formatDuration(totalDowntimeMS / totalTickets);
 
     const equipmentCounts = {};
+
     worklogs.forEach(log => {
         const equipmentId = log.equipment?.plex_equipment_id;
         const equipmentName = log.equipment?.equipment_name;
@@ -36,6 +40,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
                                                                     .map(eq => [eq[0], {name: eq[1].name, count: eq[1].count, downtime: formatDuration(eq[1].downtime)}]);
     
     const workstationCounts = {};
+
     worklogs.forEach(log => {
         const workstationId = log.workstation_id;
         const location = log.workstations?.location_site;
@@ -64,7 +69,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
     // console.log(completedTickets);
 
     // console.log(totalDowntimeFormatted);
-    // console.log(averageDowntimeFormatted);
+    // console.log(avgDowntimeFormatted);
 
     // console.log(equipmentCounts);
     // console.log(worstEquipmentByTicketsSorted);
@@ -104,12 +109,13 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
         rows.push(['Completed Tickets', completedTickets]);
         rows.push([]);
         rows.push(['Total Downtime', totalDowntimeFormatted]);
-        rows.push(['Average Downtime', averageDowntimeFormatted]);
+        rows.push(['Average Downtime', avgDowntimeFormatted]);
         rows.push([]);
         worstEquipmentByTickets.forEach((eq, index) => {
             if(index === 0) rows.push(['Worst Equipment By Tickets', eq[0], eq[1].name, eq[1].count])
-            else rows.push(['', eq])
+            else rows.push(['', eq[0], eq[1].name, eq[1].count])
         });
+        rows.push([]);
         worstEquipmentByDowntime.forEach((eq, index) => {
             if(index === 0) rows.push(['Worst Equipment By Downtime', eq[0], eq[1].name, eq[1].downtime])
             else rows.push(['', eq])
@@ -117,12 +123,15 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs) {
         rows.push([]);     
         worstWorkstationsByTickets.forEach((ws, index) => {
             if(index === 0) rows.push(['Worst Workstations By Tickets', ws[0], ws[1].location.toUpperCase(), ws[1].count])
-            else rows.push(['', ws])
+            else rows.push(['', ws[0], ws[1].location.toUpperCase(), ws[1].count])
         });
+        rows.push([]);
         worstWorkstationsByDowntime.forEach((ws, index) => {
             if(index === 0) rows.push(['Worst Workstations By Downtime', ws[0], ws[1].location.toUpperCase(), ws[1].downtime])
             else rows.push(['', ws])
         });
+        rows.push([]);
+        rows.push(['Reporting Period', startDate, (startDate === endDate) ? '' : endDate]);
         rows.push([]);
         rows.push(['Generated On', new Date().toLocaleString()]);
 
