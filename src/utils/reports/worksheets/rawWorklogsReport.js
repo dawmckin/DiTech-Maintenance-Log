@@ -6,20 +6,20 @@ export default function addRawWorklogsWorksheet(workbook, worklogs) {
     const worksheet = workbook.addWorksheet('Raw Worklogs');
 
     worksheet.columns = [
-        {header: 'Ticket ID', key: 'ticketId'},
-        {header: 'Status', key: 'status'},
-        {header: 'Start Time', key: 'startTime'},
-        {header: 'End Time', key: 'endTime'},
-        {header: 'Shift', key: 'shift'},
-        {header: 'Downtime', key: 'downtime'},
-        {header: 'Workstation', key: 'workstation'},
-        {header: 'Location', key: 'location'},
-        {header: 'Equipment ID', key: 'equipmentId'},
-        {header: 'Equipment Name', key: 'equipmentName'},
-        {header: 'Issue Type', key: 'issueType'},
-        {header: 'Issue Description', key: 'issueDescription'},
-        {header: 'Work Performed', key: 'workPerformed'},
-        {header: 'Created By', key: 'createdBy'}
+        {header: 'ticket_id', key: 'ticketId'},
+        {header: 'status', key: 'status'},
+        {header: 'start_time', key: 'startTime'},
+        {header: 'end_time', key: 'endTime'},
+        {header: 'shift', key: 'shift'},
+        {header: 'downtime', key: 'downtime'},
+        {header: 'workstation', key: 'workstation'},
+        {header: 'location', key: 'location'},
+        {header: 'equipment_id', key: 'equipmentId'},
+        {header: 'equipment_name', key: 'equipmentName'},
+        {header: 'issue_type', key: 'issueType'},
+        {header: 'issue_description', key: 'issueDescription'},
+        {header: 'work_performed', key: 'workPerformed'},
+        {header: 'created_by', key: 'createdBy'}
     ];
 
     worklogs.forEach(log => {

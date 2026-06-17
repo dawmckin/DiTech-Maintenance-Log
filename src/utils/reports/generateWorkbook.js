@@ -9,8 +9,9 @@ import addProblemWorkstationsWorksheet from "./worksheets/problemWorkstationsRep
 import addShiftPerformanceWorksheet from "./worksheets/shiftPerformanceReport";
 import addTechnicianActivityWorksheet from "./worksheets/technicianAcivityReport";
 import addRawWorklogsWorksheet from "./worksheets/rawWorklogsReport";
+import addDashboardChartWorksheet from "./worksheets/dashboardChartsReport";
 
-export async function generateWorkbook(reportData, dateRange = {}) {
+export async function generateWorkbook(reportData, dateRange = {}, charts = {}, includeRawWorklogs = false) {
     const today = new Date();
 
     const todayFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
@@ -20,13 +21,14 @@ export async function generateWorkbook(reportData, dateRange = {}) {
     const workbook = new ExcelJS.Workbook();
 
     addExecutiveSummaryWorksheet(workbook, reportData, dateRange);
-    // addWorklogDetailsWorksheet(workbook, reportData);
-    // addDowntimeSummaryWorksheet(workbook, reportData);
-    // addProblemEquipmentWorksheet(workbook, reportData);
-    // addProblemWorkstationsWorksheet(workbook, reportData);
-    // addShiftPerformanceWorksheet(workbook, reportData);
-    // addTechnicianActivityWorksheet(workbook, reportData);
-    // addRawWorklogsWorksheet(workbook, reportData);
+    addWorklogDetailsWorksheet(workbook, reportData);
+    addDowntimeSummaryWorksheet(workbook, reportData);
+    addProblemEquipmentWorksheet(workbook, reportData);
+    addProblemWorkstationsWorksheet(workbook, reportData);
+    addShiftPerformanceWorksheet(workbook, reportData);
+    addTechnicianActivityWorksheet(workbook, reportData);
+    if(includeRawWorklogs) addRawWorklogsWorksheet(workbook, reportData);
+    // if(Object.keys(charts).length > 0) addDashboardChartWorksheet(workbook, charts);
 
     const buffer = await workbook.xlsx.writeBuffer();
 

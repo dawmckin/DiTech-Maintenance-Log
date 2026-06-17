@@ -5,6 +5,17 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
     const startDate = `${dateRange.startDate.getMonth() + 1}/${dateRange.startDate.getDate()}/${dateRange.startDate.getFullYear()}`;
     const endDate = `${dateRange.endDate.getMonth() + 1}/${dateRange.endDate.getDate()}/${dateRange.endDate.getFullYear()}`;
 
+    const ranges = {
+        today: 'Today',
+        yesterday: 'Yesterday',
+        week: 'Last 7 Days',
+        month: 'Last 30 Days',
+        quarterYear: 'Last 3 Months',
+        halfYear: 'Last 6 Months',
+        year: 'Last 12 Months',
+        custom: 'Custom Range'
+    }
+
     const worksheet = workbook.addWorksheet("Executive Summary");
 
     const totalTickets = worklogs.length;
@@ -131,7 +142,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
             else rows.push(['', ws])
         });
         rows.push([]);
-        rows.push(['Reporting Period', startDate, (startDate === endDate) ? '' : endDate]);
+        rows.push(['Reporting Period', startDate, (startDate === endDate) ? '' : endDate, ranges[dateRange.range]]);
         rows.push([]);
         rows.push(['Generated On', new Date().toLocaleString()]);
 

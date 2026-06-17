@@ -10,6 +10,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
         {header: 'Status', key: 'status', width: 10},
         {header: 'Start Time', key: 'start_time'},
         {header: 'End Time', key: 'end_time'},
+        {header: 'Downtime', key: 'downtime'},
         {header: 'Shift', key: 'shift'},
         {header: 'Workstation ID', key: 'workstation_id'},
         {header: 'Location', key: 'location_site'},
@@ -18,8 +19,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
         {header: 'Issue Type', key: 'issue_type'},
         {header: 'Issue Description', key: 'issue_description', width: 50},
         {header: 'Work Performed', key: 'notes', width: 50},
-        {header: 'Created By', key: 'created_by'},
-        {header: 'Downtime', key: 'downtime'}
+        {header: 'Created By', key: 'created_by'}
     ]
 
     worklogs.forEach(log => {
@@ -27,6 +27,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
             status: log.issue_status,
             start_time: formatDateTime(log.start_time),
             end_time: formatDateTime(log.end_time) ?? "",
+            downtime: formatDuration(Date.parse(log.end_time) - Date.parse(log.start_time)),
             shift: formatShift(log.start_time),
             workstation_id: log.workstation_id,
             location_site: log.workstations.location_site?.toUpperCase(),
@@ -35,8 +36,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
             issue_type: log.issue_type,
             issue_description: log.issue_description,
             notes: log.notes[0]?.note_text ?? "",
-            created_by: `${log.users.first_name} ${log.users.last_name}`,
-            downtime: formatDuration(Date.parse(log.end_time) - Date.parse(log.start_time))
+            created_by: `${log.users.first_name} ${log.users.last_name}`
         })
     });
 
