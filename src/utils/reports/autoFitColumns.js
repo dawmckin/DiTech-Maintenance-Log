@@ -1,4 +1,4 @@
-export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 50, excludedColumns = []) {
+export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 60, excludedColumns = []) {
     worksheet.columns.forEach((col) => {
         if(excludedColumns.includes(col.key)) {
             return;
@@ -20,6 +20,6 @@ export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 50, 
             }
         });
 
-        col.width = Math.min(maxColWidth + 3, maxWidth);
+        col.width = Math.min(maxColWidth + 5, maxWidth);
     });
 }

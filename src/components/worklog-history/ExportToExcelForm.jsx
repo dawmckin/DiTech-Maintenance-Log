@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useToast } from "../../context/ToastContext";
+
+import * as htmlToImage from "html-to-image";
 
 import DateRangePicker from "../util/DateRangePicker";
 
@@ -7,7 +9,17 @@ import { generateWorkbook } from "../../utils/reports/generateWorkbook";
 import { useSelectFilteredWorklogs } from "../../api/useSelectFilteredWorklogs";
 import { subDays } from "date-fns";
 
+import DowntimeByIssueTypeChart from "../dashboard/DowntimeByIssueTypeChart";
+import DowntimeByWorkstationChart from "../dashboard/DowntimeByWorkstationChart";
+
 export default function ExportToExcel({onSuccess}) {
+    const [worklogs, setWorklogs] = useState([]);
+    const [isExporting, setIsExporting] = useState(false);
+
+    const downtimeByIssueTypeChartRef = useRef(null);
+    const downtimeByWorkstationWalnutChartRef = useRef(null);
+    const downtimeByWorkstationMainChartRef = useRef(null);
+
     const [exportExcelForm, setExportExcelForm] = useState({
         report_type: '',
         dateRange: {
@@ -19,8 +31,8 @@ export default function ExportToExcel({onSuccess}) {
         workstationIds: [],
         equipmentIds: [],
         createdBy: [],
-        includeCharts: true,
-        includeRawData: true
+        includeCharts: false,
+        includeRawData: false
     });
 
     const handleChange = (e) => {
@@ -45,73 +57,54 @@ export default function ExportToExcel({onSuccess}) {
         };
         // console.log(filters);
 
-        const worklogs = await useSelectFilteredWorklogs(filters);
-        // console.log(worklogs);
-        
-        await generateWorkbook(worklogs);
+        const filteredWorklogs = await useSelectFilteredWorklogs(filters);
+        setWorklogs(filteredWorklogs);
+
+        setIsExporting(true);
     }
+
+    useEffect(() => {
+        // if(!isExporting ||
+        //     !worklogs.length ||
+        //     !downtimeByIssueTypeChartRef.current ||
+        //     !downtimeByWorkstationWalnutChartRef.current ||
+        //     !downtimeByWorkstationMainChartRef.current
+        // ) {
+        //     return;
+        // }        
+        if(!isExporting || !worklogs.length) {
+            return;
+        }
+
+        const exportWorkbook = async () => {
+            try {
+                await new Promise(resolve => {
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(resolve)
+                    })
+                })
+
+                // const charts = {};
+                // if(exportExcelForm.includeCharts) {
+                //     charts['downtimeByIssueTypeChartImage'] = await htmlToImage.toPng(downtimeByIssueTypeChartRef.current);
+                //     charts['downtimeByWorkstationWalnutChartImage'] = await htmlToImage.toPng(downtimeByWorkstationWalnutChartRef.current);
+                //     charts['downtimeByWorkstationMainChartImage'] = await htmlToImage.toPng(downtimeByWorkstationMainChartRef.current);
+                // }
+
+                await generateWorkbook(worklogs, exportExcelForm.dateRange, (exportExcelForm.includeCharts) ? charts: {}, exportExcelForm.includeRawData);
+            } catch(error) {
+                console.error(error);
+            } finally {
+                setIsExporting(false);
+            }
+        }
+
+        exportWorkbook();
+    }, [isExporting, worklogs, exportExcelForm.dateRange, exportExcelForm.includeCharts, exportExcelForm.includeRawData]);
 
     return (
         <>
             <form onSubmit={handleExport}>
-                {/* <label>Report Type <span className="required-input">*</span></label>
-                <select 
-                    name='report_type' 
-                    value={exportExcelForm.report_type || ""}
-                    onChange={handleChange}
-                >
-                    <option value="">--Select--</option>
-                    <option value="worklog-detail">Worklog Detail Report</option>
-                    <option value="downtime-summary">Downtime Summary</option>
-                    <option value="problem-workstations">Problem Workstations</option>
-                    <option value="problem-equipment">Problem Equipment</option>
-                    <option value="issue-trends">Issue Type Trends</option>
-                    <option value="shift-performance">Shift Performance</option>
-                </select> */}
-
-                {/* <fieldset>
-                    <label>Shift(s)</label>
-                    <div className="d-flex flex-wrap">
-                        <div className="d-flex mr-3">
-                            <input 
-                                name='all' 
-                                type='checkbox' 
-                                checked={exportExcelForm.shift.all} 
-                                onChange={handleChange}
-                            />
-                            <label className="ml-1 my-auto">All</label>
-                        </div>
-
-                        <div className="d-flex mr-3">
-                            <input 
-                                name='first' 
-                                type='checkbox' 
-                                checked={exportExcelForm.shift.first} 
-                                onChange={handleChange}    
-                            />
-                            <label className="ml-1 my-auto">1st</label>
-                        </div>
-                        <div className="d-flex mr-3">
-                            <input 
-                                name='second' 
-                                type='checkbox' 
-                                checked={exportExcelForm.shift.second} 
-                                onChange={handleChange}  
-                            />
-                            <label className="ml-1 my-auto">2nd</label>
-                        </div>
-                        <div className="d-flex mr-3">
-                            <input 
-                                name='third' 
-                                type='checkbox' 
-                                checked={exportExcelForm.shift.third} 
-                                onChange={handleChange}  
-                            />
-                            <label className="ml-1 my-auto">3rd</label>
-                        </div>
-                    </div>
-                </fieldset> */}
-
                 <label>Date Range</label>
                 <DateRangePicker 
                     value={exportExcelForm.dateRange}
@@ -149,9 +142,16 @@ export default function ExportToExcel({onSuccess}) {
                 </div>
 
                 <div className="actions">
-                    <button type='submit' className="primary">Generate Report</button>
+                    <button type='submit' className="primary" disabled={isExporting}>{isExporting ? 'Generating...' : 'Generate Report'}</button>
                 </div>
             </form>
+            {/* <div style={{display: 'none'}}> */}
+            {/* <div style={{position: 'absolute', left: '-999px', top: 0}}> */}
+            {/* <div >?z */}
+                {/* <DowntimeByIssueTypeChart ref={downtimeByIssueTypeChartRef} logs={worklogs}/>
+                <DowntimeByWorkstationChart ref={downtimeByWorkstationWalnutChartRef} logs={worklogs} locationSite='walnut' />
+                <DowntimeByWorkstationChart ref={downtimeByWorkstationMainChartRef} logs={worklogs} locationSite='main' /> */}
+            {/* </div> */}
         </>
     )
 }

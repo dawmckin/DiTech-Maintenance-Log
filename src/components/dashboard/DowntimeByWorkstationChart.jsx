@@ -6,14 +6,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useMemo, useState } from "react";
+import { useMemo, useState, forwardRef, useEffect } from "react";
 import groupLogsByField from "../../utils/group-by-field";
 import formatDuration from "../../utils/format-duration";
 import "./KPICard.css";
 
-export default function DowntimeByWorkstationChart({logs}) {
+const DowntimeByWorkstationChart = forwardRef(({logs, locationSite = 'walnut'}, ref) => {
+    const [location, setLocation] = useState('walnut');
 
-    const [location, setLocation] = useState(() => 'walnut');
+    useEffect(() => setLocation(locationSite), [locationSite]);
 
     const data = useMemo(() => {
         return groupLogsByField(logs, "workstation_id");
@@ -24,7 +25,7 @@ export default function DowntimeByWorkstationChart({logs}) {
     }, [location, data]);
   
     return (
-        <div className="kpi-card">
+        <div className="kpi-card" ref={ref}>
             <div className="card-header">
                 <h3 className="">Downtime by Workstation</h3>
 
@@ -65,4 +66,6 @@ export default function DowntimeByWorkstationChart({logs}) {
             </ResponsiveContainer>
         </div>
     );
-}
+})
+
+export default DowntimeByWorkstationChart;
