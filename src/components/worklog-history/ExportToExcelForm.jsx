@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useToast } from "../../context/ToastContext";
+import { useToast } from '../../context/ToastContext';
 
 import * as htmlToImage from "html-to-image";
 
@@ -13,6 +13,8 @@ import DowntimeByIssueTypeChart from "../dashboard/DowntimeByIssueTypeChart";
 import DowntimeByWorkstationChart from "../dashboard/DowntimeByWorkstationChart";
 
 export default function ExportToExcel({onSuccess}) {
+    const { showToast } = useToast();
+
     const [worklogs, setWorklogs] = useState([]);
     const [isExporting, setIsExporting] = useState(false);
 
@@ -22,6 +24,8 @@ export default function ExportToExcel({onSuccess}) {
 
     const [exportExcelForm, setExportExcelForm] = useState({
         report_type: '',
+        mainLocation: true,
+        walnutLocation: true,
         dateRange: {
             range: 'month',
             startDate: subDays(new Date(), 30),
@@ -51,13 +55,25 @@ export default function ExportToExcel({onSuccess}) {
     const handleExport = async (e) => {
         e.preventDefault();
 
+        if(!exportExcelForm.mainLocation && !exportExcelForm.walnutLocation) {
+            showToast('Please select a location.', "error");
+            return;
+        }
+
         const filters = {
             startDate: exportExcelForm.dateRange.startDate?.toISOString(),
-            endDate: exportExcelForm.dateRange.endDate?.toISOString()
+            endDate: exportExcelForm.dateRange.endDate?.toISOString(),
+            main: exportExcelForm.mainLocation,
+            walnut: exportExcelForm.walnutLocation
         };
         // console.log(filters);
 
         const filteredWorklogs = await useSelectFilteredWorklogs(filters);
+
+        if(filteredWorklogs.length === 0) {
+            showToast('No records available.', 'error')
+        }
+       
         setWorklogs(filteredWorklogs);
 
         setIsExporting(true);
@@ -73,6 +89,7 @@ export default function ExportToExcel({onSuccess}) {
         //     return;
         // }        
         if(!isExporting || !worklogs.length) {
+            setIsExporting(false);
             return;
         }
 
@@ -90,7 +107,8 @@ export default function ExportToExcel({onSuccess}) {
                 //     charts['downtimeByWorkstationWalnutChartImage'] = await htmlToImage.toPng(downtimeByWorkstationWalnutChartRef.current);
                 //     charts['downtimeByWorkstationMainChartImage'] = await htmlToImage.toPng(downtimeByWorkstationMainChartRef.current);
                 // }
-
+                console.log(exportExcelForm.dateRange.startDate);
+                console.log(exportExcelForm.dateRange.endDate);
                 await generateWorkbook(worklogs, exportExcelForm.dateRange, (exportExcelForm.includeCharts) ? charts: {}, exportExcelForm.includeRawData);
             } catch(error) {
                 console.error(error);
@@ -100,11 +118,37 @@ export default function ExportToExcel({onSuccess}) {
         }
 
         exportWorkbook();
-    }, [isExporting, worklogs, exportExcelForm.dateRange, exportExcelForm.includeCharts, exportExcelForm.includeRawData]);
+    }, [isExporting, worklogs, exportExcelForm]);
 
     return (
         <>
             <form onSubmit={handleExport}>
+                {/* <label className="mb-0">Location</label> */}
+                <div className="d-flex">
+                    <label className="mr-3">
+                        <input 
+                            type="checkbox"
+                            checked={exportExcelForm.mainLocation}
+                            name="mainLocation"
+                            onChange={handleChange}
+                            className="mr-1"
+                        /> 
+                        Main St
+                    </label>
+                
+                    
+                    <label className="mr-3">
+                        <input 
+                            type="checkbox"
+                            checked={exportExcelForm.walnutLocation}
+                            name="walnutLocation"
+                            onChange={handleChange}
+                            className="mr-1"
+                        />
+                        Walnut St
+                    </label>
+                </div>
+
                 <label>Date Range</label>
                 <DateRangePicker 
                     value={exportExcelForm.dateRange}

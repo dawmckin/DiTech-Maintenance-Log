@@ -4,6 +4,8 @@ import type { Worklog } from "../types/worklog";
 export type WorklogFilters = {
     startDate?: string;
     endDate?: string;
+    main?: boolean;
+    walnut?: boolean
 }
 
 export async function useSelectFilteredWorklogs(filters: WorklogFilters): Promise<Worklog[]> {
@@ -15,7 +17,7 @@ export async function useSelectFilteredWorklogs(filters: WorklogFilters): Promis
                 first_name,
                 last_name
             ),
-            workstations(
+            workstations!inner(
                 location_site
             ),
             equipment(
@@ -42,6 +44,14 @@ export async function useSelectFilteredWorklogs(filters: WorklogFilters): Promis
             'start_time',
             filters.endDate
         );
+    }
+
+    if(filters.main && !filters.walnut) {
+        query = query.eq('workstations.location_site', 'main');
+    }
+
+    if(filters.walnut && !filters.main) {
+        query = query.eq('workstations.location_site', 'walnut');
     }
 
     const {data, error} = await query.order(
