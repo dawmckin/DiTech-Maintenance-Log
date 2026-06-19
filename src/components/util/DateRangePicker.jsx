@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { DateRange } from 'react-date-range';
-import { startOfDay, endOfDay, subDays, subMonths, sub } from "date-fns";
 
 import './date-range-picker.css';
 
@@ -16,32 +15,56 @@ export default function DateRangePicker({value, onChange}) {
     const handlePresetChange = (e) => {
         const range = e.target.value;
 
+        const now = new Date();
+        const nowHour = now.getHours();
+
         let startDate = new Date();
         let endDate = new Date();
 
+        startDate.setHours(21, 0, 0, 0);
+        endDate.setHours(20, 59, 59, 999);
+
+        //ditech day start (9pm prev day / start of 3rd shift)
         switch(range) {
             case 'today':
-                startDate = startOfDay(new Date());
-                endDate = endOfDay(new Date());
+                (nowHour >= 21 && nowHour < 24) 
+                    ? startDate.setDate(now.getDate()) 
+                    : startDate.setDate(now.getDate() - 1);
+                
+                (nowHour >= 21 && nowHour < 24) 
+                    ? endDate.setDate(now.getDate() + 1)
+                    : endDate.setDate(now.getDate());
+
                 break;
             case 'yesterday':
-                startDate = startOfDay(subDays(new Date(), 1));
-                endDate = endOfDay(subDays(new Date(), 1));
+                (nowHour >= 21 && nowHour < 24)
+                    ? startDate.setDate(now.getDate() - 1)
+                    : startDate.setDate(now.getDate() - 2);
+
+                (nowHour >= 21 && nowHour < 24)
+                    ? endDate.setDate(now.getDate())
+                    : endDate.setDate(now.getDate() - 1);
+
                 break;
             case 'week':
-                startDate = subDays(new Date(), 7);
+                startDate.setDate(now.getDate() - 7);
+
                 break;
             case 'month':
-                startDate = subDays(new Date(), 30);
+                startDate.setMonth(now.getMonth() - 1);
+                                
                 break;
             case 'quarterYear':
-                startDate = subMonths(new Date(), 3);
+                startDate.setMonth(now.getMonth() - 3);
+
                 break;            
             case 'halfYear':
-                startDate = subMonths(new Date(), 6);
+                startDate.setMonth(now.getMonth() - 6);
+
                 break;            
             case 'year':
-                startDate = subMonths(new Date(), 12);
+                startDate.setMonth(now.getMonth() - 12);
+                
                 break;
             default:
                 break;
