@@ -61,15 +61,17 @@ export default function AdminView({range}) {
                     <DowntimeByWorkstationChart logs={filteredLogs} />
                 </div>
             </div>
-
-            <div className="row mt-3">
-                <div className="col-md-6">
-                    <DowntimeChart logs={filteredLogs} range={range} />
+            {
+                (range !== 'today' && range !== 'yesterday') &&
+                <div className="row mt-3">
+                    <div className="col-md-6">
+                        <DowntimeChart logs={filteredLogs} range={range} />
+                    </div>
+                    <div className="col-md-6">
+                        <IssuesOverTimeChart logs={filteredLogs} range={range} />
+                    </div>
                 </div>
-                <div className="col-md-6">
-                    <IssuesOverTimeChart logs={filteredLogs} range={range} />
-                </div>
-            </div>
+            }
         </div>
     )
 }

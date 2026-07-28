@@ -17,7 +17,8 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
             equipmentSummary[equipmentId] = {
                 equipmentName: log.equipment?.equipment_name,
                 ticketCount: 0,
-                totalDowntime: 0
+                totalDowntime: 0,
+                workstationId: log.workstation_id
             };
         }
 
@@ -32,7 +33,8 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
             equipmentName: data.equipmentName,
             ticketCount: data.ticketCount,
             totalDowntime: data.totalDowntime,
-            avgDowntime: data.totalDowntime / data.ticketCount
+            avgDowntime: data.totalDowntime / data.ticketCount,
+            workstationId: data.workstationId
 
         }
     ));
@@ -43,6 +45,7 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
         {header: 'Rank', key: 'rank'},
         {header: 'Equipment ID', key: 'equipmentId'},
         {header: 'Equipment Name', key: 'equipmentName'},
+        {header: 'Workstation', key: 'workstationId'},
         {header: 'Tickets', key: 'ticketCount'},
         {header: 'Total Downtime', key: 'totalDowntime'},
         {header: 'Average Downtime', key: 'avgDowntime'}
@@ -52,7 +55,8 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
         worksheet.addRow({
             rank: index + 1,
             equipmentId: row.equipmentId,
-            equipmentName: row.equipmentName,
+            equipmentName: `${row.equipmentName}`,
+            workstationId: row.workstationId,
             ticketCount: row.ticketCount,
             totalDowntime: formatDuration(row.totalDowntime),
             avgDowntime: formatDuration(row.avgDowntime), 
@@ -98,13 +102,13 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
         }
     });
 
-    autoFitColumns(worksheet, 10, 60, ['rank']);
+    autoFitColumns(worksheet);
     
     worksheet.getColumn('A').alignment = {
         horizontal: 'center'
     };
 
-    worksheet.getColumn('D').alignment = {
+    worksheet.getColumn('E').alignment = {
         horizontal: 'center'
     };
 }

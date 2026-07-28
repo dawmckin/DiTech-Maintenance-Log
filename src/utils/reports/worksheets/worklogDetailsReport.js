@@ -11,8 +11,8 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
         {header: 'Start Time', key: 'start_time'},
         {header: 'End Time', key: 'end_time'},
         {header: 'Downtime', key: 'downtime'},
-        {header: 'Shift', key: 'shift'},
-        {header: 'Workstation ID', key: 'workstation_id'},
+        {header: 'Shift', key: 'shift', width: 8},
+        {header: 'Workstation', key: 'workstation_id'},
         {header: 'Location', key: 'location_site'},
         {header: 'PLEX Equipment ID', key: 'equipment_id'},
         {header: 'Equipment Name', key: 'equipment_name'},
@@ -90,7 +90,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
         }
     })
 
-    autoFitColumns(worksheet, 10, 50, ['status', 'issue_description', 'notes']);
+    autoFitColumns(worksheet, 10, 50, ['status', 'shift', 'issue_description', 'notes']);
 
     worksheet.getColumn("issue_description").alignment = {
         wrapText: true,
