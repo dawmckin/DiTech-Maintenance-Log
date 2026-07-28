@@ -9,8 +9,9 @@ import "./history-table.css";
 
 import OpenIcon from "./../../assets/open-icon.svg";
 import CompetedIcon from "./../../assets/completed-icon.svg";
+import formatDuration from "../../utils/format-duration";
 
-export default function HistoryTable({logs, toggle, search}) {
+export default function HistoryTable({logs, search}) {
     //sorting configs
     const [sortConfig, setSortConfig] = useState({key: 'start_time', direction: "desc"});
     
@@ -19,21 +20,6 @@ export default function HistoryTable({logs, toggle, search}) {
 
     //expanded rows
     const [expandedRows, setExpandedRows] = useState(new Set());
-
-    //sorting configs
-    useEffect(() => {
-        if(toggle === "date") {
-            setSortConfig({
-                key: 'start_time',
-                direction: 'desc'
-            });
-        } else if(toggle === 'workstation') {
-            setSortConfig({
-                key: 'workstation_id',
-                direction: 'asc'
-            });
-        }
-    }, [toggle]);
     
     //search
     useEffect(() => {
@@ -46,6 +32,7 @@ export default function HistoryTable({logs, toggle, search}) {
 
     //handle col click sorting
     const handleSort = (key) => {
+        // console.log(key);
         setSortConfig((prev) => {
             if(prev.key === key) {
                 return {
@@ -55,6 +42,7 @@ export default function HistoryTable({logs, toggle, search}) {
             }
             return {key, direction: "asc"};
         });
+        // console.log(sortConfig);
 
         setCurrentPage(1);
     };
@@ -75,7 +63,9 @@ export default function HistoryTable({logs, toggle, search}) {
     const getSortArrow = (column) => {
         if(sortConfig.key !== column) return null;
 
-        return sortConfig.direction === 'asc' ? <i className="bi bi-caret-up-fill"></i> : <i className="bi bi-caret-down-fill"></i>;
+        return sortConfig.direction === 'asc' 
+                    ? <i className="bi bi-caret-up-fill"></i> 
+                    : <i className="bi bi-caret-down-fill"></i>;
     }
 
     //sorting logic
@@ -92,13 +82,14 @@ export default function HistoryTable({logs, toggle, search}) {
                 "issue_status",
                 "start_time",
                 "end_time",
-                "users"
+                "users",
+                'shift'
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
 
             filtered = filtered.filter((log) =>
                 searchableFields.some((field) => {
-                    const value = log[field];
+                    const value = (field === 'shift') ? log.start_time : log[field];
 
                     if(value === null || value === undefined) return false;
 
@@ -118,6 +109,10 @@ export default function HistoryTable({logs, toggle, search}) {
                         return String(value?.first_name).toLowerCase().includes(lowercasedSearch) || String(value?.last_name).toLowerCase().includes(lowercasedSearch);
                     }
 
+                    if(field === 'shift') {
+                        return formatShift(log.start_time).includes(lowercasedSearch);
+                    }
+
                     return String(value).toLowerCase().includes(lowercasedSearch);
                 })
             );
@@ -126,9 +121,25 @@ export default function HistoryTable({logs, toggle, search}) {
         //apply column sort
         filtered.sort((a, b) => {
             const {key, direction} = sortConfig;
+            // console.log(key, direction);
 
-            let valueA = key !== 'equipment' ? a[key] : a[key].plex_equipment_id;
-            let valueB = key !== 'equipment' ? b[key] : b[key].plex_equipment_id;
+            let valueA;
+            let valueB;
+
+            switch (key) {
+                case 'equipment':
+                   valueA = a[key].plex_equipment_id;
+                   valueB = b[key].plex_equipment_id;
+                   break;
+                case 'shift':
+                    valueA = formatShift(a.start_time);
+                    valueB = formatShift(b.start_time);
+                    break;
+                default:
+                    valueA = a[key];
+                    valueB = b[key];
+                    break;
+            }
 
             if (valueA == null) return 1;
             if (valueB == null) return -1;
@@ -148,7 +159,7 @@ export default function HistoryTable({logs, toggle, search}) {
         return filtered;
     }, [logs, debouncedSearch, sortConfig]);
 
-    const pageSize = 8;
+    const pageSize = 10;
     const {currentPage, setCurrentPage, paginatedData: paginatedLogs, totalPages} = usePagination(sortedLogs, pageSize);
 
     return (
@@ -163,46 +174,27 @@ export default function HistoryTable({logs, toggle, search}) {
                             <th className="sortable" onClick={() => handleSort("issue_status")}>
                                 Status {getSortArrow("issue_status")}
                             </th>
-                            {toggle === 'date' ? (
-                                <>
-                                    <th className="sortable" onClick={() => handleSort("start_time")}>
-                                        Start Time {getSortArrow("start_time")}
-                                    </th>
-                                    <th>
-                                        Shift
-                                    </th>  
-                                    <th className="sortable" onClick={() => handleSort("workstation_id")}>
-                                        Workstation {getSortArrow("workstation_id")}
-                                    </th>
-                                    <th className="sortable" onClick={() => handleSort("equipment")}>
-                                        Equipment {getSortArrow("equipment")}
-                                    </th>
-                                </>
-                            ) : (
-                                <>
-                                    <th className="sortable" onClick={() => handleSort("workstation_id")}>
-                                        Workstation {getSortArrow("workstation_id")}
-                                    </th>
-                                    <th>
-                                        Shift
-                                    </th> 
-                                    <th className="sortable" onClick={() => handleSort("equipment")}>
-                                        Equipment {getSortArrow("equipment")}
-                                    </th>
-                                    <th className="sortable" onClick={() => handleSort("start_time")}>
-                                        Start Time {getSortArrow("start_time")}
-                                    </th>
-                                </>
-                            )}
+                            <th className="sortable" onClick={() => handleSort("start_time")}>
+                                Start Time {getSortArrow("start_time")}
+                            </th>
+                            {/* <th className="sortable" onClick={() => handleSort("shift")}>
+                                Shift {getSortArrow("shift")}
+                            </th>                            */}
+                            <th className="sortable" onClick={() => handleSort("shift")}>
+                                Downtime {getSortArrow("shift")}
+                            </th>  
+                            <th className="sortable" onClick={() => handleSort("workstation_id")}>
+                                Workstation {getSortArrow("workstation_id")}
+                            </th>
+                            <th className="sortable" onClick={() => handleSort("equipment")}>
+                                Equipment {getSortArrow("equipment")}
+                            </th>
                             <th className="sortable" onClick={() => handleSort("issue_type")}>
                                 Issue Type {getSortArrow("issue_type")}
                             </th>
                             <th className="sortable" onClick={() => handleSort("end_time")}>
                                 End Time {getSortArrow("end_time")}
                             </th>                       
-                            {/* <th>
-                                Issue Description
-                            </th> */}
                         </tr> 
                     </thead>
 
@@ -244,26 +236,18 @@ export default function HistoryTable({logs, toggle, search}) {
                                                     <span className="status-tooltip-text">{log.issue_status.toUpperCase()}</span>
                                                 </div>
                                             </td>
-
-                                            {toggle === 'date' ? (
-                                                <>
-                                                    <td>{new Date(log.start_time).toLocaleString()}</td>
-                                                    <td>{formatShift(log.start_time)}</td>
-                                                    <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
-                                                    <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
-                                                    <td>{formatShift(log.start_time)}</td>
-                                                    <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
-                                                    <td>{new Date(log.start_time).toLocaleString()}</td>
-                                                </>
-                                            )}
-
+                                            <td>{new Date(log.start_time).toLocaleString()}</td>
+                                            {/* <td>{formatShift(log.start_time)}</td> */}
+                                            <td>
+                                                {formatDuration(log.end_time 
+                                                    ? new Date(log.end_time) - new Date(log.start_time) 
+                                                    : new Date() - new Date(log.start_time)
+                                                )}
+                                            </td>
+                                            <td>{log.workstation_id} - {log.workstations?.location_site?.toUpperCase()}</td>
+                                            <td>[{log.equipment?.plex_equipment_id}] - {log.equipment.equipment_name}</td>
                                             <td>{log.issue_type}</td>
                                             <td>{log.end_time ? new Date(log.end_time).toLocaleString() : ""}</td>
-                                            {/* <td>{log.issue_description}</td> */}
                                         </tr>
 
                                         {(isExpanded) && (

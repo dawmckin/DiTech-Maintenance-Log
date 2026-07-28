@@ -87,7 +87,7 @@ export default function addShiftPerformanceWorksheet(workbook, worklogs) {
 
     autoFitColumns(worksheet);
 
-        worksheet.getColumn('A').alignment = {
+    worksheet.getColumn('A').alignment = {
         horizontal: 'center'
     };
 

@@ -43,7 +43,7 @@ export default function addProblemWorkstationsWorksheet(workbook, worklogs) {
 
     worksheet.columns = [
         {header: 'Rank', key: 'rank'},
-        {header: 'Workstation ID', key: 'workstationId'},
+        {header: 'Workstation', key: 'workstationId'},
         {header: 'Location', key: 'location'},
         {header: 'Tickets', key: 'ticketCount'},
         {header: 'Total Downtime', key: 'totalDowntime'},
@@ -54,7 +54,7 @@ export default function addProblemWorkstationsWorksheet(workbook, worklogs) {
     rows.forEach((row, index) => {
         worksheet.addRow({
             rank: index + 1,
-            workstationId: row.workstationId,
+            workstationId: Number.parseInt(row.workstationId),
             location: row.location.toUpperCase(),
             ticketCount: row.ticketCount,
             totalDowntime: formatDuration(row.totalDowntime),
@@ -106,15 +106,15 @@ export default function addProblemWorkstationsWorksheet(workbook, worklogs) {
         }
     });
 
-    autoFitColumns(worksheet, 10, 60, ['rank']);
+    autoFitColumns(worksheet);
 
-    worksheet.getColumn('A').alignment = {
-        horizontal: 'center'
-    };
+    const centeredCols = ['A', 'D'];
 
-    worksheet.getColumn('D').alignment = {
-        horizontal: 'center'
-    };
+    centeredCols.forEach(col => {
+        worksheet.getColumn(col).alignment = {
+            horizontal: 'center'
+        }
+    });
 
     worksheet.mergeCells('J14:O21');
 

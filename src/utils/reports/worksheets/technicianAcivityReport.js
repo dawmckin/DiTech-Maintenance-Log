@@ -114,7 +114,7 @@ export default function addTechnicianActivityWorksheet(workbook, worklogs) {
         }
     });
 
-    autoFitColumns(worksheet, 10, 60, ['rank']);
+    autoFitColumns(worksheet);
 
     worksheet.getColumn('A').alignment = {
         horizontal: 'center'

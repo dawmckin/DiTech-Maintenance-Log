@@ -19,7 +19,8 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
             equipmentSummary[equipmentId] = {
                 equipmentName,
                 ticketCount: 0,
-                totalDowntime: 0
+                totalDowntime: 0,
+                workstationId: log.workstation_id
             }
         }
 
@@ -34,9 +35,11 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
         {
             equipmentId: id,
             equipmentName: data.equipmentName,
+            workstationId: data.workstationId,
             ticketCount: data.ticketCount,
             totalDowntime: data.totalDowntime,
-            avgDowntime: data.totalDowntime / data.ticketCount
+            avgDowntime: data.totalDowntime / data.ticketCount,
+            impactScore: Math.round(data.ticketCount * data.totalDowntime / (1000 * 60 * 60))
         }
     ));
 
@@ -46,9 +49,11 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
         {header: 'Rank', key: 'rank'},
         {header: 'Equipment ID', key: 'equipmentId'},
         {header: 'Equipment Name', key: 'equipmentName'},
+        {header: 'Workstation', key: 'workstationId'},
         {header: 'Tickets', key: 'ticketCount'},
         {header: 'Total Downtime', key: 'totalDowntime'},
-        {header: 'Average Downtime', key: 'avgDowntime'}
+        {header: 'Average Downtime', key: 'avgDowntime'},
+        {header: 'Impact Score', key: 'impactScore'}
     ];
 
     rows.forEach((row, index) => {
@@ -56,9 +61,11 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
             rank: index + 1,
             equipmentId: row.equipmentId,
             equipmentName: row.equipmentName,
+            workstationId: row.workstationId,
             ticketCount: row.ticketCount,
             totalDowntime: formatDuration(row.totalDowntime),
             avgDowntime: formatDuration(row.avgDowntime), 
+            impactScore: row.impactScore
         });
     });
 
@@ -92,7 +99,7 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
     worksheet.eachRow((row, rowNumber) => {
         if(rowNumber === 1) return;
 
-        const ticketCount = row.getCell(4).value;
+        const ticketCount = row.getCell(5).value;
 
         if(ticketCount >= 10) {
             row.fill = {
@@ -105,13 +112,35 @@ export default function addProblemEquipmentWorksheet(workbook, worklogs) {
         }
     });
 
-    autoFitColumns(worksheet, 10, 60, ['rank']);
+    autoFitColumns(worksheet);
 
     worksheet.getColumn('A').alignment = {
         horizontal: 'center'
     };
 
-    worksheet.getColumn('D').alignment = {
+    worksheet.getColumn('E').alignment = {
         horizontal: 'center'
+    };
+
+    worksheet.mergeCells('J14:O21');
+
+    const notesCell = worksheet.getCell('J14');
+
+    notesCell.value = "Impact Score = Ticket Count x Total Downtime (Hours)\n\n" +
+    "This score helps identify workstations that generate both frequent maintenance activity and significant production downtime. Higher scores indicate areas that may require corrective actions, process improvements, or additional operator training.";
+    
+    notesCell.alignment = {
+        wrapText: true,
+        vertical: 'top'
+    };
+
+    notesCell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'F3F4F6'}
+    };
+
+    notesCell.font = {
+        italic: true
     };
 }

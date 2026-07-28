@@ -1,5 +1,6 @@
 export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 60, excludedColumns = []) {
     worksheet.columns.forEach((col) => {
+
         if(excludedColumns.includes(col.key)) {
             return;
         }
@@ -20,6 +21,6 @@ export default function autoFitColumns(worksheet, minWidth = 10, maxWidth = 60, 
             }
         });
 
-        col.width = Math.min(maxColWidth + 5, maxWidth);
+        col.width = (col.key === 'rank') ? Math.min(maxColWidth + 2, maxWidth) : Math.min(maxColWidth + 8, maxWidth);
     });
 }

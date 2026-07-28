@@ -2,8 +2,8 @@ import calculateKPIs from "../../calculate-kpis";
 import formatDuration from "../../format-duration";
 
 export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRange = {}) {
-    const startDate = `${dateRange.startDate.getMonth() + 1}/${dateRange.startDate.getDate()}/${dateRange.startDate.getFullYear()}`;
-    const endDate = `${dateRange.endDate.getMonth() + 1}/${dateRange.endDate.getDate()}/${dateRange.endDate.getFullYear()}`;
+    // const startDate = `${dateRange.startDate.getMonth() + 1}/${dateRange.startDate.getDate()}/${dateRange.startDate.getFullYear()}`;
+    // const endDate = `${dateRange.endDate.getMonth() + 1}/${dateRange.endDate.getDate()}/${dateRange.endDate.getFullYear()}`;
 
     const ranges = {
         today: 'Today',
@@ -74,26 +74,6 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
     const worstWorkstationsByDowntime = worstWorkstationsByDowntimeSorted.filter(ws => ws[1].downtime === worstWorkstationsByDowntimeSorted[0][1].downtime)
                                                                     .map(ws => [ws[0], {location: ws[1].location, count: ws[1].count, downtime: formatDuration(ws[1].downtime)}]);
 
-
-    // console.log(totalTickets);
-    // console.log(openTickets);
-    // console.log(completedTickets);
-
-    // console.log(totalDowntimeFormatted);
-    // console.log(avgDowntimeFormatted);
-
-    // console.log(equipmentCounts);
-    // console.log(worstEquipmentByTicketsSorted);
-    // console.log(worstEquipmentByTickets);
-    // console.log(worstEquipmentByDowntimeSorted);
-    // console.log(worstEquipmentByDowntime);
-
-    // console.log(workstationCounts);
-    // console.log(worstWorkstationsByTicketsSorted)
-    // console.log(worstWorkstationsByTickets)
-    // console.log(worstWorkstationsByDowntimeSorted)
-    // console.log(worstWorkstationsByDowntime)
-
     worksheet.mergeCells('A1:D1');
 
     worksheet.getCell('A1').value = 'Maintenance Portal Executive Summary';
@@ -123,7 +103,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
         rows.push(['Average Downtime', avgDowntimeFormatted]);
         rows.push([]);
         worstEquipmentByTickets.forEach((eq, index) => {
-            if(index === 0) rows.push(['Worst Equipment By Tickets', eq[0], eq[1].name, eq[1].count])
+            if(index === 0) rows.push(['Worst Equipment By Tickets', eq[0], eq[1].name, `${eq[1].count} tickets`])
             else rows.push(['', eq[0], eq[1].name, eq[1].count])
         });
         rows.push([]);
@@ -133,7 +113,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
         });
         rows.push([]);     
         worstWorkstationsByTickets.forEach((ws, index) => {
-            if(index === 0) rows.push(['Worst Workstations By Tickets', ws[0], ws[1].location.toUpperCase(), ws[1].count])
+            if(index === 0) rows.push(['Worst Workstations By Tickets', ws[0], ws[1].location.toUpperCase(), `${ws[1].count} tickets`])
             else rows.push(['', ws[0], ws[1].location.toUpperCase(), ws[1].count])
         });
         rows.push([]);
@@ -142,7 +122,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
             else rows.push(['', ws])
         });
         rows.push([]);
-        rows.push(['Reporting Period', startDate, (startDate === endDate) ? '' : endDate, ranges[dateRange.range]]);
+        rows.push(['Reporting Period', dateRange.startDate.toLocaleString(), dateRange.endDate.toLocaleString(), `Range: ${ranges[dateRange.range]}`]);
         rows.push([]);
         rows.push(['Generated On', new Date().toLocaleString()]);
 
@@ -169,7 +149,7 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
     }
     
     worksheet.getColumn(1).width = 32;
-    worksheet.getColumn(2).width = 23;
-    worksheet.getColumn(3).width = 18;
-    worksheet.getColumn(4).width = 18;
+    worksheet.getColumn(2).width = 30;
+    worksheet.getColumn(3).width = 30;
+    worksheet.getColumn(4).width = 30;
 }

@@ -107,8 +107,7 @@ export default function ExportToExcel({onSuccess}) {
                 //     charts['downtimeByWorkstationWalnutChartImage'] = await htmlToImage.toPng(downtimeByWorkstationWalnutChartRef.current);
                 //     charts['downtimeByWorkstationMainChartImage'] = await htmlToImage.toPng(downtimeByWorkstationMainChartRef.current);
                 // }
-                console.log(exportExcelForm.dateRange.startDate);
-                console.log(exportExcelForm.dateRange.endDate);
+
                 await generateWorkbook(worklogs, exportExcelForm.dateRange, (exportExcelForm.includeCharts) ? charts: {}, exportExcelForm.includeRawData);
             } catch(error) {
                 console.error(error);
