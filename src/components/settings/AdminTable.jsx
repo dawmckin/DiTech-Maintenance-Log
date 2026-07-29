@@ -5,6 +5,8 @@ import Pagination from "../util/Pagination";
 
 import formatDateTime from "../../utils/format-date-time";
 
+import checkIcon from "./../../assets/check-lg-icon.svg";
+
 import "../worklog-history/history-table.css";
 
 export default function AdminTable({view, rowData, onEdit, onDelete}) {
@@ -84,7 +86,7 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
             col === 'second_shift' || 
             col === 'third_shift'
         ) {
-            tableData = (td) ? <i className="bi bi-check-square-fill"  style={{textAlign: 'center'}}></i> : '';
+            tableData = (td) ? <img src={checkIcon} alt="Selected" width={22} height={22}/> : '';
         } else tableData = td;
 
         return tableData;
