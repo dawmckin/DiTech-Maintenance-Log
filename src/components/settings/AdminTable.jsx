@@ -13,43 +13,66 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData, totalPages} = usePagination(rowData, pageSize);
 
+    let tableHeaders = '';
+
+    switch(view) {
+        case 'users':
+            tableHeaders = 
+                <tr>
+                    <th>ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        case 'emailRecipients':
+            tableHeaders = 
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>All</th>
+                    <th>1st</th>
+                    <th>2nd</th>
+                    <th>3rd</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        case 'workstations':
+            tableHeaders = 
+                <tr>
+                    <th>ID</th>
+                    <th>Location</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr> 
+            break;
+        case 'equipment':
+            tableHeaders =                                     
+                <tr>
+                    <th>PLEX ID</th>
+                    <th>Asset Number</th>
+                    <th>Equipment Name</th>
+                    <th>Workstation ID</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        default:
+            break;
+
+    }
+
     return (
         <>
             <div className="table-wrapper">
                 <table className="admin-table">
                     <thead>
-                        {
-                            (view === 'users') ? (
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Last Name</th>
-                                    <th>First Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th></th>
-                                </tr>
-                            ) : (
-                                (view === 'workstations') ? (
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Location</th>
-                                        <th>Created At</th>
-                                        <th></th>
-                                    </tr> 
-                                ) : (
-                                    <tr>
-                                        <th>PLEX ID</th>
-                                        <th>Asset Number</th>
-                                        <th>Equipment Name</th>
-                                        <th>Workstation ID</th>
-                                        <th>Created At</th>
-                                        <th></th>
-                                    </tr>
-                                )
-                            )
-                        }
+                        {tableHeaders}
                     </thead>
                     <tbody>
                         {paginatedData.length === 0 ? (
@@ -64,13 +87,14 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
                                 if(view === 'users') rowKey = row.ditech_id;
                                 else if(view === 'workstations') rowKey = row.workstation_id;
+                                else if(view === 'emailRecipients') rowKey = row.recipient_id;
                                 else rowKey = row.plex_equipment_id;
 
                                 return (
                                     <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
                                         {
                                             Object.keys(row).map(k => (
-                                                (k !== 'user_id') && (
+                                                (k !== 'user_id' && k !== 'recipient_id') && (
                                                     <td key={k}>
                                                         {
                                                             (k === 'created_at') ? 

@@ -14,6 +14,7 @@ import useSelectAll from "../../api/useSelectAll";
 import useUpdateUser from "../../api/useUpdateUser";
 import useDeleteWorkstation from "../../api/useDeleteWorkstation";
 import useDeleteEquipment from "../../api/useDeleteEquipment";
+import EmailRecipientForm from "./EmailRecipientForm";
 
 export default function AdminSettings() {
     const [activeTab, setActiveTab] = useState("users");
@@ -101,6 +102,53 @@ export default function AdminSettings() {
         }
     }
 
+    let tabForm = '';
+    console.log(activeTab);
+    switch(activeTab) {
+        case 'users':
+            tabForm = <UserForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        case 'emailRecipients':
+            tabForm = <EmailRecipientForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />
+            break;
+        case 'workstations':
+            tabForm = <WorkstationsForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        case 'equipment':
+            tabForm = <EquipmentForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        default:
+            break;
+    }   
+
     return (
         <div>
             <div className="card">
@@ -125,6 +173,12 @@ export default function AdminSettings() {
                                 onClick={() => setActiveTab('users')}
                             >
                                 Users
+                            </button>                             
+                            <button
+                                className={activeTab === 'emailRecipients' ? 'tab active' : 'tab'}
+                                onClick={() => setActiveTab('emailRecipients')}
+                            >
+                                Email Recipients
                             </button>                            
                             <button
                                 className={activeTab === 'workstations' ? 'tab active' : 'tab'}
@@ -167,43 +221,7 @@ export default function AdminSettings() {
                 }} 
                 title={`${selectedRow ? 'Edit' : 'Add'} ${activeTab.toUpperCase()}`}
             >
-                {
-                    (activeTab === 'users') ? 
-                    (
-                        <UserForm 
-                            initialData={selectedRow}
-                            onSuccess={() => {
-                                setIsModalOpen(false);
-                                setSelectedRow(null);
-                                setRefreshKey(prev => prev + 1);
-                            }}
-                        />    
-                    ) : 
-                    (
-                        (activeTab === 'workstations') ? 
-                        (
-                            <WorkstationsForm 
-                                initialData={selectedRow}
-                                onSuccess={() => {
-                                    setIsModalOpen(false);
-                                    setSelectedRow(null);
-                                    setRefreshKey(prev => prev + 1);
-                                }}
-                            />
-
-                        ) : 
-                        (
-                            <EquipmentForm 
-                                initialData={selectedRow}
-                                onSuccess={() => {
-                                    setIsModalOpen(false);
-                                    setSelectedRow(null);
-                                    setRefreshKey(prev => prev + 1);
-                                }}
-                            />
-                        )
-                    )
-                }
+                {tabForm}
             </Modal>
 
             <Modal

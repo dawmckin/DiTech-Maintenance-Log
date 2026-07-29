@@ -5,17 +5,20 @@ import { useLoader } from "../context/LoaderContext";
 import type { User } from "../types/user";
 import type { Workstation } from "../types/workstation";
 import type { Equipment } from "../types/equipment";
+import type { EmailRecipient } from "../types/email-recipient";
 
 const TABLE_SELECTS = {
     users: 'user_id, ditech_id, last_name, first_name, email, user_role, user_status, created_at',
     workstations: 'workstation_id, location_site, created_at',
-    equipment: 'plex_equipment_id, asset_number, equipment_name, workstation_id, created_at'
+    equipment: 'plex_equipment_id, asset_number, equipment_name, workstation_id, created_at',
+    emailRecipients: 'recipient_id, name, email, all_shifts, first_shift, second_shift, third_shift, created_at'
 } as const;
 
 const TABLE_ORDERS = {
     users: 'last_name',
     workstations: 'workstation_id',
-    equipment: 'plex_equipment_id'
+    equipment: 'plex_equipment_id',
+    emailRecipients: 'name'
 } as const;
 
 export type SelectableView = keyof typeof TABLE_SELECTS;
@@ -24,6 +27,7 @@ interface ViewRowMap {
     users: User;
     workstations: Workstation;
     equipment: Equipment;
+    emailRecipients: EmailRecipient;
 }
 
 export default function useSelectAll<V extends SelectableView>(view: V, refresh: boolean): ViewRowMap[V][] {
@@ -36,7 +40,7 @@ export default function useSelectAll<V extends SelectableView>(view: V, refresh:
             showLoader();
 
             const {data, error} = await supabase
-                .from(view)
+                .from(view === 'emailRecipients' ? 'report_subscriptions' : view)
                 .select(TABLE_SELECTS[view])
                 .order(TABLE_ORDERS[view])
 
