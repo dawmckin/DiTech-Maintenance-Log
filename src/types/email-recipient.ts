@@ -1,4 +1,5 @@
 export interface EmailRecipient {
+    recipient_id: any,
     name: string,
     email: string,
     all_shifts: boolean,

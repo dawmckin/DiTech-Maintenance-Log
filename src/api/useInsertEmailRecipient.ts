@@ -17,6 +17,7 @@ export default function useInsertEmailRecipient() {
 
         showLoader();
 
+        console.log(emailRecipientData);
         const {data, error} = await supabase
             .from('report_subscriptions')
             .insert(emailRecipientData)

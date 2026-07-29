@@ -2,21 +2,20 @@ import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useLoader } from "../context/LoaderContext";
 
-export default function useUpdateEmailRecipient() {
+export default function useDeleteEmailRecipient() {
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
 
     const { showLoader, hideLoader } = useLoader();
 
-    const updateEmailRecipient = async (emailRecipientData) => {
-        console.log(emailRecipientData);
+    const deleteEmailRecipient = async (emailRecipientData) => {
         setError(null);
         
         showLoader();
 
         const {data, error} = await supabase
             .from('report_subscriptions')
-            .update(emailRecipientData)
+            .delete()
             .eq('recipient_id', emailRecipientData.recipient_id);
 
         if (error) {
@@ -35,5 +34,5 @@ export default function useUpdateEmailRecipient() {
         return {'success': true, data};
     }
 
-    return { updateEmailRecipient, status, error };
+    return { deleteEmailRecipient, status, error };
 }

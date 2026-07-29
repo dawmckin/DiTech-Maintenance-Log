@@ -9,6 +9,7 @@ import "../worklog-history/history-table.css";
 
 export default function AdminTable({view, rowData, onEdit, onDelete}) {
     const upperCaseFields = ['location_site', 'user_role', 'user_status'];
+    const shiftFields = ['all_shifts', 'first_shift', 'second_shift', 'third_shift'];
 
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData, totalPages} = usePagination(rowData, pageSize);
@@ -34,10 +35,9 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>All</th>
-                    <th>1st</th>
-                    <th>2nd</th>
-                    <th>3rd</th>
+                    <th style={{textAlign: 'center'}}>1st</th>
+                    <th style={{textAlign: 'center'}}>2nd</th>
+                    <th style={{textAlign: 'center'}}>3rd</th>
                     <th>Created At</th>
                     <th></th>
                 </tr>
@@ -67,6 +67,29 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
     }
 
+    const formatTableData = (col, td) => {
+        let tableData = "";
+
+        if(col === 'created_at') {
+            tableData = formatDateTime(td);
+        } else if(
+            col === 'location_site' || 
+            col === 'user_role' || 
+            col === 'user_status'
+        ) {
+            tableData = td.toUpperCase();
+        } else if(
+            col === 'all_shifts' || 
+            col === 'first_shift' || 
+            col === 'second_shift' || 
+            col === 'third_shift'
+        ) {
+            tableData = (td) ? <i className="bi bi-check-square-fill"  style={{textAlign: 'center'}}></i> : '';
+        } else tableData = td;
+
+        return tableData;
+    }
+
     return (
         <>
             <div className="table-wrapper">
@@ -94,19 +117,9 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
                                     <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
                                         {
                                             Object.keys(row).map(k => (
-                                                (k !== 'user_id' && k !== 'recipient_id') && (
-                                                    <td key={k}>
-                                                        {
-                                                            (k === 'created_at') ? 
-                                                            (
-                                                                formatDateTime(row[k])
-                                                            ) : 
-                                                            (
-                                                                (upperCaseFields.includes(k)) ? 
-                                                                    row[k].toUpperCase() : 
-                                                                    row[k]
-                                                            )
-                                                        }
+                                                (k !== 'user_id' && k !== 'recipient_id' && k !== 'all_shifts') && (
+                                                    <td key={k} style={(k === 'first_shift' || k === 'second_shift' || k === 'third_shift') ? {textAlign: 'center'} : {}}>
+                                                        { formatTableData(k, row[k]) }
                                                     </td> 
                                                 )
                                             ))
