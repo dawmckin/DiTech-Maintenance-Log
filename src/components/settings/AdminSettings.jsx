@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import AdminTable from "./AdminTable";
 import UserForm from "./UserForm";
+import EmailRecipientForm from "./EmailRecipientForm";
 import WorkstationsForm from "./WorkstationsForm";
 import EquipmentForm from "./EquipmentForm";
 import Modal from "../util/Modal";
@@ -12,6 +13,7 @@ import "./admin-settings.css";
 
 import useSelectAll from "../../api/useSelectAll";
 import useUpdateUser from "../../api/useUpdateUser";
+import useDeleteEmailRecipient from "../../api/useDeleteEmailRecipient";
 import useDeleteWorkstation from "../../api/useDeleteWorkstation";
 import useDeleteEquipment from "../../api/useDeleteEquipment";
 
@@ -26,10 +28,18 @@ export default function AdminSettings() {
 
     const { updateAuthUser } = useAuth();
     const { updateUser } = useUpdateUser();
+    const { deleteEmailRecipient } = useDeleteEmailRecipient();
     const { deleteWorkstation } = useDeleteWorkstation();
     const { deleteEquipment } = useDeleteEquipment();
 
     const { showToast } = useToast();
+
+    const headerText = {
+        users: 'User',
+        emailRecipients: 'Email Recipient',
+        workstations: 'Workstation',
+        equipment: 'Equipment'
+    }
 
     const handleEnableDisableUser = async () => {
         let authUpdatedData = {
@@ -69,6 +79,22 @@ export default function AdminSettings() {
         }
     }
 
+    const handleDeleteEmailRecipient = async () => {
+        const result = await deleteEmailRecipient(selectedRow);
+
+        if(result.success) {
+            showToast("Email Recipient deleted successfully.", "success");
+
+            setIsDelete(false);
+            setIsModalOpen(false);
+            setSelectedRow(null);
+            setRefreshKey(prev => prev + 1);
+        } else {
+            console.log(result.error);
+            showToast("Unable to delete email recipient.", 'error');
+        }
+    }
+
     const handleDeleteWorkstation = async () => {
         const result = await deleteWorkstation(selectedRow);
 
@@ -101,6 +127,83 @@ export default function AdminSettings() {
         }
     }
 
+    let tabForm = '';
+    switch(activeTab) {
+        case 'users':
+            tabForm = <UserForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        case 'emailRecipients':
+            tabForm = <EmailRecipientForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />
+            break;
+        case 'workstations':
+            tabForm = <WorkstationsForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        case 'equipment':
+            tabForm = <EquipmentForm 
+                initialData={selectedRow}
+                onSuccess={() => {
+                    setIsModalOpen(false);
+                    setSelectedRow(null);
+                    setRefreshKey(prev => prev + 1);
+                }}
+            />;
+            break;
+        default:
+            break;
+    }
+
+    let deleteButton = '';
+    switch(activeTab) {
+        case 'users':
+            deleteButton = <button className={`primary ${selectedRow?.user_status === 'active' ? 'cancel' : ''}`}
+                onClick={() => handleEnableDisableUser()}>
+                {selectedRow?.user_status === 'active' ? 'Disable' : 'Enable'}
+            </button>;
+            break;
+        case 'emailRecipients':
+           deleteButton = <button className="primary cancel"
+                onClick={() => handleDeleteEmailRecipient()}>
+                Delete
+            </button>; 
+            break;       
+        case 'workstations':
+            deleteButton = <button className="primary cancel"
+                onClick={() => handleDeleteWorkstation()}>
+                Delete
+            </button>;
+            break;
+        case 'equipment':
+            deleteButton = <button className="primary cancel"
+                onClick={() => handleDeleteEquipment()}>
+                Delete
+            </button>;
+            break;
+        default:
+            break;
+
+    }
+
     return (
         <div>
             <div className="card">
@@ -125,6 +228,12 @@ export default function AdminSettings() {
                                 onClick={() => setActiveTab('users')}
                             >
                                 Users
+                            </button>                             
+                            <button
+                                className={activeTab === 'emailRecipients' ? 'tab active' : 'tab'}
+                                onClick={() => setActiveTab('emailRecipients')}
+                            >
+                                Email Recipients
                             </button>                            
                             <button
                                 className={activeTab === 'workstations' ? 'tab active' : 'tab'}
@@ -165,45 +274,9 @@ export default function AdminSettings() {
                     setIsModalOpen(false);
                     setSelectedRow(null);
                 }} 
-                title={`${selectedRow ? 'Edit' : 'Add'} ${activeTab.toUpperCase()}`}
+                title={`${selectedRow ? 'Edit' : 'Add'} ${headerText[activeTab]}`}
             >
-                {
-                    (activeTab === 'users') ? 
-                    (
-                        <UserForm 
-                            initialData={selectedRow}
-                            onSuccess={() => {
-                                setIsModalOpen(false);
-                                setSelectedRow(null);
-                                setRefreshKey(prev => prev + 1);
-                            }}
-                        />    
-                    ) : 
-                    (
-                        (activeTab === 'workstations') ? 
-                        (
-                            <WorkstationsForm 
-                                initialData={selectedRow}
-                                onSuccess={() => {
-                                    setIsModalOpen(false);
-                                    setSelectedRow(null);
-                                    setRefreshKey(prev => prev + 1);
-                                }}
-                            />
-
-                        ) : 
-                        (
-                            <EquipmentForm 
-                                initialData={selectedRow}
-                                onSuccess={() => {
-                                    setIsModalOpen(false);
-                                    setSelectedRow(null);
-                                    setRefreshKey(prev => prev + 1);
-                                }}
-                            />
-                        )
-                    )
-                }
+                {tabForm}
             </Modal>
 
             <Modal
@@ -215,40 +288,14 @@ export default function AdminSettings() {
                 }} 
                 title={`${activeTab === 'users' ? 
                             `${selectedRow?.user_status === 'active' ? 'Disable' : 'Enable'} User` : 
-                            activeTab === 'workstations' ? 
-                                'Delete Workstation' : 
-                                'Delete Equipment'}`}
+                            `Delete ${headerText[activeTab]}`}
+                        `}
                 isDelete={true}
             >
                 <p>Are you sure?</p>
 
                 <div className="float-right">
-                    {
-                        (activeTab === 'users') ? 
-                        (
-                            <button className={`primary ${selectedRow?.user_status === 'active' ? 'cancel' : ''}`}
-                                    onClick={() => handleEnableDisableUser()}>
-                                {selectedRow?.user_status === 'active' ? 'Disable' : 'Enable'}
-                            </button>
-                        ) : 
-                        (
-                            (activeTab === 'workstations') ? 
-                            (
-                                <button className="primary cancel"
-                                        onClick={() => handleDeleteWorkstation()}>
-                                    Delete
-                                </button>
-                            ) : 
-                            (
-                                <button className="primary cancel"
-                                        onClick={() => handleDeleteEquipment()}>
-                                    Delete
-                                </button>
-                            )
-                        )
-
-                    }
-
+                    {deleteButton}
                 </div>
             </Modal>
         </div>

@@ -9,47 +9,93 @@ import "../worklog-history/history-table.css";
 
 export default function AdminTable({view, rowData, onEdit, onDelete}) {
     const upperCaseFields = ['location_site', 'user_role', 'user_status'];
+    const shiftFields = ['all_shifts', 'first_shift', 'second_shift', 'third_shift'];
 
     const pageSize = 8;
     const {currentPage, setCurrentPage, paginatedData, totalPages} = usePagination(rowData, pageSize);
+
+    let tableHeaders = '';
+
+    switch(view) {
+        case 'users':
+            tableHeaders = 
+                <tr>
+                    <th>ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        case 'emailRecipients':
+            tableHeaders = 
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th style={{textAlign: 'center'}}>1st</th>
+                    <th style={{textAlign: 'center'}}>2nd</th>
+                    <th style={{textAlign: 'center'}}>3rd</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        case 'workstations':
+            tableHeaders = 
+                <tr>
+                    <th>ID</th>
+                    <th>Location</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr> 
+            break;
+        case 'equipment':
+            tableHeaders =                                     
+                <tr>
+                    <th>PLEX ID</th>
+                    <th>Asset Number</th>
+                    <th>Equipment Name</th>
+                    <th>Workstation ID</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            break;
+        default:
+            break;
+
+    }
+
+    const formatTableData = (col, td) => {
+        let tableData = "";
+
+        if(col === 'created_at') {
+            tableData = formatDateTime(td);
+        } else if(
+            col === 'location_site' || 
+            col === 'user_role' || 
+            col === 'user_status'
+        ) {
+            tableData = td.toUpperCase();
+        } else if(
+            col === 'all_shifts' || 
+            col === 'first_shift' || 
+            col === 'second_shift' || 
+            col === 'third_shift'
+        ) {
+            tableData = (td) ? <i className="bi bi-check-square-fill"  style={{textAlign: 'center'}}></i> : '';
+        } else tableData = td;
+
+        return tableData;
+    }
 
     return (
         <>
             <div className="table-wrapper">
                 <table className="admin-table">
                     <thead>
-                        {
-                            (view === 'users') ? (
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Last Name</th>
-                                    <th>First Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th></th>
-                                </tr>
-                            ) : (
-                                (view === 'workstations') ? (
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Location</th>
-                                        <th>Created At</th>
-                                        <th></th>
-                                    </tr> 
-                                ) : (
-                                    <tr>
-                                        <th>PLEX ID</th>
-                                        <th>Asset Number</th>
-                                        <th>Equipment Name</th>
-                                        <th>Workstation ID</th>
-                                        <th>Created At</th>
-                                        <th></th>
-                                    </tr>
-                                )
-                            )
-                        }
+                        {tableHeaders}
                     </thead>
                     <tbody>
                         {paginatedData.length === 0 ? (
@@ -64,25 +110,16 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
                                 if(view === 'users') rowKey = row.ditech_id;
                                 else if(view === 'workstations') rowKey = row.workstation_id;
+                                else if(view === 'emailRecipients') rowKey = row.recipient_id;
                                 else rowKey = row.plex_equipment_id;
 
                                 return (
                                     <tr key={`${view}-${rowKey ?? 'no-id'}-${index}`}>
                                         {
                                             Object.keys(row).map(k => (
-                                                (k !== 'user_id') && (
-                                                    <td key={k}>
-                                                        {
-                                                            (k === 'created_at') ? 
-                                                            (
-                                                                formatDateTime(row[k])
-                                                            ) : 
-                                                            (
-                                                                (upperCaseFields.includes(k)) ? 
-                                                                    row[k].toUpperCase() : 
-                                                                    row[k]
-                                                            )
-                                                        }
+                                                (k !== 'user_id' && k !== 'recipient_id' && k !== 'all_shifts') && (
+                                                    <td key={k} style={(k === 'first_shift' || k === 'second_shift' || k === 'third_shift') ? {textAlign: 'center'} : {}}>
+                                                        { formatTableData(k, row[k]) }
                                                     </td> 
                                                 )
                                             ))
