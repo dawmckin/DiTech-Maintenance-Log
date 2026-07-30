@@ -5,6 +5,8 @@ import Pagination from "../util/Pagination";
 
 import formatDateTime from "../../utils/format-date-time";
 
+import checkIcon from "./../../assets/check-lg-icon.svg";
+
 import "../worklog-history/history-table.css";
 
 export default function AdminTable({view, rowData, onEdit, onDelete}) {
@@ -72,19 +74,10 @@ export default function AdminTable({view, rowData, onEdit, onDelete}) {
 
         if(col === 'created_at') {
             tableData = formatDateTime(td);
-        } else if(
-            col === 'location_site' || 
-            col === 'user_role' || 
-            col === 'user_status'
-        ) {
+        } else if(upperCaseFields.includes(col)) {
             tableData = td.toUpperCase();
-        } else if(
-            col === 'all_shifts' || 
-            col === 'first_shift' || 
-            col === 'second_shift' || 
-            col === 'third_shift'
-        ) {
-            tableData = (td) ? <i className="bi bi-check-square-fill"  style={{textAlign: 'center'}}></i> : '';
+        } else if(shiftFields.includes(col)) {
+            tableData = (td) ? <img src={checkIcon} alt="Selected" width={22} height={22}/> : '';
         } else tableData = td;
 
         return tableData;
