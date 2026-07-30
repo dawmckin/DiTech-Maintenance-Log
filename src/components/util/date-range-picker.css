@@ -62,6 +62,46 @@
     background: var(--primary) !important;
 }
 
+.rdrStartEdge,
+.rdrDayStartOfWeek .rdrInRange,
+.rdrDayStartOfWeek .rdrStartEdge,
+.rdrDayStartOfWeek .rdrEndEdge,
+.rdrDayStartOfMonth .rdrInRange,
+.rdrDayStartOfMonth .rdrStartEdge,
+.rdrDayStartOfMonth .rdrEndEdge,
+.rdrDayStartPreview,
+.rdrDayStartOfWeek .rdrDayInPreview,
+.rdrDayStartOfWeek .rdrDayStartPreview,
+.rdrDayStartOfWeek .rdrDayEndPreview,
+.rdrDayStartOfMonth .rdrDayStartPreview,
+.rdrDayStartOfMonth .rdrDayEndPreview,
+.rdrDayStartOfMonth .rdrDayEndPreview
+
+{
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.rdrEndEdge,
+.rdrDayEndOfWeek .rdrInRange,
+.rdrDayEndOfWeek .rdrStartEdge,
+.rdrDayEndOfWeek .rdrEndEdge,
+.rdrDayEndOfMonth .rdrInRange,
+.rdrDayEndOfMonth .rdrStartEdge,
+.rdrDayEndOfMonth .rdrEndEdge,
+.rdrDayEndPreview,
+.rdrDayEndOfWeek .rdrDayInPreview,
+.rdrDayEndOfWeek .rdrDayStartPreview,
+.rdrDayEndOfWeek .rdrDayEndPreview,
+.rdrDayEndOfMonth .rdrDayInPreview,
+.rdrDayEndOfMonth .rdrDayStartPreview,
+.rdrDayEndOfMonth .rdrDayEndPreview
+{
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+
 /* SELECTED DAY TEXT */
 .rdrDayStartPreview,
 .rdrDayEndPreview,
