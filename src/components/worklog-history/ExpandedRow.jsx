@@ -12,8 +12,15 @@ export default function ExpandedRow({logData, colSpan, isExpanded}) {
                     <div className="expanded-content">
                     
                         <div className="expanded-left">
-                            <p className="mt-0"><strong>Created By:</strong> {logData.name}</p>
-                            <p><strong>Downtime:</strong> {formatDuration(duration)}</p>
+                            <p className="mt-0"><strong>Created By: </strong>{logData.name}</p>
+                            <p><strong>Downtime: </strong>{formatDuration(duration)}</p>
+                            <p><strong>Tooling Issue: </strong> 
+                                {
+                                    (logData.is_tooling_issue !== null) ? 
+                                        ((logData.is_tooling_issue === true) ? <span>Yes</span> : <span>No</span>) :
+                                        '--'
+                                }
+                            </p>
                         </div>
 
                         <div className="expanded-right row">
