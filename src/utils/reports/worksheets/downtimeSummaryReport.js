@@ -87,7 +87,7 @@ export default function addDowntimeSummaryWorksheet(workbook, worklogs) {
 
     worksheet.autoFilter = {
         from: "A1",
-        to: "F1"
+        to: "G1"
     };
 
     rows.slice(0, 5).forEach((_, index) => {
