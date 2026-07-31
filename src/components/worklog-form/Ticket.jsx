@@ -129,10 +129,10 @@ export default function Ticket() {
                 ) : 
                 (
                     <form onSubmit={handleSubmit}>
+                        <label className="mr-3">Tooling Issue: </label>
                         <div className="d-flex">
-                            <label className="mr-3">Tooling Issue: </label>
 
-                            <label className="mr-3">
+                            <label className="mr-3 mt-0">
                                 <input 
                                     type="radio"
                                     checked={isToolingIssue === "yes"}
@@ -143,7 +143,7 @@ export default function Ticket() {
                                 /> 
                                 Yes
                             </label>                        
-                            <label className="mr-3">
+                            <label className="mr-3 mt-0">
                                 <input 
                                     type="radio"
                                     checked={isToolingIssue === "no"}
