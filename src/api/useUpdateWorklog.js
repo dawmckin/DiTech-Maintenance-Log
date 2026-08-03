@@ -8,7 +8,7 @@ export default function useUpdateWorklog() {
 
     const { showLoader, hideLoader } = useLoader();
 
-    const updateWorklog = async (ticketId) => {
+    const updateWorklog = async (ticketId, isToolingIssue) => {
         setError(null);
         
         showLoader();
@@ -19,7 +19,8 @@ export default function useUpdateWorklog() {
             .from('tickets')
             .update({
                 end_time: now,
-                issue_status: 'completed'
+                issue_status: 'completed',
+                is_tooling_issue: isToolingIssue
             })
             .eq('ticket_id', ticketId);
 

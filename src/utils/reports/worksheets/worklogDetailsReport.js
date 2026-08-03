@@ -3,11 +3,12 @@ import formatDateTime from "../../format-date-time";
 import formatDuration from "../../format-duration";
 import formatShift from "../../format-shift";
 
-export default function addWorklogDetailsWorksheet(workbook, worklogs) {
-    const worksheet = workbook.addWorksheet('Worklog Details');
+export default function addWorklogDetailsWorksheet(workbook, worklogs, toolingIssue = false) {
+    const worksheet = workbook.addWorksheet(toolingIssue ? 'Tooling Issues' : 'Worklog Details');
 
     worksheet.columns = [
         {header: 'Status', key: 'status', width: 10},
+        {header: 'Ticket ID', key: 'ticket_id', width: 12},
         {header: 'Start Time', key: 'start_time'},
         {header: 'End Time', key: 'end_time'},
         {header: 'Downtime', key: 'downtime'},
@@ -22,9 +23,10 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
         {header: 'Created By', key: 'created_by'}
     ]
 
-    worklogs.forEach(log => {
+    const addRow = (log) => {
         worksheet.addRow({
             status: log.issue_status,
+            ticket_id: log.ticket_id,
             start_time: formatDateTime(log.start_time),
             end_time: formatDateTime(log.end_time) ?? "",
             downtime: formatDuration(Date.parse(log.end_time) - Date.parse(log.start_time)),
@@ -38,7 +40,14 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
             notes: log.notes[0]?.note_text ?? "",
             created_by: `${log.users.first_name} ${log.users.last_name}`
         })
-    });
+    }
+
+    if(toolingIssue) {
+        worklogs.filter(log => log.is_tooling_issue === true).forEach(log => {addRow(log)});
+    } else {
+        worklogs.forEach(log => {addRow(log)});
+    }
+ 
 
     worksheet.getColumn('status').eachCell({includeEmpty: false}, (cell, rowNumber) => {
         if(rowNumber === 1) return;
@@ -98,6 +107,11 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs) {
     };
 
     worksheet.getColumn("notes").alignment = {
+        wrapText: true,
+        vertical: "top"
+    };    
+    
+    worksheet.getColumn("shift").alignment = {
         wrapText: true,
         vertical: "top"
     };

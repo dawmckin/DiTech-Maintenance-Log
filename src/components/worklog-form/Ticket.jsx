@@ -19,6 +19,7 @@ export default function Ticket() {
 
     const navigate = useNavigate();
     const { id } = useParams();
+    const [isToolingIssue, setIsToolingIssue] = useState("no");
     const [notes, setNotes] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
@@ -31,7 +32,11 @@ export default function Ticket() {
     const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
 
     const handleChange = (e) => {
-        setNotes(e.target.value);
+        if(e.target.name === 'isToolingIssue') {
+            setIsToolingIssue(e.target.value);
+        } else if(e.target.name === 'notes') {
+            setNotes(e.target.value);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -44,7 +49,7 @@ export default function Ticket() {
         
         try {
             const notesResult = await insertNote(notes, id);
-            const worklogResult = await updateWorklog(id);
+            const worklogResult = await updateWorklog(id, isToolingIssue);
 
             if(notesResult.success && worklogResult) {
                 showToast("Maintenance Log Submitted.", "success");
@@ -116,11 +121,41 @@ export default function Ticket() {
             {
                 (worklogData?.issue_status === 'completed') ? 
                 (
+                    <div>
+                    <p><label>Tooling Issue:</label> {worklogData?.is_tooling_issue ? 'Yes' : 'No'}</p>
                     <p><label>Notes:</label> {worklogData?.notes[0]?.note_text}</p>
+                    </div>
 
                 ) : 
                 (
                     <form onSubmit={handleSubmit}>
+                        <label className="mr-3">Tooling Issue: </label>
+                        <div className="d-flex">
+
+                            <label className="mr-3 mt-0">
+                                <input 
+                                    type="radio"
+                                    checked={isToolingIssue === "yes"}
+                                    name="isToolingIssue"
+                                    value='yes'
+                                    onChange={handleChange}
+                                    className="mr-2"
+                                /> 
+                                Yes
+                            </label>                        
+                            <label className="mr-3 mt-0">
+                                <input 
+                                    type="radio"
+                                    checked={isToolingIssue === "no"}
+                                    name="isToolingIssue"
+                                    value='no'
+                                    onChange={handleChange}
+                                    className="mr-2"
+                                /> 
+                                No
+                            </label>
+                        </div>
+
                         <label>Notes <span className="required-input">*</span></label>
                         <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
                     

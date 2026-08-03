@@ -74,6 +74,8 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
     const worstWorkstationsByDowntime = worstWorkstationsByDowntimeSorted.filter(ws => ws[1].downtime === worstWorkstationsByDowntimeSorted[0][1].downtime)
                                                                     .map(ws => [ws[0], {location: ws[1].location, count: ws[1].count, downtime: formatDuration(ws[1].downtime)}]);
 
+    const toolingIssues = worklogs.filter(log => log.is_tooling_issue === true).length;
+
     worksheet.mergeCells('A1:D1');
 
     worksheet.getCell('A1').value = 'Maintenance Portal Executive Summary';
@@ -121,6 +123,8 @@ export default function addExecutiveSummaryWorksheet(workbook, worklogs, dateRan
             if(index === 0) rows.push(['Worst Workstations By Downtime', ws[0], ws[1].location.toUpperCase(), ws[1].downtime])
             else rows.push(['', ws])
         });
+        rows.push([]);
+        rows.push(['Tooling Issues', toolingIssues]);
         rows.push([]);
         rows.push(['Reporting Period', dateRange.startDate.toLocaleString(), dateRange.endDate.toLocaleString(), `Range: ${ranges[dateRange.range]}`]);
         rows.push([]);

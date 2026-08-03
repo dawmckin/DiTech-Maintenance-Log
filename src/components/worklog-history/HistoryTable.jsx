@@ -256,6 +256,7 @@ export default function HistoryTable({logs, search}) {
                                                 issue_description: log?.issue_description,
                                                 start_time: log.start_time,
                                                 end_time: log.end_time,
+                                                is_tooling_issue: log.is_tooling_issue,
                                                 notes: log.notes
                                             }} colSpan={8} isExpanded={isExpanded} />
                                         )}

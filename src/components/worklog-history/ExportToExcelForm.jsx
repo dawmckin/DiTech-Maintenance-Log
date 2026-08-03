@@ -41,7 +41,6 @@ export default function ExportToExcel({onSuccess}) {
 
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
-        // console.log(name, value, type, checked);
 
         setExportExcelForm(prev => ({
             ...prev,

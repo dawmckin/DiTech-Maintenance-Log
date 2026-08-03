@@ -64,7 +64,6 @@ export default function EmailRecipientForm({onSuccess, initialData}) {
 
             if (type === "checkbox") {
                 if (name === "all_shifts") {
-                    // Toggle all shift checkboxes
                     updatedForm = {
                         ...updatedForm,
                         first_shift: checked,
@@ -72,7 +71,6 @@ export default function EmailRecipientForm({onSuccess, initialData}) {
                         third_shift: checked
                     };
                 } else {
-                    // Keep All Shifts in sync with the individual shift checkboxes
                     const allSelected =
                         updatedForm.first_shift &&
                         updatedForm.second_shift &&

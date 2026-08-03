@@ -22,6 +22,7 @@ export async function generateWorkbook(reportData, dateRange = {}, charts = {}, 
 
     addExecutiveSummaryWorksheet(workbook, reportData, dateRange);
     addWorklogDetailsWorksheet(workbook, reportData);
+    if(reportData.filter(log => log.is_tooling_issue === true).length > 0) addWorklogDetailsWorksheet(workbook, reportData, true);
     addDowntimeSummaryWorksheet(workbook, reportData);
     addProblemEquipmentWorksheet(workbook, reportData);
     addProblemWorkstationsWorksheet(workbook, reportData);
