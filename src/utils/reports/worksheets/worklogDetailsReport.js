@@ -23,7 +23,7 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs, toolingIs
         {header: 'Created By', key: 'created_by'}
     ]
 
-    worklogs.filter(log => log.is_tooling_issue === true).forEach(log => {
+    const addRow = (log) => {
         worksheet.addRow({
             status: log.issue_status,
             ticket_id: log.ticket_id,
@@ -40,7 +40,14 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs, toolingIs
             notes: log.notes[0]?.note_text ?? "",
             created_by: `${log.users.first_name} ${log.users.last_name}`
         })
-    });
+    }
+
+    if(toolingIssue) {
+        worklogs.filter(log => log.is_tooling_issue === true).forEach(log => {addRow(log)});
+    } else {
+        worklogs.forEach(log => {addRow(log)});
+    }
+ 
 
     worksheet.getColumn('status').eachCell({includeEmpty: false}, (cell, rowNumber) => {
         if(rowNumber === 1) return;
@@ -100,6 +107,11 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs, toolingIs
     };
 
     worksheet.getColumn("notes").alignment = {
+        wrapText: true,
+        vertical: "top"
+    };    
+    
+    worksheet.getColumn("shift").alignment = {
         wrapText: true,
         vertical: "top"
     };
