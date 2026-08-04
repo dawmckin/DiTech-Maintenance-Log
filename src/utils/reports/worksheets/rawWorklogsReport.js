@@ -36,8 +36,8 @@ export default function addRawWorklogsWorksheet(workbook, worklogs) {
             equipmentName: log.equipment?.equipment_name,
             issueType: log.issue_type,
             issueDescription: log.issue_description,
-            workPerformed: log.notes[0]?.note_text,
-            createdBy: `${log.users?.first_name} ${log.users?.last_name}`
+            workPerformed: log.notes?.map(note => note?.note_text).join(", \n\n"),
+            createdBy: `${log.created_by?.first_name} ${log.created_by?.last_name}`
         });
     });
 

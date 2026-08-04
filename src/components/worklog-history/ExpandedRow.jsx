@@ -1,4 +1,5 @@
 import formatDuration from "../../utils/format-duration";
+import formatDateTime from "../../utils/format-date-time";
 import "./history-table.css";
 
 export default function ExpandedRow({logData, colSpan, isExpanded}) {
@@ -33,14 +34,22 @@ export default function ExpandedRow({logData, colSpan, isExpanded}) {
                                 logData.notes?.length > 0 && (
                                     <div className="col-md-7">
                                         <p className="notes-title"><strong>Notes:</strong></p>
-                                        <p>{logData?.notes[0]?.note_text}</p>
-                                        {/* <ul className="notes-list ml-3">
+                                        {/* <p>{logData?.notes[0]?.note_text}</p> */}
+                                        <ul className="notes-list pl-0">
                                             {logData.notes?.map((note, index) => (
-                                                <li key={index}>
-                                                    {note.note_text}
+                                                <li>
+                                                    <div className="row top-meta mb-0">
+                                                        <div className="col-md-4">
+                                                            <strong>{`${note?.users?.first_name} ${note?.users?.last_name}`}</strong>
+                                                            <strong>{`[${formatDateTime(note.created_at)}]`}</strong>
+                                                        </div>
+                                                        <div className="col-md-8">
+                                                            <p className="mb-0">{note.note_text}</p>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                             ))}
-                                        </ul> */}
+                                        </ul>
                                     </div>
                                 )
                             }

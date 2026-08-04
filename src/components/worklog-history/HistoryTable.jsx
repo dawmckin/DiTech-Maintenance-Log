@@ -12,7 +12,6 @@ import CompetedIcon from "./../../assets/completed-icon.svg";
 import formatDuration from "../../utils/format-duration";
 
 export default function HistoryTable({logs, search}) {
-    console.log(logs);
     //sorting configs
     const [sortConfig, setSortConfig] = useState({key: 'start_time', direction: "desc"});
     
@@ -85,7 +84,8 @@ export default function HistoryTable({logs, search}) {
                 "end_time",
                 "created_by",
                 "owner",
-                'shift'
+                'shift',
+                'is_tooling_issue'
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
 

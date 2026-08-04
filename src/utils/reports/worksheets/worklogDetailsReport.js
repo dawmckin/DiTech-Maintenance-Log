@@ -37,8 +37,8 @@ export default function addWorklogDetailsWorksheet(workbook, worklogs, toolingIs
             equipment_name: log.equipment.equipment_name,
             issue_type: log.issue_type,
             issue_description: log.issue_description,
-            notes: log.notes[0]?.note_text ?? "",
-            created_by: `${log.users.first_name} ${log.users.last_name}`
+            notes: log.notes?.map(note => note?.note_text).join(", \n\n"),
+            created_by: `${log.created_by.first_name} ${log.created_by.last_name}`
         })
     }
 

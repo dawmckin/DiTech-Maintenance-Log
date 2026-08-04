@@ -32,8 +32,6 @@ export default function Ticket() {
     const worklogData = useSelectWorklogById(id);
     const userData = useSelectAll('users', 0);
 
-    console.log(worklogData);
-
     const duration = (worklogData?.end_time) ? 
                         new Date(worklogData?.end_time) - new Date(worklogData?.start_time) : 
                         new Date() - new Date(worklogData?.start_time);
@@ -105,7 +103,7 @@ export default function Ticket() {
                         <li>
                             <div className="row top-meta mb-0">
                                 <div className="col-md-2">
-                                    <strong>{userData.filter(user => user.user_id === note.created_by).map(user => `${user.first_name} ${user.last_name}`)}</strong>
+                                    <strong>{`${note?.users?.first_name} ${note?.users?.last_name}`}</strong>
                                     <strong>{`[${formatDateTime(note.created_at)}]`}</strong>
                                 </div>
                                 <div className="col-md-10">

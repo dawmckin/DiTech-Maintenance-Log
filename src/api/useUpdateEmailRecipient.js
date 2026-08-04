@@ -9,7 +9,6 @@ export default function useUpdateEmailRecipient() {
     const { showLoader, hideLoader } = useLoader();
 
     const updateEmailRecipient = async (emailRecipientData) => {
-        console.log(emailRecipientData);
         setError(null);
         
         showLoader();

@@ -32,8 +32,10 @@ export default function useSelectWorklogs(refreshKey: number = 0): Worklog[] {
                         ),
                         notes (
                             note_text,
+                            created_at,
                             users (
-                                ditech_id
+                                first_name,
+                                last_name
                             )
                         )
                         `)

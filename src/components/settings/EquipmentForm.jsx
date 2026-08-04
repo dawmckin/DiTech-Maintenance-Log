@@ -48,7 +48,7 @@ export default function EquipmentForm({onSuccess, initialData}) {
     const handleAddEquipment = async (e) => {
         e.preventDefault();
 
-        console.log(Object.entries(equipmentForm));
+        // console.log(Object.entries(equipmentForm));
         if(Object.entries(equipmentForm).some(i => i[1] === "" && i[0] !== 'asset_number')) {
             showToast("Missing required fields.", "error");
             return;

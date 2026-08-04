@@ -58,14 +58,14 @@ export default function WorklogForm() {
         } 
 
         try {
-            console.log(worklogFormData);
+            // console.log(worklogFormData);
             const startTime = new Date().toISOString();
             
             const updatedForm = {
                 ...worklogFormData,
                 startTime
             }
-            console.log(updatedForm);
+            // console.log(updatedForm);
             setWorklogFormData(updatedForm);
             const result = await insertWorklog(updatedForm);
 
