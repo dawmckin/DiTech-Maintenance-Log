@@ -7,7 +7,7 @@ export default function addTechnicianActivityWorksheet(workbook, worklogs) {
     const technicianSummary = {};
 
     worklogs.forEach(log => {
-        const technician = `${log.users?.first_name} ${log.users?.last_name}`;
+        const technician = `${log.created_by?.first_name} ${log.created_by?.last_name}`;
 
         if(!technicianSummary[technician]) {
             technicianSummary[technician] = {

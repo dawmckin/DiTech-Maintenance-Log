@@ -82,8 +82,10 @@ export default function HistoryTable({logs, search}) {
                 "issue_status",
                 "start_time",
                 "end_time",
-                "users",
-                'shift'
+                "created_by",
+                "owner",
+                'shift',
+                'is_tooling_issue'
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
 
@@ -105,7 +107,7 @@ export default function HistoryTable({logs, search}) {
                         return String(value?.location_site).toLowerCase().includes(lowercasedSearch);
                     }
 
-                    if(field === 'users') {
+                    if(field === 'created_by' || field === 'owner') {
                         return String(value?.first_name).toLowerCase().includes(lowercasedSearch) || String(value?.last_name).toLowerCase().includes(lowercasedSearch);
                     }
 
@@ -252,7 +254,7 @@ export default function HistoryTable({logs, search}) {
 
                                         {(isExpanded) && (
                                             <ExpandedRow logData={{
-                                                name: `${log.users.first_name} ${log.users.last_name}`,
+                                                name: `${log.created_by.first_name} ${log.created_by.last_name}`,
                                                 issue_description: log?.issue_description,
                                                 start_time: log.start_time,
                                                 end_time: log.end_time,

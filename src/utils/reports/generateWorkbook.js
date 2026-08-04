@@ -33,7 +33,6 @@ export async function generateWorkbook(reportData, dateRange = {}, charts = {}, 
 
     const buffer = await workbook.xlsx.writeBuffer();
 
-    // console.log(`Maintenance_Report(${todayFormatted})_Reporting(${(startDate === endDate) ? `${startDate}` : `${startDate}~${endDate}`}).xlsx`);
     saveAs(new Blob([buffer]), `Maintenance_Report(${todayFormatted})_Reporting(${(startDate === endDate) ? `${startDate}` : `${startDate}~${endDate}`}).xlsx`);
 
     workbook.creator = 'Maintenance Portal';

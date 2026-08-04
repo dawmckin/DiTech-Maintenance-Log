@@ -13,7 +13,11 @@ export async function useSelectFilteredWorklogs(filters: WorklogFilters): Promis
         .from('tickets')
         .select(`
             *,
-            users(
+            created_by:users!tickets_created_by_fkey (
+                first_name,
+                last_name
+            ),
+            owner:users!tickets_owner_fkey (
                 first_name,
                 last_name
             ),

@@ -5,24 +5,34 @@ import formatDateTime from "../../utils/format-date-time";
 import formatDuration from "../../utils/format-duration";
 
 import useSelectWorklogById from "../../api/useSelectWorklogById";
+import useSelectAll from "../../api/useSelectAll";
 import useInsertNote from "../../api/useInsertNote";
 import useUpdateWorklog from "../../api/useUpdateWorklog";
 
+import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
+
+import Modal from "../util/Modal";
 
 import OpenIcon from "../../assets/open-icon.svg";
 import CompetedIcon from "../../assets/completed-icon.svg";
 
 
 export default function Ticket() {
+    const user = useAuth().user;
+    
     const { showToast } = useToast();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const { id } = useParams();
     const [isToolingIssue, setIsToolingIssue] = useState("no");
     const [notes, setNotes] = useState(null);
+    const [transferRecipient, setTransferRecipient] = useState(null);
 
     const worklogData = useSelectWorklogById(id);
+    const userData = useSelectAll('users', 0);
 
     const duration = (worklogData?.end_time) ? 
                         new Date(worklogData?.end_time) - new Date(worklogData?.start_time) : 
@@ -39,7 +49,18 @@ export default function Ticket() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const initiateTransfer = (e) => {
+        e.preventDefault();
+
+        if(!notes) {
+            showToast("Please enter a note before transferring your worklog.", "warning");
+            return;
+        } 
+
+        setIsModalOpen(true);
+    }
+
+    const handleSubmit = async (e, type) => {
         e.preventDefault();
 
         if(!notes) {
@@ -49,20 +70,54 @@ export default function Ticket() {
         
         try {
             const notesResult = await insertNote(notes, id);
-            const worklogResult = await updateWorklog(id, isToolingIssue);
+            const worklogResult = (type === 'transfer') ? 
+                                        await updateWorklog(id, isToolingIssue, transferRecipient, 'transfer') :
+                                        await updateWorklog(id, isToolingIssue, worklogData?.created_by);
 
             if(notesResult.success && worklogResult) {
-                showToast("Maintenance Log Submitted.", "success");
-
+                (type === 'transfer') ? 
+                    showToast("Maintenance Log Transferred.", "success") : 
+                    showToast("Maintenance Log Submitted.", "success");
+                    
                 navigate(`/dashboard`);
             } else {
-                showToast("Error submitting log.", "error");
+                (type === 'transfer') ? 
+                    showToast("Error transferring log.", "error") : 
+                    showToast("Error submitting log.", "error");
             }
         } catch (error) {
             console.error(error);
             showToast("Unexpected error.", "error");
         }
     };
+
+    const generateSelectOptions = () => {
+        return userData.map(user => 
+                <option value={user.user_id}>{user.first_name} {user.last_name}</option>
+            );
+    };
+
+    const generateNotes = () => {
+        return (
+            <ul className="notes-list pl-0">
+                {
+                    worklogData?.notes?.map(note => (
+                        <li>
+                            <div className="row top-meta mb-0">
+                                <div className="col-md-2">
+                                    <strong>{`${note?.users?.first_name} ${note?.users?.last_name}`}</strong>
+                                    <strong>{`[${formatDateTime(note.created_at)}]`}</strong>
+                                </div>
+                                <div className="col-md-10">
+                                    <p className="mb-0">{note.note_text}</p>
+                                </div>
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+        );
+    }
 
     return (
         <div className="card">
@@ -87,14 +142,12 @@ export default function Ticket() {
                         <span>{formatDateTime(worklogData?.start_time)}</span>
                     </div>
                     {
-                        (worklogData?.end_time) ? 
+                        (worklogData?.end_time) && 
                         (
                             <div>
                                 <strong>End Time:</strong>
                                 <span>{formatDateTime(worklogData?.end_time)}</span>
                             </div>
-                        ) : (
-                            <></>
                         )
                     }
                     <div>
@@ -113,7 +166,7 @@ export default function Ticket() {
             <hr/>
 
             <div className="readonly">
-                <p><label>Workstation #:</label> {worklogData?.workstation_id} - {worklogData?.workstations?.location_site.toUpperCase()}</p>
+                <p><label>Workstation:</label> {worklogData?.workstation_id} - {worklogData?.workstations?.location_site.toUpperCase()}</p>
                 <p><label>Equipment:</label>[ID: {worklogData?.equipment?.plex_equipment_id}] - {worklogData?.equipment?.equipment_name}</p>
                 <p><label>Issue Description:</label> {worklogData?.issue_description}</p>
             </div>
@@ -122,13 +175,14 @@ export default function Ticket() {
                 (worklogData?.issue_status === 'completed') ? 
                 (
                     <div>
-                    <p><label>Tooling Issue:</label> {worklogData?.is_tooling_issue ? 'Yes' : 'No'}</p>
-                    <p><label>Notes:</label> {worklogData?.notes[0]?.note_text}</p>
+                        <p><label>Tooling Issue:</label> {worklogData?.is_tooling_issue ? 'Yes' : 'No'}</p>
+                        <p><label>Notes:</label></p>
+                        {generateNotes()}
                     </div>
 
                 ) : 
                 (
-                    <form onSubmit={handleSubmit}>
+                    <form>
                         <label className="mr-3">Tooling Issue: </label>
                         <div className="d-flex">
 
@@ -157,14 +211,48 @@ export default function Ticket() {
                         </div>
 
                         <label>Notes <span className="required-input">*</span></label>
+                        {generateNotes()}
                         <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
                     
                         <div className="actions">
-                            <button className="primary">Submit</button>
+                            {/* <button onClick={(e) => handleSubmit(e, 'transfer')} className="primary transfer mr-2">Transfer</button> */}
+                            {
+                                (user?.user_metadata?.user_role === 'admin' && user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                                    (
+                                        <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
+                                    )
+                            }
+                            {/* <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button> */}
+                            <button onClick={(e) => handleSubmit(e, 'submit')} className="primary">Submit</button>
                         </div>
                     </form>
                 )
             }
+
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={() => {
+                    setIsModalOpen(false);
+                }} 
+                title={`Transfer Worklog`}
+            >
+                <form onSubmit={(e) => handleSubmit(e, 'transfer')}>
+                    <label className="mr-2">Recipient: </label>
+                    <select className="mr-2"
+                            style={{height: '3em'}} 
+                            value={transferRecipient} 
+                            name="transferRecipient" 
+                            onChange={(e) => setTransferRecipient(e.target.value)}
+                    >
+                        <option value="">--Select--</option>
+                        {generateSelectOptions()}
+                    </select>
+
+                    <div className="actions">
+                        <button type='submit' className="primary transfer">Transfer</button>
+                    </div>
+                </form>
+            </Modal>
         </div>
     )
 

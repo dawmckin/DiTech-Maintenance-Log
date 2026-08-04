@@ -25,8 +25,11 @@ export default function useSelectWorklogById(ticketId: number): Worklog | undefi
                         ),
                         notes (
                             note_text,
-                            created_by,
-                            created_at
+                            created_at,
+                            users (
+                                first_name,
+                                last_name
+                            )
                         )
                     `)
                 .eq('ticket_id', ticketId)
