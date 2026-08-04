@@ -24,7 +24,8 @@ export default function useInsertWorklog() {
                 issue_type: worklog.issueType,
                 issue_description: worklog.issueDescription,
                 issue_status: worklog.issueStatus,
-                start_time: worklog.startTime
+                start_time: worklog.startTime,
+                is_tooling_issue: worklog.isToolingIssue === 'yes' ? true : false
             })
             .select();
 

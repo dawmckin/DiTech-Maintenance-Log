@@ -21,7 +21,8 @@ export default function WorklogForm() {
         "issueDescription": "",
         "startTime": null,
         "issueStatus": "open",
-        "notes": ""
+        "notes": "",
+        "isToolingIssue": 'no'
     });
 
     const workstationOptions = useSelectWorkstations();
@@ -146,6 +147,32 @@ export default function WorklogForm() {
                     <option>Maintenance</option>
                     <option>Problem</option>
                 </select>
+
+                <label className="mr-3">Tooling Issue: </label>
+                <div className="d-flex">
+                    <label className="mr-3 mt-0">
+                        <input 
+                            type="radio"
+                            checked={worklogFormData.isToolingIssue === "yes"}
+                            name="isToolingIssue"
+                            value='yes'
+                            onChange={handleChange}
+                            className="mr-2"
+                        /> 
+                        Yes
+                    </label>                        
+                    <label className="mr-3 mt-0">
+                        <input 
+                            type="radio"
+                            checked={worklogFormData.isToolingIssue === "no"}
+                            name="isToolingIssue"
+                            value='no'
+                            onChange={handleChange}
+                            className="mr-2"
+                        /> 
+                        No
+                    </label>
+                </div>
 
                 <label>Issue Description <span className="required-input">*</span></label>
                 <textarea name="issueDescription" onChange={handleChange} placeholder="Describe the issue..."></textarea>
