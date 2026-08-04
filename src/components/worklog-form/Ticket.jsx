@@ -9,16 +9,18 @@ import useSelectAll from "../../api/useSelectAll";
 import useInsertNote from "../../api/useInsertNote";
 import useUpdateWorklog from "../../api/useUpdateWorklog";
 
+import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 
 import Modal from "../util/Modal";
 
 import OpenIcon from "../../assets/open-icon.svg";
 import CompetedIcon from "../../assets/completed-icon.svg";
-import { tr } from "date-fns/locale";
 
 
 export default function Ticket() {
+    const user = useAuth().user;
+    
     const { showToast } = useToast();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,7 +99,7 @@ export default function Ticket() {
 
     const generateNotes = () => {
         return (
-            <ul className="notes-list">
+            <ul className="notes-list pl-0">
                 {
                     worklogData?.notes?.map(note => (
                         <li>
@@ -174,7 +176,6 @@ export default function Ticket() {
                 (
                     <div>
                         <p><label>Tooling Issue:</label> {worklogData?.is_tooling_issue ? 'Yes' : 'No'}</p>
-                        {/* <p><label>Notes:</label> {worklogData?.notes[0]?.note_text}</p> */}
                         <p><label>Notes:</label></p>
                         {generateNotes()}
                     </div>
@@ -215,7 +216,13 @@ export default function Ticket() {
                     
                         <div className="actions">
                             {/* <button onClick={(e) => handleSubmit(e, 'transfer')} className="primary transfer mr-2">Transfer</button> */}
-                            <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
+                            {
+                                (user?.user_metadata?.user_role === 'admin' && user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                                    (
+                                        <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
+                                    )
+                            }
+                            {/* <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button> */}
                             <button onClick={(e) => handleSubmit(e, 'submit')} className="primary">Submit</button>
                         </div>
                     </form>

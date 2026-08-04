@@ -29,7 +29,6 @@ export default function Dashboard() {
             <div className="card">
                 <div className="d-flex justify-content-between">
                     <h2>Dashboard</h2>
-                    {/* <button className="primary log-action d-flex" disabled={user?.user_metadata?.user_role !== 'admin'} */}
                     <div className="d-flex">
                         {
                             (user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
@@ -95,15 +94,18 @@ export default function Dashboard() {
                         )
                     }
                 </div>      
-                {user?.user_metadata?.user_role === 'admin' && dashboardView === 'admin' ? (
-                        <div>
-                            <AdminView range={range}/>
-                        </div>
-                    ) : (
-                        <div className="card">
-                            <MaintenanceView userId={user.id} refreshKey={refreshKey}/>
-                        </div>
-                    )
+                {
+                    user?.user_metadata?.user_role === 'admin' && dashboardView === 'admin' ? 
+                        (
+                            <div>
+                                <AdminView range={range}/>
+                            </div>
+                        ) :
+                        (
+                            <div className="card">
+                                <MaintenanceView userId={user.id} refreshKey={refreshKey}/>
+                            </div>
+                        )
                 }
             </div>
         </div>
