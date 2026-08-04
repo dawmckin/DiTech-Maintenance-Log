@@ -27,7 +27,7 @@ export default function useSelectWorklogsByUser(userId: string, refreshKey: numb
                             equipment_name
                         )
                         `)
-                .eq('created_by', userId)
+                .eq('owner', userId)
                 .order('issue_status', {ascending: false});
 
             if(error) {

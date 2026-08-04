@@ -12,6 +12,7 @@ import CompetedIcon from "./../../assets/completed-icon.svg";
 import formatDuration from "../../utils/format-duration";
 
 export default function HistoryTable({logs, search}) {
+    console.log(logs);
     //sorting configs
     const [sortConfig, setSortConfig] = useState({key: 'start_time', direction: "desc"});
     
@@ -82,7 +83,8 @@ export default function HistoryTable({logs, search}) {
                 "issue_status",
                 "start_time",
                 "end_time",
-                "users",
+                "created_by",
+                "owner",
                 'shift'
             ];
             const lowercasedSearch = debouncedSearch.toLowerCase();
@@ -105,7 +107,7 @@ export default function HistoryTable({logs, search}) {
                         return String(value?.location_site).toLowerCase().includes(lowercasedSearch);
                     }
 
-                    if(field === 'users') {
+                    if(field === 'created_by' || field === 'owner') {
                         return String(value?.first_name).toLowerCase().includes(lowercasedSearch) || String(value?.last_name).toLowerCase().includes(lowercasedSearch);
                     }
 
@@ -252,7 +254,7 @@ export default function HistoryTable({logs, search}) {
 
                                         {(isExpanded) && (
                                             <ExpandedRow logData={{
-                                                name: `${log.users.first_name} ${log.users.last_name}`,
+                                                name: `${log.created_by.first_name} ${log.created_by.last_name}`,
                                                 issue_description: log?.issue_description,
                                                 start_time: log.start_time,
                                                 end_time: log.end_time,

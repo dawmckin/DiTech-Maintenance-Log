@@ -8,7 +8,7 @@ export default function useUpdateWorklog() {
 
     const { showLoader, hideLoader } = useLoader();
 
-    const updateWorklog = async (ticketId, isToolingIssue) => {
+    const updateWorklog = async (ticketId, isToolingIssue, owner, type = 'submit') => {
         setError(null);
         
         showLoader();
@@ -18,9 +18,10 @@ export default function useUpdateWorklog() {
         const {data, error} = await supabase
             .from('tickets')
             .update({
-                end_time: now,
-                issue_status: 'completed',
-                is_tooling_issue: isToolingIssue
+                end_time: type === 'submit' ? now : null,
+                issue_status: type === 'submit' ? 'completed' : 'open',
+                is_tooling_issue: isToolingIssue,
+                owner
             })
             .eq('ticket_id', ticketId);
 
