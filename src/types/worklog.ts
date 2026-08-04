@@ -49,6 +49,7 @@ export interface WorklogInsert {
     issueStatus: IssueStatus;
     issueDescription: string;
     startTime: Date;
+    isToolingIssue: string;
 }
 
 export interface WorklogRow {

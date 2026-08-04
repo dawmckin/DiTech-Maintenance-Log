@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import formatDateTime from "../../utils/format-date-time";
@@ -27,7 +27,7 @@ export default function Ticket() {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    const [isToolingIssue, setIsToolingIssue] = useState("no");
+    const [isToolingIssue, setIsToolingIssue] = useState("");
     const [notes, setNotes] = useState(null);
     const [transferRecipient, setTransferRecipient] = useState(null);
 
@@ -40,6 +40,12 @@ export default function Ticket() {
 
     const { insertNote, insertNoteStatus, insertNoteError } = useInsertNote();
     const { updateWorklog, updateWorklogStatus, updateWorklogError } = useUpdateWorklog();
+
+    useEffect(() => {
+        if(worklogData?.is_tooling_issue !== undefined) {
+                setIsToolingIssue(worklogData.is_tooling_issue === true ? 'yes' : 'no');
+        }
+    }, [worklogData])
 
     const handleChange = (e) => {
         if(e.target.name === 'isToolingIssue') {
@@ -215,7 +221,6 @@ export default function Ticket() {
                         <textarea name="notes" onChange={handleChange} placeholder="Add any additional notes..."></textarea>
                     
                         <div className="actions">
-                            {/* <button onClick={(e) => handleSubmit(e, 'transfer')} className="primary transfer mr-2">Transfer</button> */}
                             {
                                 (user?.user_metadata?.user_role === 'admin' && user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
                                     (

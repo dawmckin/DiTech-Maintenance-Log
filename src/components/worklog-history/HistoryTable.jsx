@@ -137,6 +137,10 @@ export default function HistoryTable({logs, search}) {
                     valueA = formatShift(a.start_time);
                     valueB = formatShift(b.start_time);
                     break;
+                case 'downtime':
+                    valueA = a.end_time ? (new Date(a.end_time) - new Date(a.start_time)) : (new Date() - new Date(a.start_time));
+                    valueB = b.end_time ? (new Date(b.end_time) - new Date(b.start_time)) : (new Date() - new Date(b.start_time));
+                    break;    
                 default:
                     valueA = a[key];
                     valueB = b[key];
@@ -182,8 +186,8 @@ export default function HistoryTable({logs, search}) {
                             {/* <th className="sortable" onClick={() => handleSort("shift")}>
                                 Shift {getSortArrow("shift")}
                             </th>                            */}
-                            <th className="sortable" onClick={() => handleSort("shift")}>
-                                Downtime {getSortArrow("shift")}
+                            <th className="sortable" onClick={() => handleSort("downtime")}>
+                                Downtime {getSortArrow("downtime")}
                             </th>  
                             <th className="sortable" onClick={() => handleSort("workstation_id")}>
                                 Workstation {getSortArrow("workstation_id")}
