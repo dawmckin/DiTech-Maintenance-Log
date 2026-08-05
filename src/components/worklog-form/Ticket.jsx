@@ -19,7 +19,7 @@ import CompetedIcon from "../../assets/completed-icon.svg";
 
 
 export default function Ticket() {
-    const user = useAuth().user;
+    const authUser = useAuth().user;
     
     const { showToast } = useToast();
 
@@ -72,7 +72,12 @@ export default function Ticket() {
         if(!notes) {
             showToast("Missing required fields.", "warning");
             return;
-        } 
+        }
+
+        if(type === 'transfer' && !transferRecipient) {
+            showToast('Missing transfer recipient.', 'warning');
+            return;
+        }
         
         try {
             const notesResult = await insertNote(notes, id);
@@ -98,7 +103,7 @@ export default function Ticket() {
     };
 
     const generateSelectOptions = () => {
-        return userData.map(user => 
+        return userData.filter(user => user.user_id !== authUser.id).map(user => 
                 <option value={user.user_id}>{user.first_name} {user.last_name}</option>
             );
     };
@@ -222,7 +227,7 @@ export default function Ticket() {
                     
                         <div className="actions">
                             {
-                                (user?.user_metadata?.user_role === 'admin' && user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                                (authUser?.user_metadata?.user_role === 'admin' && authUser?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
                                     (
                                         <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
                                     )
@@ -242,7 +247,7 @@ export default function Ticket() {
                 title={`Transfer Worklog`}
             >
                 <form onSubmit={(e) => handleSubmit(e, 'transfer')}>
-                    <label className="mr-2">Recipient: </label>
+                    <label className="mr-2">Recipient: <span className="required-input">*</span></label>
                     <select className="mr-2"
                             style={{height: '3em'}} 
                             value={transferRecipient} 
