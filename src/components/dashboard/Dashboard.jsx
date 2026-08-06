@@ -31,7 +31,8 @@ export default function Dashboard() {
                     <h2>Dashboard</h2>
                     <div className="d-flex">
                         {
-                            (user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                            // (user?.user_metadata?.user_role === 'admin' && user?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                            (user?.user_metadata?.user_role === 'admin') && 
                                 (
                                     <div className="d-flex">
                                         <label className="mr-2">View: </label>
