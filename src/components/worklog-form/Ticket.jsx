@@ -227,7 +227,8 @@ export default function Ticket() {
                     
                         <div className="actions">
                             {
-                                (authUser?.user_metadata?.user_role === 'admin' && authUser?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                                // (authUser?.user_metadata?.user_role === 'admin' && authUser?.user_metadata?.email === 'dmckinney@ditechinc.net') && 
+                                (authUser?.user_metadata?.user_role === 'admin') && 
                                     (
                                         <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
                                     )
