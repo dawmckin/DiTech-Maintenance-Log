@@ -233,7 +233,7 @@ export default function Ticket() {
                                         <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button">Transfer</button>
                                     )
                             } */}
-                            <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-2" type="button" disabled={authUser?.user_metadata?.user_role === 'maintenance'}>Transfer</button>
+                            <button onClick={(e) => initiateTransfer(e)} className="primary transfer mr-md-2" type="button">Transfer</button>
                             <button onClick={(e) => handleSubmit(e, 'submit')} className="primary">Submit</button>
                         </div>
                     </form>
